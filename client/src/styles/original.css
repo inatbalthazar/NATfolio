@@ -322,12 +322,19 @@
 
 		#coord-bottom-right {
 			bottom: 30px;
-			right: 30px
+			right: 30px;
+			cursor: default
 		}
 
 		#coord-bottom-left {
 			bottom: 30px;
-			left: 30px
+			left: 30px;
+			cursor: default
+		}
+
+		#coord-bottom-right:hover,
+		#coord-bottom-left:hover {
+			animation: none
 		}
 
 		.coord-full {

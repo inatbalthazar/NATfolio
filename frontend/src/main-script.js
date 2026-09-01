@@ -746,43 +746,17 @@ function runMainScript() {
 		element.classList.remove('glitch');
 	}
 
-	coordBottomRight.addEventListener('mouseenter', () => {
-		coordBottomRight.innerHTML = 'EMAIL PORTSMOUTH OFFICE';
-		startGlitch(coordBottomRight);
-	});
-
-	coordBottomRight.addEventListener('mouseleave', () => {
-		coordBottomRight.innerHTML = `
-				<span class="coord-full">43.07558340478227, -70.75358659204623</span>
-				<span class="coord-short">43.075, -70.753</span>
-			`;
-		stopGlitch(coordBottomRight);
-	});
-
 	coordBottomRight.addEventListener('click', () => {
 		const email = coordBottomRight.dataset.email;
 		navigator.clipboard.writeText(email).then(() => {
 			coordBottomRight.innerHTML = 'COPIED!';
 			setTimeout(() => {
 				coordBottomRight.innerHTML = `
-						<span class="coord-full">43.07558340478227, -70.75358659204623</span>
-						<span class="coord-short">43.075, -70.753</span>
+						<span class="coord-full">Rayong, Thailand • +66 97149 3909</span>
+						<span class="coord-short">Rayong, TH</span>
 					`;
 			}, 2000);
 		});
-	});
-
-	coordBottomLeft.addEventListener('mouseenter', () => {
-		coordBottomLeft.innerHTML = 'EMAIL LOS ANGELES OFFICE';
-		startGlitch(coordBottomLeft);
-	});
-
-	coordBottomLeft.addEventListener('mouseleave', () => {
-		coordBottomLeft.innerHTML = `
-				<span class="coord-full">34.04760929069447, -118.24995828905398</span>
-				<span class="coord-short">34.047, -118.249</span>
-			`;
-		stopGlitch(coordBottomLeft);
 	});
 
 	coordBottomLeft.addEventListener('click', () => {
@@ -791,8 +765,8 @@ function runMainScript() {
 			coordBottomLeft.innerHTML = 'COPIED!';
 			setTimeout(() => {
 				coordBottomLeft.innerHTML = `
-						<span class="coord-full">34.04760929069447, -118.24995828905398</span>
-						<span class="coord-short">34.047, -118.249</span>
+						<span class="coord-full">inatbalthazar@gmail.com</span>
+						<span class="coord-short">EMAIL ME</span>
 					`;
 			}, 2000);
 		});
@@ -1147,7 +1121,7 @@ function runMainScript() {
 	}
 	// Add hover detection for interactive elements
 	document.addEventListener('mouseover', (e) => {
-		const hoverable = e.target.closest('a, button, .ui-component, .nav-link, .mobile-nav-link, .social-link, .burger-line, #logo, .big-word, #reel-play-button, #reel-controls, .reel-btn, #reel-video-container, .award-item, .text-section');
+		const hoverable = e.target.closest('a, button, .ui-component:not(#coord-bottom-left):not(#coord-bottom-right), .nav-link, .mobile-nav-link, .social-link, .burger-line, #logo, .big-word, #reel-play-button, #reel-controls, .reel-btn, #reel-video-container, .award-item, .text-section');
 
 		if (hoverable) {
 			document.body.classList.add('cursor-hover');
@@ -1155,7 +1129,7 @@ function runMainScript() {
 	});
 
 	document.addEventListener('mouseout', (e) => {
-		const hoverable = e.target.closest('a, button, .ui-component, .nav-link, .mobile-nav-link, .social-link, .burger-line, #logo, .big-word, #reel-play-button, #reel-controls, .reel-btn, #reel-video-container, .award-item, .text-section');
+		const hoverable = e.target.closest('a, button, .ui-component:not(#coord-bottom-left):not(#coord-bottom-right), .nav-link, .mobile-nav-link, .social-link, .burger-line, #logo, .big-word, #reel-play-button, #reel-controls, .reel-btn, #reel-video-container, .award-item, .text-section');
 
 		if (hoverable) {
 			document.body.classList.remove('cursor-hover');
