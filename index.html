@@ -4832,6 +4832,11 @@
 			<div id="vhs-wrapper">
 				<img id="vhs-base" src="shell32_160.gif" alt="Loading...">
 			</div>
+			<div class="xp-progress-wrapper">
+				<div class="xp-progress-container">
+					<div class="xp-progress-bar" id="xp-progress-fill" style="width: 0%;"></div>
+				</div>
+			</div>
 			<div class="loader-text">loading portfolio <span id="vhs-title">0%</span></div>
 		</div><a href="#" id="logo" title="Watcharine Duangsri Portfolio"></a>
 		<div id="video-container"><canvas id="image-canvas"></canvas></div>
@@ -5702,48 +5707,73 @@
 					if (vhsTapeRight) vhsTapeRight.style.transform = `rotate(-32deg) translateX(${tapeRightOffset}px)`;
 
 					if (vhsTitle) vhsTitle.textContent = `${Math.round(progress)}%`;
+
+					const xpProgressFill = document.getElementById('xp-progress-fill');
+					if (xpProgressFill) {
+						xpProgressFill.style.width = `${Math.min(100, Math.max(0, progress))}%`;
+					}
 				}
 
-				const onFrameLoaded = () => {
-					loadedImages++;
-					const progress = (loadedImages / frameCount) * 100;
+				const extraAssets = [
+					'/images/1k_Dissolve_Noise_Texture.png',
+					'/shell32_160.gif'
+				];
+
+				const totalAssetCount = frameCount + extraAssets.length;
+				let loadedAssets = 0;
+				let initialPlayComplete = false;
+				let imagesLoaded = false;
+				let preloaderStartTime = Date.now();
+
+				// Preload images
+				const images = [];
+
+				const onAssetLoaded = () => {
+					loadedAssets++;
+					const progress = Math.min(100, (loadedAssets / totalAssetCount) * 100);
 					updateVHSProgress(progress);
 
-					if (loadedImages === 1) {
+					if (loadedAssets === 1 || (images[0] && images[0].complete)) {
 						updateImage(1);
 					}
 
-					if (loadedImages === frameCount && !imagesLoaded) {
+					if (loadedAssets >= totalAssetCount && !imagesLoaded) {
 						imagesLoaded = true;
-						hidePreloader();
+						if (document.readyState === 'complete') {
+							hidePreloader();
+						} else {
+							window.addEventListener('load', hidePreloader, { once: true });
+						}
 					}
 				};
 
 				for (let i = 1; i <= frameCount; i++) {
 					const img = new Image();
-					img.onload = onFrameLoaded;
-					img.onerror = onFrameLoaded;
+					img.onload = onAssetLoaded;
+					img.onerror = onAssetLoaded;
 					img.src = currentFrame(i);
 					images.push(img);
 				}
 
-				// Fallback safety timeout
+				extraAssets.forEach(src => {
+					const img = new Image();
+					img.onload = onAssetLoaded;
+					img.onerror = onAssetLoaded;
+					img.src = src;
+				});
+
+				// Fallback safety timeout (30s)
 				setTimeout(() => {
 					if (!imagesLoaded) {
 						imagesLoaded = true;
 						hidePreloader();
 					}
-				}, 4000);
+				}, 30000);
 
 				function hidePreloader() {
-					const elapsed = Date.now() - preloaderStartTime;
-					const remainingTime = Math.max(0, 1000 - elapsed);
-
-					setTimeout(() => {
-						preloader.classList.add('hidden');
-						updateImage(1);
-						playInitialSequence();
-					}, remainingTime);
+					updateImage(1);
+					if (preloader) preloader.classList.add('hidden');
+					playInitialSequence();
 				}
 
 				let currentFrameIndex = 1;

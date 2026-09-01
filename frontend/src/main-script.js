@@ -60,15 +60,21 @@ function runMainScript() {
 	const frameCount = 192;
 	const currentFrame = index => `/sequoia/sequoia_${String(index).padStart(3, '0')}.jpg`;
 
+	const extraAssets = [
+		'/images/1k_Dissolve_Noise_Texture.png',
+		'/shell32_160.gif'
+	];
+
+	const totalAssetCount = frameCount + extraAssets.length;
+	let loadedAssets = 0;
 	let initialPlayComplete = false;
 	let imagesLoaded = false;
 	let preloaderStartTime = Date.now();
 
 	// Preload images
 	const images = [];
-	let loadedImages = 0;
 
-	// Update VHS tape based on progress
+	// Update VHS tape and Windows XP progress bar based on progress
 	function updateVHSProgress(progress) {
 		const leftScale = 1 - (progress / 100 * 0.6);
 		const rightScale = 0.4 + (progress / 100 * 0.6);
@@ -83,49 +89,62 @@ function runMainScript() {
 		if (vhsTapeRight) vhsTapeRight.style.transform = `rotate(-32deg) translateX(${tapeRightOffset}px)`;
 
 		if (vhsTitle) vhsTitle.textContent = `${Math.round(progress)}%`;
+
+		const xpProgressFill = document.getElementById('xp-progress-fill');
+		if (xpProgressFill) {
+			xpProgressFill.style.width = `${Math.min(100, Math.max(0, progress))}%`;
+		}
 	}
 
-	const onFrameLoaded = () => {
-		loadedImages++;
-		const progress = (loadedImages / frameCount) * 100;
+	const onAssetLoaded = () => {
+		loadedAssets++;
+		const progress = Math.min(100, (loadedAssets / totalAssetCount) * 100);
 		updateVHSProgress(progress);
 
-		// Render frame 1 immediately when first image is loaded so canvas is ready
-		if (loadedImages === 1) {
+		// Render frame 1 immediately as soon as it's ready so canvas is never blank
+		if (loadedAssets === 1 || (images[0] && images[0].complete)) {
 			updateImage(1);
 		}
 
-		if (loadedImages === frameCount && !imagesLoaded) {
+		if (loadedAssets >= totalAssetCount && !imagesLoaded) {
 			imagesLoaded = true;
-			hidePreloader();
+			if (document.readyState === 'complete') {
+				hidePreloader();
+			} else {
+				window.addEventListener('load', hidePreloader, { once: true });
+			}
 		}
 	};
 
+	// Preload 192 sequoia frames
 	for (let i = 1; i <= frameCount; i++) {
 		const img = new Image();
-		img.onload = onFrameLoaded;
-		img.onerror = onFrameLoaded;
+		img.onload = onAssetLoaded;
+		img.onerror = onAssetLoaded;
 		img.src = currentFrame(i);
 		images.push(img);
 	}
 
-	// Fallback safety timeout
+	// Preload extra heavy assets (e.g. 3.1MB Noise Texture)
+	extraAssets.forEach(src => {
+		const img = new Image();
+		img.onload = onAssetLoaded;
+		img.onerror = onAssetLoaded;
+		img.src = src;
+	});
+
+	// Fallback safety timeout (30s for slow connection fallback)
 	setTimeout(() => {
 		if (!imagesLoaded) {
 			imagesLoaded = true;
 			hidePreloader();
 		}
-	}, 4000);
+	}, 30000);
 
 	function hidePreloader() {
-		const elapsed = Date.now() - preloaderStartTime;
-		const remainingTime = Math.max(0, 1000 - elapsed);
-
-		setTimeout(() => {
-			preloader.classList.add('hidden');
-			updateImage(1);
-			playInitialSequence();
-		}, remainingTime);
+		updateImage(1);
+		if (preloader) preloader.classList.add('hidden');
+		playInitialSequence();
 	}
 
 	let currentFrameIndex = 1;
