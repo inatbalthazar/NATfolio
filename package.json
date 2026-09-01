@@ -1,0 +1,12 @@
+{
+  "name": "natfolio-mern",
+  "version": "1.0.0",
+  "description": "Watcharine Duangsri Portfolio",
+  "scripts": {
+    "dev": "npm run dev --prefix frontend",
+    "install:all": "npm install && npm install --prefix frontend",
+    "build": "npm run build --prefix frontend"
+  },
+  "author": "",
+  "license": "ISC"
+}
