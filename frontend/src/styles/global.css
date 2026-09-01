@@ -6,6 +6,12 @@
 	--soft-periwinkle: #c86e53
 }
 
+@media (min-width: 769px) {
+	html {
+		zoom: 0.8;
+	}
+}
+
 * {
 	margin: 0;
 	padding: 0;
