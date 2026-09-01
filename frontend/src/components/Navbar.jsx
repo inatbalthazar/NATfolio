@@ -43,8 +43,8 @@ function Navbar({ onOpenInquiry }) {
     <>
       <div id="nav-links">
         <a href="#" className="nav-link">Home</a>
-        <a href="#portfolio-section" className="nav-link">Projects</a>
         <a href="#story-section" className="nav-link">About</a>
+        <a href="#portfolio-section" className="nav-link">Projects</a>
         <div className={`nav-contact-wrapper ${isOpen ? 'is-open' : ''}`} ref={dropdownRef}>
           <button 
             type="button"
@@ -109,8 +109,8 @@ function Navbar({ onOpenInquiry }) {
         <div className="mobile-menu-section">
           <div className="mobile-menu-title">Navigate</div>
           <a href="#" className="mobile-nav-link">Home</a>
-          <a href="#portfolio-section" className="mobile-nav-link">Projects</a>
           <a href="#story-section" className="mobile-nav-link">About</a>
+          <a href="#portfolio-section" className="mobile-nav-link">Projects</a>
           <a href="#contact-section" className="mobile-nav-link">Contact</a>
         </div>
         <div className="mobile-menu-section">
