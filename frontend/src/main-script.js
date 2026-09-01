@@ -90,12 +90,14 @@ function runMainScript() {
 		const progress = (loadedImages / frameCount) * 100;
 		updateVHSProgress(progress);
 
+		// Render frame 1 immediately when first image is loaded so canvas is ready
+		if (loadedImages === 1) {
+			updateImage(1);
+		}
+
 		if (loadedImages === frameCount && !imagesLoaded) {
 			imagesLoaded = true;
-			setTimeout(() => {
-				hidePreloader();
-				playInitialSequence();
-			}, 300);
+			hidePreloader();
 		}
 	};
 
@@ -112,16 +114,17 @@ function runMainScript() {
 		if (!imagesLoaded) {
 			imagesLoaded = true;
 			hidePreloader();
-			playInitialSequence();
 		}
 	}, 4000);
 
 	function hidePreloader() {
 		const elapsed = Date.now() - preloaderStartTime;
-		const remainingTime = Math.max(0, 2000 - elapsed);
+		const remainingTime = Math.max(0, 1000 - elapsed);
 
 		setTimeout(() => {
 			preloader.classList.add('hidden');
+			updateImage(1);
+			playInitialSequence();
 		}, remainingTime);
 	}
 
