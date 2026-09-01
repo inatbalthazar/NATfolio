@@ -198,7 +198,7 @@ function DrawboxModal({ isOpen, onClose }) {
 
       if (error) {
         console.error('Failed to submit drawing to Supabase:', error);
-        setStatusMsg('★ Drawing saved locally! (Online table error)');
+        setStatusMsg(`★ Drawing saved locally! (${error.message || 'Online table error'})`);
         setGallery(prev => [{ ...newDrawing, id: Date.now() }, ...prev]);
       } else {
         setStatusMsg('★ Drawing submitted successfully to global online gallery!');
