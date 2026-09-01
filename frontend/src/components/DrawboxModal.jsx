@@ -1,4 +1,5 @@
 import React, { useRef, useState, useEffect, useCallback } from 'react';
+import { supabase } from '../lib/supabase';
 
 function DrawboxModal({ isOpen, onClose }) {
   const canvasRef = useRef(null);
@@ -35,7 +36,33 @@ function DrawboxModal({ isOpen, onClose }) {
     ];
   });
 
-  // Save gallery to localStorage
+  // Fetch drawings from Supabase Database
+  const fetchOnlineDrawings = useCallback(async () => {
+    try {
+      const { data, error } = await supabase
+        .from('drawings')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) {
+        console.warn('Supabase fetch error, fallback to local gallery:', error.message);
+        return;
+      }
+
+      if (data && data.length > 0) {
+        setGallery(data);
+      }
+    } catch (err) {
+      console.warn('Failed to load online drawings:', err);
+    }
+  }, []);
+
+  // Fetch online gallery on mount and when modal opens
+  useEffect(() => {
+    fetchOnlineDrawings();
+  }, [fetchOnlineDrawings, isOpen]);
+
+  // Save gallery to localStorage as fallback
   useEffect(() => {
     localStorage.setItem('drawbox_gallery', JSON.stringify(gallery));
   }, [gallery]);
@@ -147,7 +174,7 @@ function DrawboxModal({ isOpen, onClose }) {
     link.click();
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const dataUrl = canvas.toDataURL('image/png');
@@ -156,14 +183,37 @@ function DrawboxModal({ isOpen, onClose }) {
     const dateStr = `${String(now.getDate()).padStart(2, '0')}/${String(now.getMonth() + 1).padStart(2, '0')}/${now.getFullYear()} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`;
 
     const newDrawing = {
-      id: Date.now(),
       name: userName.trim() || 'Anonymous',
       date: dateStr,
       image: dataUrl
     };
 
-    setGallery(prev => [newDrawing, ...prev]);
-    setStatusMsg('★ Drawing submitted successfully to gallery!');
+    setStatusMsg('Uploading drawing to online gallery...');
+
+    try {
+      const { data, error } = await supabase
+        .from('drawings')
+        .insert([newDrawing])
+        .select();
+
+      if (error) {
+        console.error('Failed to submit drawing to Supabase:', error);
+        setStatusMsg('★ Drawing saved locally! (Online table error)');
+        setGallery(prev => [{ ...newDrawing, id: Date.now() }, ...prev]);
+      } else {
+        setStatusMsg('★ Drawing submitted successfully to global online gallery!');
+        if (data && data.length > 0) {
+          setGallery(prev => [data[0], ...prev]);
+        } else {
+          setGallery(prev => [{ ...newDrawing, id: Date.now() }, ...prev]);
+        }
+      }
+    } catch (err) {
+      console.error('Error submitting drawing:', err);
+      setGallery(prev => [{ ...newDrawing, id: Date.now() }, ...prev]);
+      setStatusMsg('★ Drawing saved locally!');
+    }
+
     setTimeout(() => setStatusMsg(''), 4000);
   };
 
