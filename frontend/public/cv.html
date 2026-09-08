@@ -89,6 +89,9 @@
         }
 
         @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
             .action-bar {
                 flex-direction: column;
                 gap: 10px;
@@ -101,6 +104,35 @@
             .btn-back, .btn-download {
                 width: 100%;
                 justify-content: center;
+            }
+            .contain {
+                padding: 24px 20px;
+            }
+            .contact-bar {
+                flex-direction: column;
+                align-items: center;
+                gap: 8px;
+            }
+            .contact-bar > span:not(.contact-item) {
+                display: none;
+            }
+            .r-text, .r-subtext {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 2px;
+            }
+            .r-subtext {
+                margin-bottom: 6px;
+            }
+            .skill-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 4px;
+                margin-bottom: 8px;
+            }
+            .skill-badge {
+                min-width: auto;
+                display: inline-block;
             }
         }
 
