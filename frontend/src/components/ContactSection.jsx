@@ -38,7 +38,7 @@ function ContactSection() {
           </a>
           <a 
             className="contact-item" 
-            href="https://html-session-omega.vercel.app/cv.html" 
+            href="/cv.html" 
             target="_blank" 
             rel="noopener noreferrer"
             style={{ textDecoration: 'none' }}
@@ -66,7 +66,7 @@ function ContactSection() {
             <a href="mailto:inatbalthazar@gmail.com" className="social-link" title="Email">EMAIL</a>
             <a href="https://github.com/inatbalthazar" target="_blank" rel="noopener noreferrer" className="social-link" title="GitHub">GITHUB</a>
             <a href="https://www.linkedin.com/in/inat/" target="_blank" rel="noopener noreferrer" className="social-link" title="LinkedIn">LINKEDIN</a>
-            <a href="https://html-session-omega.vercel.app/cv.html" target="_blank" rel="noopener noreferrer" className="social-link" title="Online CV">CV</a>
+            <a href="/cv.html" target="_blank" rel="noopener noreferrer" className="social-link" title="Online CV">CV</a>
           </div>
 
           <div className="social-badges-row">
