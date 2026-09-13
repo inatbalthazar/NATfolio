@@ -671,7 +671,7 @@ function runMainScript() {
 			const storyWords = paragraph.querySelectorAll('.word');
 			if (storyWords.length > 0) {
 				gsap.fromTo(storyWords,
-					{ opacity: 0, y: 15 },
+					{ opacity: 0, y: 20 },
 					{
 						opacity: 1,
 						y: 0,
@@ -910,10 +910,10 @@ function runMainScript() {
 			ease: "expo.out",
 			duration: 0.2
 		}, 0.3)
-		// Phase 2: Shrink video container back down to exact dimensions in screenshot (273.38px x 285.18px)
+		// Phase 2: Shrink video container back down (responsive: use CSS-defined initial dimensions)
 		.to(reelVideoContainer, {
-			width: "273.38px",
-			height: "285.18px",
+			width: isMobile ? "250px" : "273.38px",
+			height: isMobile ? "160px" : "285.18px",
 			borderRadius: "12px",
 			ease: "power1.inOut",
 			duration: 0.4
@@ -2170,7 +2170,7 @@ function runMainScript() {
 	// Animate award cards on scroll - DESKTOP ONLY
 	const isMobileAwards = window.innerWidth <= 968;
 
-	if (!isMobileAwards && typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+	if (!isMobileAwards) {
 		const awardCards = document.querySelectorAll('.award-card');
 		awardCards.forEach((card, index) => {
 			gsap.fromTo(card,
