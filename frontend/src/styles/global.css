@@ -1283,7 +1283,7 @@ a.nav-noti-btn:hover {
 
 #reel-scroll-section {
 	position: relative;
-	height: 200vh;
+	height: 100vh;
 	z-index: 16;
 	margin-top: -10vh;
 }
