@@ -74,7 +74,17 @@ function ContactSection() {
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
             <span>View Online CV</span>
           </a>
-          <div 
+          <a
+            className="contact-item"
+            href="/resume.html"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ textDecoration: 'none' }}
+          >
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+            <span>View Resume</span>
+          </a>
+          <div
             className={`contact-item ${copiedText === 'phone' ? 'copied' : ''}`}
             id="copy-phone" 
             onClick={() => copyToClipboard("+66971493909", "phone")}
@@ -101,6 +111,7 @@ function ContactSection() {
             <a href="https://github.com/inatbalthazar" target="_blank" rel="noopener noreferrer" className="social-link" title="GitHub">GITHUB</a>
             <a href="https://www.linkedin.com/in/inat/" target="_blank" rel="noopener noreferrer" className="social-link" title="LinkedIn">LINKEDIN</a>
             <a href="/cv.html" target="_blank" rel="noopener noreferrer" className="social-link" title="Online CV">CV</a>
+            <a href="/resume.html" target="_blank" rel="noopener noreferrer" className="social-link" title="Resume">RESUME</a>
           </div>
 
           <div className="social-badges-row">

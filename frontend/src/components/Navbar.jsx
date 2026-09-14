@@ -67,6 +67,7 @@ function Navbar({ onOpenInquiry }) {
             <a href="https://github.com/inatbalthazar" target="_blank" rel="noreferrer" className="social-link" onClick={closeDropdown}>GitHub Profile</a>
             <a href="https://www.linkedin.com/in/inat/" target="_blank" rel="noreferrer" className="social-link" onClick={closeDropdown}>LinkedIn Profile</a>
             <a href="/cv.html" target="_blank" rel="noreferrer" className="social-link" onClick={closeDropdown}>Online CV</a>
+            <a href="/resume.html" target="_blank" rel="noreferrer" className="social-link" onClick={closeDropdown}>Resume</a>
             <a href="mailto:inatbalthazar@gmail.com" className="social-link" onClick={closeDropdown}>Send Email</a>
             <a href="tel:+66971493909" className="social-link" onClick={closeDropdown}>+66 97 149 3909</a>
           </div>
@@ -118,6 +119,7 @@ function Navbar({ onOpenInquiry }) {
           <a href="https://github.com/inatbalthazar" target="_blank" rel="noreferrer" className="mobile-social-link">GitHub</a>
           <a href="https://www.linkedin.com/in/inat/" target="_blank" rel="noreferrer" className="mobile-social-link">LinkedIn</a>
           <a href="/cv.html" target="_blank" rel="noreferrer" className="mobile-social-link">Online CV</a>
+          <a href="/resume.html" target="_blank" rel="noreferrer" className="mobile-social-link">Resume</a>
         </div>
         <div className="mobile-email" data-email="inatbalthazar@gmail.com">inatbalthazar@gmail.com</div>
       </div>
