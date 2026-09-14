@@ -1,8 +1,36 @@
-import React, { useState } from 'react';
-import VintageMap from './VintageMap';
+import React, { useState, useEffect, useRef, lazy, Suspense } from 'react';
+
+// Leaflet + react-leaflet are a sizeable chunk only needed once a visitor
+// actually scrolls this far, so they're code-split and fetched on approach
+// rather than bundled into the initial page load.
+const VintageMap = lazy(() => import('./VintageMap'));
+const MAP_HEIGHT = '400px';
 
 function ContactSection() {
   const [copiedText, setCopiedText] = useState(null);
+  const [showMap, setShowMap] = useState(false);
+  const mapContainerRef = useRef(null);
+
+  useEffect(() => {
+    const el = mapContainerRef.current;
+    if (!el || !('IntersectionObserver' in window)) {
+      setShowMap(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setShowMap(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: '400px 0px' }
+    );
+    observer.observe(el);
+
+    return () => observer.disconnect();
+  }, []);
 
   const copyToClipboard = (text, key) => {
     navigator.clipboard.writeText(text).then(() => {
@@ -56,8 +84,14 @@ function ContactSection() {
           </div>
         </div>
       </div>
-      <div className="map-container">
-        <VintageMap />
+      <div className="map-container" ref={mapContainerRef}>
+        {showMap ? (
+          <Suspense fallback={<div style={{ width: '100%', height: MAP_HEIGHT }} />}>
+            <VintageMap />
+          </Suspense>
+        ) : (
+          <div style={{ width: '100%', height: MAP_HEIGHT }} />
+        )}
       </div>
       <div className="contact-footer">
         <h3 className="contact-footer-title">Thanks for visiting my portfolio</h3>
@@ -71,28 +105,28 @@ function ContactSection() {
 
           <div className="social-badges-row">
             <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" className="social-badge-link" title="YouTube">
-              <img src="/images/oldnet-social/ytbutton.gif" alt="YouTube" className="social-badge-img" />
+              <img src="/images/oldnet-social/ytbutton.gif" alt="YouTube" className="social-badge-img" loading="lazy" decoding="async" />
             </a>
             <a href="https://discord.com" target="_blank" rel="noopener noreferrer" className="social-badge-link" title="Discord">
-              <img src="/images/oldnet-social/discord2.gif" alt="Discord" className="social-badge-img" />
+              <img src="/images/oldnet-social/discord2.gif" alt="Discord" className="social-badge-img" loading="lazy" decoding="async" />
             </a>
             <a href="https://store.steampowered.com" target="_blank" rel="noopener noreferrer" className="social-badge-link" title="Steam">
-              <img src="/images/oldnet-social/steam.gif" alt="Steam" className="social-badge-img" />
+              <img src="/images/oldnet-social/steam.gif" alt="Steam" className="social-badge-img" loading="lazy" decoding="async" />
             </a>
             <a href="https://theoldnet.com" target="_blank" rel="noopener noreferrer" className="social-badge-link" title="The Old Net">
-              <img src="/images/oldnet-social/oldnet.gif" alt="The Old Net" className="social-badge-img" />
+              <img src="/images/oldnet-social/oldnet.gif" alt="The Old Net" className="social-badge-img" loading="lazy" decoding="async" />
             </a>
             <a href="https://www.w3schools.com" target="_blank" rel="noopener noreferrer" className="social-badge-link" title="Learn HTML">
-              <img src="/images/oldnet-social/learn_html.gif" alt="Learn HTML" className="social-badge-img" />
+              <img src="/images/oldnet-social/learn_html.gif" alt="Learn HTML" className="social-badge-img" loading="lazy" decoding="async" />
             </a>
             <a href="https://microsoft.com" target="_blank" rel="noopener noreferrer" className="social-badge-link" title="Internet Explorer">
-              <img src="/images/oldnet-social/ie2.gif" alt="Internet Explorer" className="social-badge-img" />
+              <img src="/images/oldnet-social/ie2.gif" alt="Internet Explorer" className="social-badge-img" loading="lazy" decoding="async" />
             </a>
             <a href="https://html-session-omega.vercel.app/" target="_blank" rel="noopener noreferrer" className="social-badge-link" title="Windows Media Player 7">
-              <img src="/images/oldnet-social/getwmp7.gif" alt="Get WMP 7" className="social-badge-img" />
+              <img src="/images/oldnet-social/getwmp7.gif" alt="Get WMP 7" className="social-badge-img" loading="lazy" decoding="async" />
             </a>
             <a href="https://github.com/inatbalthazar" target="_blank" rel="noopener noreferrer" className="social-badge-link" title="Web Passion">
-              <img src="/images/oldnet-social/webpassion.gif" alt="Web Passion" className="social-badge-img" />
+              <img src="/images/oldnet-social/webpassion.gif" alt="Web Passion" className="social-badge-img" loading="lazy" decoding="async" />
             </a>
           </div>
         </div>

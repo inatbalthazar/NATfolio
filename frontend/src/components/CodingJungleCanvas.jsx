@@ -1,9 +1,37 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 function CodingJungleCanvas({ className = "story-bg-gif" }) {
   const canvasRef = useRef(null);
+  const [shouldLoad, setShouldLoad] = useState(false);
+
+  // Defer the 145-frame preload until the canvas is about to scroll into view —
+  // firing all of it on mount competed for bandwidth with everything else at page load.
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    if (!('IntersectionObserver' in window)) {
+      setShouldLoad(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setShouldLoad(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: '600px 0px' }
+    );
+    observer.observe(canvas);
+
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
+    if (!shouldLoad) return;
+
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
@@ -78,12 +106,12 @@ function CodingJungleCanvas({ className = "story-bg-gif" }) {
       isMounted = false;
       cancelAnimationFrame(animationFrameId);
     };
-  }, []);
+  }, [shouldLoad]);
 
   return (
-    <canvas 
-      ref={canvasRef} 
-      className={className} 
+    <canvas
+      ref={canvasRef}
+      className={className}
     />
   );
 }

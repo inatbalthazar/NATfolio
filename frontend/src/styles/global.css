@@ -4215,7 +4215,14 @@ body.cursor-hover .cursor-follower {
 	.typo-word,
 	.typo-description,
 	.award-card,
-	.original-item {
+	.original-item,
+	.contact-item,
+	.map-container,
+	.contact-footer-title,
+	.social-text-links a,
+	.social-badge-link,
+	.copyright,
+	.lucasarts-note {
 		opacity: 1 !important;
 		transform: none !important;
 		transition: all .4s cubic-bezier(.4, 0, .2, 1), opacity 0.3s ease;
@@ -5465,8 +5472,229 @@ body.canteen-cursor * {
 		linear-gradient(to right, transparent 0%, black 2%, black 98%, transparent 100%),
 		linear-gradient(to bottom, transparent 0%, black 2%, black 98%, transparent 100%);
 	-webkit-mask-composite: source-in;
-	mask-image: 
+	mask-image:
 		linear-gradient(to right, transparent 0%, black 2%, black 98%, transparent 100%),
 		linear-gradient(to bottom, transparent 0%, black 2%, black 98%, transparent 100%);
 	mask-composite: intersect;
+}
+
+/* ========== LIVE DEMO MODAL ========== */
+
+.live-demo-overlay {
+	position: fixed;
+	inset: 0;
+	z-index: 999999;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 24px;
+	background: rgba(0, 0, 0, 0.72);
+	backdrop-filter: blur(4px);
+	opacity: 0;
+}
+
+.live-demo-window {
+	width: 1180px;
+	max-width: 100%;
+	height: 88vh;
+	display: flex;
+	flex-direction: column;
+	box-shadow: 0 18px 60px rgba(0, 0, 0, .7);
+	opacity: 0;
+}
+
+/* 7.css title bars are translucent, which leaves black-on-dark text over the page behind */
+.live-demo-window .title-bar {
+	background: linear-gradient(180deg, #1663ad 0%, #0a4783 48%, #06325e 100%);
+	border-bottom: 1px solid #042547;
+}
+
+.live-demo-window .title-bar-text {
+	color: #fff;
+	font-weight: 600;
+	text-shadow: 0 1px 2px rgba(0, 0, 0, .6);
+}
+
+.live-demo-window .title-bar-controls button {
+	background-color: #e8f0fa;
+	border-radius: 3px;
+	box-shadow: 0 0 0 1px rgba(255, 255, 255, .5);
+}
+
+.live-demo-window .title-bar-controls button:hover {
+	background-color: #ffd0d0;
+}
+
+.live-demo-toolbar {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 6px 8px;
+	background: linear-gradient(180deg, #f6f4ec 0%, #e6e2d3 100%);
+	border-bottom: 1px solid #9a9684;
+	font-family: 'Tahoma', 'Segoe UI', Arial, sans-serif;
+	font-size: 11px;
+}
+
+.live-demo-dot {
+	width: 9px;
+	height: 9px;
+	flex: none;
+	border-radius: 50%;
+	background: #35c759;
+	box-shadow: 0 0 6px rgba(53, 199, 89, .9);
+	animation: liveDemoPulse 1.8s ease-in-out infinite;
+}
+
+@keyframes liveDemoPulse {
+	50% { opacity: .35 }
+}
+
+.live-demo-address {
+	flex: 1;
+	min-width: 0;
+	padding: 4px 8px;
+	background: #fff;
+	border: 1px solid #7f9db9;
+	border-radius: 2px;
+	color: #1a1a1a;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.live-demo-btn {
+	flex: none;
+	padding: 4px 12px;
+	border: 2px solid #003c74;
+	border-radius: 5px;
+	background: linear-gradient(180deg, #fff 0%, #ece9d8 50%, #e3decb 100%);
+	box-shadow: inset 0 1px 0 #fff, 0 1px 3px rgba(0, 0, 0, .2);
+	color: #000;
+	text-decoration: none;
+	white-space: nowrap;
+	transition: all .15s ease;
+}
+
+.live-demo-btn:hover {
+	border-color: #005499;
+	box-shadow: 0 0 6px rgba(0, 84, 153, .55), inset 0 1px 0 #fff;
+}
+
+.live-demo-body {
+	flex: 1;
+	min-height: 0;
+	position: relative;
+	padding: 0;
+	margin: 0;
+	background: #fff;
+	overflow: hidden;
+}
+
+.live-demo-frame {
+	width: 100%;
+	height: 100%;
+	border: none;
+	display: block;
+}
+
+.live-demo-loading {
+	position: absolute;
+	inset: 0;
+	z-index: 2;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 14px;
+	padding: 24px;
+	text-align: center;
+	background: #f3f1e7;
+	font-family: 'Tahoma', 'Segoe UI', Arial, sans-serif;
+	font-size: 12px;
+	color: #333;
+}
+
+.live-demo-spinner {
+	width: 26px;
+	height: 26px;
+	border: 3px solid #c8c4b4;
+	border-top-color: #003c74;
+	border-radius: 50%;
+	animation: liveDemoSpin .8s linear infinite;
+}
+
+@keyframes liveDemoSpin {
+	to { transform: rotate(360deg) }
+}
+
+.live-demo-stall {
+	max-width: 380px;
+	color: #7a3b00;
+}
+
+.live-demo-status {
+	flex: none;
+	font-family: 'Tahoma', 'Segoe UI', Arial, sans-serif;
+	font-size: 11px;
+}
+
+/* The global near-white body colour would render these invisible on the light status bar */
+.live-demo-status .status-bar-field {
+	color: #2a2a2a;
+}
+
+@media (max-width: 768px) {
+	.live-demo-overlay {
+		padding: 0;
+	}
+
+	.live-demo-window {
+		height: 100%;
+		border-radius: 0;
+	}
+
+	.live-demo-toolbar {
+		flex-wrap: wrap;
+	}
+
+	.live-demo-address {
+		order: 3;
+		flex-basis: 100%;
+	}
+
+	.live-demo-status {
+		display: none;
+	}
+}
+
+/* Live-demo badge on portfolio cards */
+
+.portfolio-item-live {
+	position: absolute;
+	top: 10px;
+	left: 10px;
+	z-index: 4;
+	display: flex;
+	align-items: center;
+	gap: 5px;
+	padding: 3px 8px;
+	border-radius: 3px;
+	background: rgba(8, 20, 14, .82);
+	border: 1px solid rgba(53, 199, 89, .8);
+	font-family: 'Chakra Petch', 'Tahoma', sans-serif;
+	font-size: 9px;
+	font-weight: 600;
+	letter-spacing: .12em;
+	text-transform: uppercase;
+	color: #7df0a5;
+}
+
+.portfolio-item-live::before {
+	content: '';
+	width: 5px;
+	height: 5px;
+	border-radius: 50%;
+	background: #35c759;
+	animation: liveDemoPulse 1.8s ease-in-out infinite;
 }

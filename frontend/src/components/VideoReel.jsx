@@ -13,7 +13,7 @@ function VideoReel() {
             data-subtitle="Full-Stack Software Development &amp; Tech Highlights • 2026" 
             data-description="A showcase of full-stack software development, MERN web applications, UI/UX craftsmanship, and precision industrial engineering by Watcharine Duangsri."
           >
-            <video id="reel-preview" loop muted playsInline>
+            <video id="reel-preview" loop muted playsInline preload="none">
               <source src="/nature.mp4" type="video/mp4" />
             </video>
             <video id="reel-video" playsInline>

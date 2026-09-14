@@ -228,51 +228,51 @@ function AdventureFooter({ onOpenDrawbox, onOpenCbox }) {
         onMouseLeave={handleMouseLeave}
       >
         <div className="adventure-scene">
-          <img className="scene-layer" id="adventure-layer-bg" src="/images/solidbg.png" alt="" style={{objectFit:'cover', zIndex:0}} /> 
-          <img className="scene-layer" id="adventure-layer-mountains" src="/images/mountainscn.png" alt="" style={{objectFit:'cover', zIndex:1}} /> 
+          <img className="scene-layer" id="adventure-layer-bg" src="/images/solidbg.png" alt="" loading="lazy" decoding="async" style={{objectFit:'cover', zIndex:0}} /> 
+          <img className="scene-layer" id="adventure-layer-mountains" src="/images/mountainscn.png" alt="" loading="lazy" decoding="async" style={{objectFit:'cover', zIndex:1}} /> 
           
           <img 
-            className="hotspot-object" id="adventure-sequoia" src="/images/bigtree2.png" alt="Sequoia Tree" 
+            className="hotspot-object" id="adventure-sequoia" src="/images/bigtree2.png" alt="Sequoia Tree" loading="lazy" decoding="async" 
             style={{position:'absolute', left:'5%', bottom:'15%', height:'85%', width:'auto', objectFit:'contain', objectPosition:'bottom', imageRendering:'pixelated'}}
             onMouseEnter={(e) => handleHotspotHover(e, 'adventure-sequoia')} onMouseMove={handleHotspotMove} onMouseLeave={handleHotspotLeave} onClick={(e) => handleHotspotClick(e, 'adventure-sequoia')}
           />
           <img 
-            className="hotspot-object" id="adventure-tent" src="/images/tent.png" alt="Tent" 
+            className="hotspot-object" id="adventure-tent" src="/images/tent.png" alt="Tent" loading="lazy" decoding="async" 
             style={{position:'absolute', left:'57%', bottom:'9%', width:'170px', imageRendering:'pixelated', filter:'brightness(.7) contrast(.85) sepia(.3) hue-rotate(190deg) saturate(.6)'}}
             onMouseEnter={(e) => handleHotspotHover(e, 'adventure-tent')} onMouseMove={handleHotspotMove} onMouseLeave={handleHotspotLeave} onClick={(e) => handleHotspotClick(e, 'adventure-tent')}
           />
           <img 
-            className="hotspot-object" id="adventure-campfire" src="/images/fire.gif" alt="Campfire" 
+            className="hotspot-object" id="adventure-campfire" src="/images/fire.gif" alt="Campfire" loading="lazy" decoding="async" 
             style={{position:'absolute', left:'63%', bottom:'13%', width:'190px'}}
             onMouseEnter={(e) => handleHotspotHover(e, 'adventure-campfire')} onMouseMove={handleHotspotMove} onMouseLeave={handleHotspotLeave} onClick={(e) => handleHotspotClick(e, 'adventure-campfire')}
           /> 
           <img 
-            className="hotspot-object" id="adventure-camera" src="/images/paint.png" alt="Paint Palette" 
+            className="hotspot-object" id="adventure-camera" src="/images/paint.png" alt="Paint Palette" loading="lazy" decoding="async" 
             style={{position:'absolute', left:'75%', bottom:'10%', width:'60px', imageRendering:'pixelated', filter:'brightness(.7) contrast(.85) sepia(.3) hue-rotate(190deg) saturate(.6)'}}
             onMouseEnter={(e) => handleHotspotHover(e, 'adventure-camera')} onMouseMove={handleHotspotMove} onMouseLeave={handleHotspotLeave} onClick={(e) => handleHotspotClick(e, 'adventure-camera')}
           />
           <img 
-            className="hotspot-object" id="adventure-laptop" src="/images/laptop.png" alt="Laptop" 
+            className="hotspot-object" id="adventure-laptop" src="/images/laptop.png" alt="Laptop" loading="lazy" decoding="async" 
             style={{position:'absolute', left:'55%', bottom:'9%', width:'70px', imageRendering:'pixelated', filter:'brightness(.7) contrast(.85) sepia(.3) hue-rotate(190deg) saturate(.6)'}}
             onMouseEnter={(e) => handleHotspotHover(e, 'adventure-laptop')} onMouseMove={handleHotspotMove} onMouseLeave={handleHotspotLeave} onClick={(e) => handleHotspotClick(e, 'adventure-laptop')}
           />
           <img 
-            className="hotspot-object" id="adventure-canteen" src="/images/canteen.png" alt="Canteen" 
+            className="hotspot-object" id="adventure-canteen" src="/images/canteen.png" alt="Canteen" loading="lazy" decoding="async" 
             style={{position:'absolute', left:'59%', bottom:'6%', width:'50px', imageRendering:'pixelated', filter:'brightness(.7) contrast(.85) sepia(.3) hue-rotate(190deg) saturate(.6)'}}
             onMouseEnter={(e) => handleHotspotHover(e, 'adventure-canteen')} onMouseMove={handleHotspotMove} onMouseLeave={handleHotspotLeave} onClick={(e) => handleHotspotClick(e, 'adventure-canteen')}
           />
           <img 
-            className="hotspot-object" id="adventure-mud" src="/images/mud.png" alt="Mud" 
+            className="hotspot-object" id="adventure-mud" src="/images/mud.png" alt="Mud" loading="lazy" decoding="async" 
             style={{position:'absolute', left:'80%', bottom:'8%', width:'150px', opacity:0.3, imageRendering:'pixelated', filter:'brightness(.7) contrast(.85) sepia(.3) hue-rotate(190deg) saturate(.6)'}}
             onMouseEnter={(e) => handleHotspotHover(e, 'adventure-mud')} onMouseMove={handleHotspotMove} onMouseLeave={handleHotspotLeave} onClick={(e) => handleHotspotClick(e, 'adventure-mud')}
           />
           <img 
-            className="hotspot-object" id="adventure-owl" src="/images/owl.png" alt="Owl" 
+            className="hotspot-object" id="adventure-owl" src="/images/owl.png" alt="Owl" loading="lazy" decoding="async" 
             style={{position:'absolute', left:'89%', bottom:'49%', width:'60px', imageRendering:'pixelated', filter:'brightness(.7) contrast(.85) sepia(.3) hue-rotate(190deg) saturate(.6)'}}
             onMouseEnter={(e) => handleHotspotHover(e, 'adventure-owl')} onMouseMove={handleHotspotMove} onMouseLeave={handleHotspotLeave} onClick={(e) => handleHotspotClick(e, 'adventure-owl')}
           />
           <img 
-            className="hotspot-object" id="adventure-drone" src="/images/drone.gif" alt="Drone" 
+            className="hotspot-object" id="adventure-drone" src="/images/drone.gif" alt="Drone" loading="lazy" decoding="async" 
             style={{position:'absolute', left:'60%', top:'10%', width:'110px', imageRendering:'pixelated', filter:'brightness(.7) contrast(.85) saturate(.8)'}}
             onMouseEnter={(e) => handleHotspotHover(e, 'adventure-drone')} onMouseMove={handleHotspotMove} onMouseLeave={handleHotspotLeave} onClick={(e) => handleHotspotClick(e, 'adventure-drone')}
           />
@@ -284,11 +284,11 @@ function AdventureFooter({ onOpenDrawbox, onOpenCbox }) {
           />
 
           <div className="adventure-treasure" id="adventure-treasure" ref={treasureRef} onClick={handleTreasureClick}>
-            <img src="/images/treasure.gif" alt="Treasure" style={{width:'100%', height:'100%', zIndex:100, bottom:'10%', imageRendering:'pixelated', filter:'brightness(.7) contrast(.85) sepia(.3) hue-rotate(190deg) saturate(.6)'}} />
+            <img src="/images/treasure.gif" alt="Treasure" loading="lazy" decoding="async" style={{width:'100%', height:'100%', zIndex:100, bottom:'10%', imageRendering:'pixelated', filter:'brightness(.7) contrast(.85) sepia(.3) hue-rotate(190deg) saturate(.6)'}} />
           </div>
           
           <div className="adventure-character" id="adventure-char-andy" ref={andyRef} style={{position:'absolute', left:'30%', bottom:'1%', width:'90px', zIndex:6}}>
-            <img src="/images/andy_still.png" alt="Andy" ref={andyImgRef} />
+            <img src="/images/andy_still.png" alt="Andy" loading="lazy" decoding="async" ref={andyImgRef} />
           </div>
           
         </div>

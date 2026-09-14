@@ -5,7 +5,7 @@ function AwardsSection() {
     <div id="awards-section">
       <h2 className="fadetxtUp">Experience, Credentials &amp; Certifications</h2>
       <div className="awards-3d-container">
-        <img src="/images/compass.png" alt="Technical Achievement" className="emmy-image" id="emmy-image" />
+        <img src="/images/compass.png" alt="Technical Achievement" className="emmy-image" id="emmy-image" loading="lazy" decoding="async" />
         <div className="awards-stack awards-left">
           <div className="award-card highlight-card">
             <div className="award-card-name">Generation Thailand</div>

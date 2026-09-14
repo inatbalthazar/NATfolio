@@ -659,6 +659,139 @@ function runMainScript() {
 		}
 	});
 
+	// ========== CONTACT SECTION REVEAL ==========
+	// contact-title already handled above; everything else in this section
+	// previously popped in at full opacity with no scroll motion at all.
+	const contactItems = document.querySelectorAll('#contact-section .contact-item');
+	const contactMap = document.querySelector('#contact-section .map-container');
+	const contactFooterTitle = document.querySelector('#contact-section .contact-footer-title');
+	const contactSocialLinks = document.querySelector('#contact-section .social-text-links');
+	const contactBadges = document.querySelectorAll('#contact-section .social-badge-link');
+	const contactCopyright = document.querySelectorAll('#contact-section .copyright, #contact-section .lucasarts-note');
+
+	if (!isMobile) {
+		if (contactItems.length > 0) {
+			gsap.fromTo(contactItems,
+				{ opacity: 0, y: 26, scale: 0.96 },
+				{
+					opacity: 1,
+					y: 0,
+					scale: 1,
+					duration: 0.6,
+					ease: "power2.out",
+					stagger: 0.08,
+					scrollTrigger: {
+						trigger: '#contact-section .contact-methods',
+						start: "top 85%",
+						toggleActions: "play none none reverse"
+					}
+				}
+			);
+		}
+
+		if (contactMap) {
+			gsap.fromTo(contactMap,
+				{ opacity: 0, y: 40, scale: 0.96 },
+				{
+					opacity: 1,
+					y: 0,
+					scale: 1,
+					duration: 0.9,
+					ease: "power3.out",
+					scrollTrigger: {
+						trigger: contactMap,
+						start: "top 85%",
+						toggleActions: "play none none reverse"
+					}
+				}
+			);
+		}
+
+		if (contactFooterTitle) {
+			gsap.fromTo(contactFooterTitle,
+				{ opacity: 0, y: 24 },
+				{
+					opacity: 1,
+					y: 0,
+					duration: 0.7,
+					ease: "power2.out",
+					scrollTrigger: {
+						trigger: contactFooterTitle,
+						start: "top 88%",
+						toggleActions: "play none none reverse"
+					}
+				}
+			);
+		}
+
+		if (contactSocialLinks) {
+			gsap.fromTo(contactSocialLinks.children,
+				{ opacity: 0, y: 16 },
+				{
+					opacity: 1,
+					y: 0,
+					duration: 0.5,
+					ease: "power2.out",
+					stagger: 0.06,
+					scrollTrigger: {
+						trigger: contactSocialLinks,
+						start: "top 90%",
+						toggleActions: "play none none reverse"
+					}
+				}
+			);
+		}
+
+		if (contactBadges.length > 0) {
+			gsap.fromTo(contactBadges,
+				{ opacity: 0, y: 14, scale: 0.85 },
+				{
+					opacity: 1,
+					y: 0,
+					scale: 1,
+					duration: 0.45,
+					ease: "back.out(1.6)",
+					stagger: 0.05,
+					scrollTrigger: {
+						trigger: '#contact-section .social-badges-row',
+						start: "top 92%",
+						toggleActions: "play none none reverse"
+					}
+				}
+			);
+		}
+
+		if (contactCopyright.length > 0) {
+			gsap.fromTo(contactCopyright,
+				{ opacity: 0, y: 12 },
+				{
+					opacity: 1,
+					y: 0,
+					duration: 0.5,
+					ease: "power2.out",
+					stagger: 0.08,
+					scrollTrigger: {
+						trigger: '#contact-section .contact-footer',
+						start: "top 95%",
+						toggleActions: "play none none reverse"
+					}
+				}
+			);
+		}
+	} else {
+		[...contactItems, contactMap, contactFooterTitle, ...contactBadges, ...contactCopyright].forEach(el => {
+			if (!el) return;
+			el.style.opacity = '1';
+			el.style.transform = 'none';
+		});
+		if (contactSocialLinks) {
+			[...contactSocialLinks.children].forEach(el => {
+				el.style.opacity = '1';
+				el.style.transform = 'none';
+			});
+		}
+	}
+
 	// ========== STORY SECTION WORD-BY-WORD ANIMATION ==========
 	const storyParagraphs = document.querySelectorAll('.story-paragraph');
 
@@ -851,8 +984,20 @@ function runMainScript() {
 		}
 	}
 
-	// Start playing muted preview
-	reelPreview.play().catch(() => { });
+	// Start playing muted preview once the reel is actually near the viewport —
+	// nature.mp4 is a large file, and calling .play() eagerly here forces the
+	// browser to start downloading all of it immediately on every page load.
+	if ('IntersectionObserver' in window) {
+		const reelPreviewObserver = new IntersectionObserver((entries) => {
+			if (entries[0].isIntersecting) {
+				reelPreview.play().catch(() => { });
+				reelPreviewObserver.disconnect();
+			}
+		}, { rootMargin: '600px 0px' });
+		reelPreviewObserver.observe(reelScrollSection);
+	} else {
+		reelPreview.play().catch(() => { });
+	}
 
 	// Set initial volume
 	reelVideo.volume = 0.8;
@@ -936,10 +1081,10 @@ function runMainScript() {
 		end: "bottom bottom",
 		onUpdate: (self) => {
 			if (self.progress > 0.4 && !reelIsPlaying) {
-				reelPlayButton.classList.add('visible');
+				if (reelPlayButton) reelPlayButton.classList.add('visible');
 				startVHSGlitch();
 			} else if (self.progress <= 0.4) {
-				reelPlayButton.classList.remove('visible');
+				if (reelPlayButton) reelPlayButton.classList.remove('visible');
 				stopVHSGlitch();
 				// Reset to preview mode if scrolled back up
 				if (reelIsPlaying) {
@@ -965,7 +1110,7 @@ function runMainScript() {
 		reelVideo.style.display = 'block';
 		reelVideo.currentTime = 0;
 		reelVideo.play();
-		reelPlayButton.classList.remove('visible');
+		if (reelPlayButton) reelPlayButton.classList.remove('visible');
 		reelControls.classList.add('visible');
 		reelPlayIcon.style.display = 'none';
 		reelPauseIcon.style.display = 'block';
@@ -986,10 +1131,12 @@ function runMainScript() {
 	}
 
 	// Click play button to start main video
-	reelPlayButton.addEventListener('click', (e) => {
-		e.stopPropagation();
-		startReelVideo();
-	});
+	if (reelPlayButton) {
+		reelPlayButton.addEventListener('click', (e) => {
+			e.stopPropagation();
+			startReelVideo();
+		});
+	}
 
 	// Click anywhere on video container to play or scroll-then-play
 	reelVideoContainer.addEventListener('click', (e) => {
@@ -1093,7 +1240,7 @@ function runMainScript() {
 		if (document.querySelector('#reel-scroll-section')) {
 			const rect = reelScrollSection.getBoundingClientRect();
 			if (rect.top < window.innerHeight * 0.6) {
-				reelPlayButton.classList.add('visible');
+				if (reelPlayButton) reelPlayButton.classList.add('visible');
 			}
 		}
 	});
@@ -2054,6 +2201,8 @@ function runMainScript() {
 	}
 
 	function openPortfolioPlayer(item) {
+		if (!portfolioPlayer) return;
+
 		const videoSrc = item.dataset.video;
 		const title = item.dataset.title;
 		const subtitle = item.dataset.subtitle;
@@ -2096,61 +2245,65 @@ function runMainScript() {
 		pauseIcon.style.display = 'none';
 	}
 
-	// Close button
-	portfolioPlayerClose.addEventListener('click', closePortfolioPlayer);
+	// The fullscreen player markup is not rendered by the React tree, so every
+	// listener below has to stay behind this guard or the rest of the script dies.
+	if (portfolioPlayer) {
+		// Close button
+		portfolioPlayerClose.addEventListener('click', closePortfolioPlayer);
 
-	// Click outside to close
-	portfolioPlayer.addEventListener('click', (e) => {
-		if (e.target === portfolioPlayer) {
-			closePortfolioPlayer();
-		}
-	});
+		// Click outside to close
+		portfolioPlayer.addEventListener('click', (e) => {
+			if (e.target === portfolioPlayer) {
+				closePortfolioPlayer();
+			}
+		});
 
-	// ESC key to close
-	document.addEventListener('keydown', (e) => {
-		if (e.key === 'Escape' && portfolioPlayer.classList.contains('active')) {
-			closePortfolioPlayer();
-		}
-	});
+		// ESC key to close
+		document.addEventListener('keydown', (e) => {
+			if (e.key === 'Escape' && portfolioPlayer.classList.contains('active')) {
+				closePortfolioPlayer();
+			}
+		});
 
-	// Info button toggle with animation
-	portfolioInfoBtn.addEventListener('click', () => {
-		const isOpening = !portfolioInfoPanel.classList.contains('active');
-		portfolioInfoPanel.classList.toggle('active');
+		// Info button toggle with animation
+		portfolioInfoBtn.addEventListener('click', () => {
+			const isOpening = !portfolioInfoPanel.classList.contains('active');
+			portfolioInfoPanel.classList.toggle('active');
 
-		if (isOpening) {
-			animateInfoPanelIn();
-		}
-	});
+			if (isOpening) {
+				animateInfoPanelIn();
+			}
+		});
 
-	// Info panel close
-	infoPanelClose.addEventListener('click', () => {
-		portfolioInfoPanel.classList.remove('active');
-	});
+		// Info panel close
+		infoPanelClose.addEventListener('click', () => {
+			portfolioInfoPanel.classList.remove('active');
+		});
 
-	// Play/Pause button
-	playerPlayBtn.addEventListener('click', () => {
-		if (portfolioPlayerVideo.paused) {
-			portfolioPlayerVideo.play();
-			playIcon.style.display = 'none';
-			pauseIcon.style.display = 'block';
-		} else {
-			portfolioPlayerVideo.pause();
+		// Play/Pause button
+		playerPlayBtn.addEventListener('click', () => {
+			if (portfolioPlayerVideo.paused) {
+				portfolioPlayerVideo.play();
+				playIcon.style.display = 'none';
+				pauseIcon.style.display = 'block';
+			} else {
+				portfolioPlayerVideo.pause();
+				playIcon.style.display = 'block';
+				pauseIcon.style.display = 'none';
+			}
+		});
+
+		// Video ended event
+		portfolioPlayerVideo.addEventListener('ended', () => {
 			playIcon.style.display = 'block';
 			pauseIcon.style.display = 'none';
-		}
-	});
+		});
 
-	// Video ended event
-	portfolioPlayerVideo.addEventListener('ended', () => {
-		playIcon.style.display = 'block';
-		pauseIcon.style.display = 'none';
-	});
-
-	// Volume slider
-	volumeSlider.addEventListener('input', (e) => {
-		portfolioPlayerVideo.volume = e.target.value;
-	});
+		// Volume slider
+		volumeSlider.addEventListener('input', (e) => {
+			portfolioPlayerVideo.volume = e.target.value;
+		});
+	}
 
 	// Add portfolio items and story elements to cursor hover detection
 	document.addEventListener('mouseover', (e) => {
@@ -2203,8 +2356,9 @@ function runMainScript() {
 		});
 	}
 
+	// VintageMap.jsx owns this container; _leaflet_id means React already built the map.
 	const mapEl = document.getElementById('vintage-map');
-	if (mapEl && typeof L !== 'undefined') {
+	if (mapEl && !mapEl._leaflet_id && typeof L !== 'undefined') {
 		const map = L.map('vintage-map', {
 			center: [12.836, 101.328],
 			zoom: 11,

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, lazy, Suspense } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
@@ -16,9 +16,12 @@ import FinalSection from './components/FinalSection';
 import PortfolioSection from './components/PortfolioSection';
 import ContactSection from './components/ContactSection';
 import AdventureFooter from './components/AdventureFooter';
-import DrawboxModal from './components/DrawboxModal';
-import CboxModal from './components/CboxModal';
-import WebsiteInquiryDrawer from './components/WebsiteInquiryDrawer';
+
+// These are only ever shown after an explicit user interaction (never on first
+// paint), so they're code-split out of the main bundle instead of loaded upfront.
+const DrawboxModal = lazy(() => import('./components/DrawboxModal'));
+const CboxModal = lazy(() => import('./components/CboxModal'));
+const WebsiteInquiryDrawer = lazy(() => import('./components/WebsiteInquiryDrawer'));
 
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
@@ -80,9 +83,11 @@ function App() {
         onOpenDrawbox={() => setIsDrawboxOpen(true)}
         onOpenCbox={() => setIsCboxOpen(true)}
       />
-      <DrawboxModal isOpen={isDrawboxOpen} onClose={() => setIsDrawboxOpen(false)} />
-      <CboxModal isOpen={isCboxOpen} onClose={() => setIsCboxOpen(false)} />
-      <WebsiteInquiryDrawer isOpen={isInquiryOpen} onClose={() => setIsInquiryOpen(false)} />
+      <Suspense fallback={null}>
+        <DrawboxModal isOpen={isDrawboxOpen} onClose={() => setIsDrawboxOpen(false)} />
+        <CboxModal isOpen={isCboxOpen} onClose={() => setIsCboxOpen(false)} />
+        <WebsiteInquiryDrawer isOpen={isInquiryOpen} onClose={() => setIsInquiryOpen(false)} />
+      </Suspense>
     </div>
   );
 }
