@@ -5,6 +5,14 @@ const GITHUB = 'https://github.com/inatbalthazar';
 
 const FULLSTACK_PROJECTS = [
   {
+    title: 'JSD13-Thattae',
+    subtitle: 'MERN Stack • Team Capstone Project',
+    description: 'Graduation capstone project built with a 5-person team from Generation Thailand JSD13. Full-stack MERN application covering end-to-end feature ownership, shared API design, and collaborative Git workflow.',
+    liveUrl: 'https://jsd-13-thattae.vercel.app/',
+    repoUrl: 'https://github.com/ctrlaltnate/JSD13-Thattae',
+    poster: 'images/web.jpg'
+  },
+  {
     title: 'Choicer Voicer Studio',
     subtitle: 'Node.js / Express / Vite • Multiplayer',
     description: 'Online voice-acting party game. Players create or join a room, take turns dubbing scenes from selectable Scene Packs, with in-browser recording, voice effects, and audio export.',
@@ -212,12 +220,12 @@ function PortfolioSection() {
             <div
               className="title-video"
               onClick={() => setActiveDemo(FULLSTACK_PROJECTS[0])}
-              data-title="Choicer Voicer Studio"
-              data-subtitle="Node.js / Express / Vite • Multiplayer"
-              data-description="Online voice-acting party game with room-based multiplayer, in-browser recording, and voice effects."
+              data-title="JSD13-Thattae"
+              data-subtitle="MERN Stack • Team Capstone Project"
+              data-description="Graduation capstone project built with a 5-person team from Generation Thailand JSD13, using the full MERN stack."
               data-width="140"
             >
-              <img src="images/projects/dogdub.jpg" alt="Choicer Voicer Studio" loading="lazy" decoding="async" />
+              <img src="images/web.jpg" alt="JSD13-Thattae" loading="lazy" decoding="async" />
               <div className="story-play-icon"></div>
             </div>
             <span className="word">that</span>
@@ -234,11 +242,11 @@ function PortfolioSection() {
           <div
             className="story-panel-image size-wide"
             onClick={() => setActiveDemo(FULLSTACK_PROJECTS[0])}
-            data-title="Choicer Voicer Studio"
+            data-title="JSD13-Thattae"
             data-subtitle="Live on Vercel"
-            data-description="Create or join a room, pick a Scene Pack, and take turns dubbing scenes together in the browser."
+            data-description="Team capstone project (5 developers) from Generation Thailand JSD13, built end-to-end on the MERN stack."
           >
-            <img src="images/projects/dogdub.jpg" alt="Choicer Voicer Studio" loading="lazy" decoding="async" />
+            <img src="images/web.jpg" alt="JSD13-Thattae" loading="lazy" decoding="async" />
             <div className="story-play-icon"></div>
           </div>
         </div>
