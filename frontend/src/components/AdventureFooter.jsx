@@ -23,23 +23,17 @@ function AdventureFooter({ onOpenDrawbox, onOpenCbox }) {
     isFlying: false
   });
   const hotspots = {
-    'adventure-sequoia': { 
-      action: 'CHAT', 
+    'adventure-sequoia': {
+      action: 'CHAT',
       response: 'Opening Cbox Chat! Chat live with other visitors...',
-      execute: () => {
-        if (onOpenCbox) onOpenCbox();
-        window.dispatchEvent(new CustomEvent('open-cbox'));
-      }
+      execute: () => onOpenCbox()
     },
     'adventure-tent': { action: 'LOOK', response: 'Basecamp for late-night Full-Stack coding sessions!' },
     'adventure-campfire': { action: 'LOOK', response: 'Warm campfire & high-efficiency power systems.' },
     'adventure-camera': { 
       action: 'DRAW', 
       response: 'Opening Drawbox! Time to create retro art...',
-      execute: () => {
-        if (onOpenDrawbox) onOpenDrawbox();
-        window.dispatchEvent(new CustomEvent('open-drawbox'));
-      }
+      execute: () => onOpenDrawbox()
     },
     'adventure-laptop': { action: 'LOOK', response: 'Full-Stack Development Workstation • React, Node & SQL.' },
     'adventure-canteen': { 
