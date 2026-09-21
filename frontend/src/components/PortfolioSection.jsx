@@ -5,17 +5,17 @@ const GITHUB = 'https://github.com/inatbalthazar';
 
 const FULLSTACK_PROJECTS = [
   {
-    title: 'JSD13-Thattae',
-    subtitle: 'MERN Stack • Team Capstone Project',
-    description: 'Graduation capstone project built with a 5-person team from Generation Thailand JSD13. Full-stack MERN application covering end-to-end feature ownership, shared API design, and collaborative Git workflow.',
+    title: 'That-tae — ธาตุแท้ Cooking Kit',
+    subtitle: 'MERN Stack • JSD13 Team Capstone',
+    description: 'Graduation capstone built by a 5-person JSD13 team. A Thai wellness food platform that profiles your body element (ธาตุเจ้าเรือน) through a quiz, then recommends menus matched to your element, health goals, and lifestyle — with a full menu catalogue, cart, and accounts.',
     liveUrl: 'https://jsd-13-thattae.vercel.app/',
     repoUrl: 'https://github.com/ctrlaltnate/JSD13-Thattae',
-    poster: 'images/web.jpg'
+    poster: 'images/projects/thattae.jpg'
   },
   {
     title: 'Choicer Voicer Studio',
     subtitle: 'Node.js / Express / Vite • Multiplayer',
-    description: 'Online voice-acting party game. Players create or join a room, take turns dubbing scenes from selectable Scene Packs, with in-browser recording, voice effects, and audio export.',
+    description: 'Online voice-acting party game. Load a voice pack, record each line in your own voice, then watch the finished dub — solo, or splitting the lines with friends in a shared multiplayer room.',
     liveUrl: 'https://dogdub.vercel.app',
     repoUrl: `${GITHUB}/dogdub`,
     poster: 'images/projects/dogdub.jpg'
@@ -24,36 +24,25 @@ const FULLSTACK_PROJECTS = [
     title: 'VICTO — Print-on-Demand Platform',
     subtitle: 'MERN Stack • E-Commerce',
     description: 'Premium print-on-demand apparel platform with an interactive design customizer, independent artwork canvases for four garment sides, and a dashboard for saving reusable product templates.',
+    liveUrl: 'https://victo-iota.vercel.app',
     repoUrl: `${GITHUB}/Victo`,
-    poster: 'images/select.jpg'
+    poster: 'images/projects/victo.jpg'
   },
   {
-    title: 'SongGuessr',
-    subtitle: 'FastAPI / Python • Audio ML',
-    description: 'Bandle-style song guessing game that automatically separates tracks into four stems using Demucs, served through a FastAPI backend.',
+    title: 'PlengGuessr',
+    subtitle: 'Cloudflare Workers • Audio Game',
+    description: 'Bandle-style song guessing game with a 226-track library split across International, Thai, and K-Pop playlists. Guess from the instrument stems — the faster you answer, the more stars you earn.',
+    liveUrl: 'https://plengguessr.inatbalthazar.workers.dev/',
     repoUrl: `${GITHUB}/PlengGuessr`,
-    poster: 'images/gaba2.jpeg'
+    poster: 'images/projects/plengguessr.jpg'
   },
   {
-    title: 'JSD Backend Assessment',
-    subtitle: 'Node.js / Express • Client + Server',
-    description: 'Full-stack backend assessment pairing an Express server with a client application, covering API design, data modelling, and request handling.',
-    repoUrl: `${GITHUB}/jsd-backend-assessment`,
-    poster: 'images/goodfire.jpg'
-  },
-  {
-    title: 'W10 Express REST API',
-    subtitle: 'Node.js / Express • REST',
-    description: 'Express-based REST API service covering routing, middleware, and structured backend architecture.',
-    repoUrl: `${GITHUB}/w10-express-api`,
-    poster: 'images/jwt2.jpg'
-  },
-  {
-    title: 'ChromaBurger Management System',
+    title: 'Chrome & Burger',
     subtitle: 'MongoDB / PostgreSQL • Database Assessment',
-    description: 'Food truck restaurant management system built to practise MongoDB and PostgreSQL queries, schema design, and CRUD operations.',
+    description: 'Food truck restaurant management system with a gourmet menu and ordering flow, built to practise MongoDB and PostgreSQL queries, schema design, and CRUD operations.',
+    liveUrl: 'https://dbs-assessment.vercel.app/',
     repoUrl: `${GITHUB}/DBS-assessment`,
-    poster: 'images/guard.jpg'
+    poster: 'images/projects/chromaburger.jpg'
   }
 ];
 
@@ -91,25 +80,20 @@ const FRONTEND_PROJECTS = [
     poster: 'images/projects/saberoflight.jpg'
   },
   {
-    title: 'React Router Application',
-    subtitle: 'React 19 / Tailwind v4 / Vite',
-    description: 'Multi-page React application using React Router for client-side navigation, styled with Tailwind CSS v4 on a Vite build.',
-    repoUrl: `${GITHUB}/W08-REACT-ROUTER`,
-    poster: 'images/next.jpg'
-  },
-  {
     title: 'Castle Rooms',
     subtitle: 'React 19 / Tailwind v4 / Vite',
-    description: 'Component-driven React exercise exploring props, state, and conditional rendering through an interactive castle room browser.',
+    description: 'Interstellar-themed room browser — the Cornfield, the Wormhole, Miller’s Planet, Gargantua, the Tesseract — built as a component-driven React exercise in props, state, and conditional rendering, with messages relayed between Earth and Cooper.',
+    liveUrl: 'https://w07-react-castle-rooms.vercel.app',
     repoUrl: `${GITHUB}/W07-React-castle-rooms`,
-    poster: 'images/history3.jpg'
+    poster: 'images/projects/castlerooms.jpg'
   },
   {
     title: 'W09 React SPA Assessment',
     subtitle: 'React.js • Single-Page Application',
-    description: 'Single-page React application assessment covering component architecture, state management, and modular design.',
+    description: 'Single-page React application assessment with separate User and Admin sections, covering component architecture, state management, and modular design.',
+    liveUrl: 'https://w09-react-assessment.vercel.app/',
     repoUrl: `${GITHUB}/W09-REACT-ASSESSMENT`,
-    poster: 'images/minesy.jpg'
+    poster: 'images/projects/w09react.jpg'
   }
 ];
 
@@ -123,50 +107,35 @@ const INTERACTIVE_PROJECTS = [
     poster: 'images/projects/clicker67.jpg'
   },
   {
-    title: 'Gen D — Restaurant Site',
-    subtitle: 'JavaScript ES6+ • Git Fundamentals',
-    description: 'Restaurant menu and reservations concept site built while practising JavaScript DOM manipulation and Git version control fundamentals.',
+    title: 'Gen D — Premium Dining',
+    subtitle: 'JavaScript ES6+ • 11-Language i18n',
+    description: 'Restaurant menu and reservations site with cuisine filtering, pre-order flow, and an eleven-language switcher — built while practising JavaScript DOM manipulation and Git version control fundamentals.',
     liveUrl: 'https://1st-meet-git.vercel.app',
     repoUrl: `${GITHUB}/JS-Restaurant`,
     poster: 'images/projects/jsrestaurant.jpg'
   },
   {
-    title: 'Miclone',
-    subtitle: 'Web Audio API • Node.js',
-    description: 'Browser-based sound engine with a catalogued sound library, layered effects processing, and shared room sessions.',
-    repoUrl: `${GITHUB}/Miclone`,
-    poster: 'images/reely.jpg'
-  },
-  {
-    title: 'Find My Hat',
-    subtitle: 'JavaScript • OOP Terminal Game',
-    description: 'Object-oriented terminal maze game built to practise classes, grid generation, and input validation logic.',
-    repoUrl: `${GITHUB}/WEEK08-JS-FIND-MY-HAT`,
-    poster: 'images/hunt.jpg'
-  },
-  {
-    title: 'Bitburner Script Pack',
-    subtitle: 'JavaScript • Automation Scripts',
-    description: 'Automation script pack for Bitburner covering early to late-game progression with efficient, scalable, easy-to-deploy strategies.',
-    repoUrl: `${GITHUB}/Bitburner-Mastermind-Script-Pack`,
-    poster: 'images/carbon.jpg'
+    title: 'Dayology',
+    subtitle: 'TypeScript / Vite • Interactive Cards',
+    description: 'Self-discovery card experience framed around Carl Jung’s psychology — explore the Persona you show the world, the Shadow you keep hidden, and a healing note for each of the seven days.',
+    liveUrl: 'https://dayology.vercel.app',
+    repoUrl: `${GITHUB}/dayology`,
+    poster: 'images/projects/dayology.jpg'
   }
 ];
 
 function ProjectCard({ project, onOpenDemo }) {
-  const isLive = Boolean(project.liveUrl);
-
   return (
     <div
       className="portfolio-item"
-      onClick={() => (isLive ? onOpenDemo(project) : window.open(project.repoUrl, '_blank'))}
+      onClick={() => onOpenDemo(project)}
       data-title={project.title}
       data-subtitle={project.subtitle}
       data-description={project.description}
       data-poster={project.poster}
     >
       <img className="portfolio-item-poster" src={project.poster} alt={project.title} loading="lazy" decoding="async" />
-      {isLive && <div className="portfolio-item-live">Live Demo</div>}
+      <div className="portfolio-item-live">Live Demo</div>
       <div className="portfolio-item-play"></div>
       <div className="portfolio-item-overlay">
         <div className="portfolio-item-title">{project.title}</div>
@@ -220,12 +189,12 @@ function PortfolioSection() {
             <div
               className="title-video"
               onClick={() => setActiveDemo(FULLSTACK_PROJECTS[0])}
-              data-title="JSD13-Thattae"
-              data-subtitle="MERN Stack • Team Capstone Project"
-              data-description="Graduation capstone project built with a 5-person team from Generation Thailand JSD13, using the full MERN stack."
+              data-title="That-tae — ธาตุแท้ Cooking Kit"
+              data-subtitle="MERN Stack • JSD13 Team Capstone"
+              data-description="Graduation capstone built by a 5-person JSD13 team — a Thai wellness food platform that matches menus to your body element."
               data-width="140"
             >
-              <img src="images/web.jpg" alt="JSD13-Thattae" loading="lazy" decoding="async" />
+              <img src="images/projects/thattae.jpg" alt="That-tae Cooking Kit" loading="lazy" decoding="async" />
               <div className="story-play-icon"></div>
             </div>
             <span className="word">that</span>
@@ -242,11 +211,11 @@ function PortfolioSection() {
           <div
             className="story-panel-image size-wide"
             onClick={() => setActiveDemo(FULLSTACK_PROJECTS[0])}
-            data-title="JSD13-Thattae"
+            data-title="That-tae — ธาตุแท้ Cooking Kit"
             data-subtitle="Live on Vercel"
             data-description="Team capstone project (5 developers) from Generation Thailand JSD13, built end-to-end on the MERN stack."
           >
-            <img src="images/web.jpg" alt="JSD13-Thattae" loading="lazy" decoding="async" />
+            <img src="images/projects/thattae.jpg" alt="That-tae Cooking Kit" loading="lazy" decoding="async" />
             <div className="story-play-icon"></div>
           </div>
         </div>
@@ -330,7 +299,7 @@ function PortfolioSection() {
             <span className="word">build.</span>
           </h2>
           <p className="story-panel-description">
-            Browser games and interactive experiments built to stress-test state handling, Web Audio, real-time multiplayer sessions, and object-oriented JavaScript — where the fastest way to learn a concept is to make something worth clicking.
+            Browser games and interactive experiments built to stress-test state handling, progression systems, internationalisation, and animation-driven UI — where the fastest way to learn a concept is to make something worth clicking.
           </p>
           <button className="view-more-projects-btn" data-accordion="accordion-interactive">
             View Interactive Builds <span className="btn-arrow">▼</span>
