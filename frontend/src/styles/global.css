@@ -5698,3 +5698,92 @@ body.canteen-cursor * {
 	background: #35c759;
 	animation: liveDemoPulse 1.8s ease-in-out infinite;
 }
+
+/* ========== MOBILE LAYOUT FIXES (≤768px) ==========
+   Kept last so these win over the earlier desktop rules without touching them. */
+@media (max-width: 768px) {
+
+	/* Side scroll-spy ticks + % pill float on top of body copy at phone widths */
+	.scroll-nav {
+		display: none !important;
+	}
+
+	/* Hero: "and Developing" overran the viewport at 12vw */
+	#text-2 .text-2-line {
+		flex-wrap: wrap;
+		justify-content: center;
+	}
+
+	#text-2 .regular-word {
+		font-size: .7em;
+	}
+
+	/* Core Philosophies: drop the 320px desktop indent and let quotes wrap */
+	.final-hero-typography {
+		font-size: clamp(1.6rem, 8.5vw, 2.4rem) !important;
+	}
+
+	#rules.framer-79selz {
+		padding: 24px 5vw 40px !important;
+		gap: 4px;
+	}
+
+	/* #rules [data-framer-name] forces display:block, which drops the gap after the number */
+	#rules .rule-row-item {
+		display: flex;
+		align-items: baseline;
+		gap: 10px;
+		padding: 8px 4px;
+		white-space: normal !important;
+	}
+
+	.rule-number,
+	.rule-text {
+		font-size: .8rem !important;
+		white-space: normal !important;
+		color: #8a8a8a;
+	}
+
+	.rule-number {
+		flex-shrink: 0;
+	}
+
+	.rule-text {
+		overflow: visible;
+	}
+
+	/* Portfolio panels: Major Mono words like "Responsive" are wider than the screen at 2.5rem */
+	.story-panel-title {
+		font-size: clamp(1.7rem, 8.5vw, 2.4rem);
+		justify-content: center;
+	}
+
+	.story-panel-label {
+		font-size: 13px;
+		letter-spacing: 2px;
+	}
+
+	/* Footer: text links and badges were split into two mismatched grid columns */
+	.contact-footer .social-links {
+		display: flex;
+		flex-direction: column;
+		max-width: 100%;
+		gap: 1.2rem;
+	}
+
+	.social-text-links {
+		gap: .25rem 1rem;
+	}
+
+	/* .social-link is shared with the navbar's XP dropdown, whose dark-blue !important colour leaks in here */
+	.social-text-links .social-link {
+		color: var(--honeydew) !important;
+		font-size: 12px !important;
+		letter-spacing: 2px !important;
+		padding: 8px 6px;
+	}
+
+	.social-badges-row {
+		gap: .5rem;
+	}
+}
