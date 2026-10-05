@@ -71,7 +71,7 @@ function StorySection() {
         {/* 3-Layer Skewed Letter & Paper Composite replacing bio-section bio-left */}
         <div className="bio-section bio-left resume-letter-composite">
           {/* Layer 1: Bottom Envelope (letter.png) */}
-          <img className="resume-envelope-layer" src="/images/resume/letter.webp" alt="Envelope" loading="lazy" decoding="async" />
+          <img className="resume-envelope-layer" src="/images/resume/letter.png" alt="Envelope" loading="lazy" decoding="async" />
 
           {/* Layer 2: Middle Paper Document (paper.png) */}
           <div className="resume-paper-layer">
