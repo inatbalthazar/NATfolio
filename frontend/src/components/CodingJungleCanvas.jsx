@@ -53,7 +53,7 @@ function CodingJungleCanvas({ className = "story-bg-gif" }) {
 
     // Preload first frame immediately
     const firstImg = new Image();
-    firstImg.src = `/codingjungle/codingjungle_001.jpg`;
+    firstImg.src = `/codingjungle/codingjungle_001.webp`;
     firstImg.onload = () => {
       if (!isMounted) return;
       imageCache[0] = firstImg;
@@ -67,7 +67,7 @@ function CodingJungleCanvas({ className = "story-bg-gif" }) {
     // Preload all remaining frames in background
     for (let i = 1; i <= totalFrames; i++) {
       const img = new Image();
-      img.src = `/codingjungle/codingjungle_${String(i).padStart(3, '0')}.jpg`;
+      img.src = `/codingjungle/codingjungle_${String(i).padStart(3, '0')}.webp`;
       img.onload = () => {
         imageCache[i - 1] = img;
       };

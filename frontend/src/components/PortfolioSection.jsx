@@ -10,7 +10,15 @@ const FULLSTACK_PROJECTS = [
     description: 'Graduation capstone built by a 5-person JSD13 team. A Thai wellness food platform that profiles your body element (ธาตุเจ้าเรือน) through a quiz, then recommends menus matched to your element, health goals, and lifestyle — with a full menu catalogue, cart, and accounts.',
     liveUrl: 'https://jsd-13-thattae.vercel.app/',
     repoUrl: 'https://github.com/ctrlaltnate/JSD13-Thattae',
-    poster: 'images/projects/thattae.jpg'
+    poster: 'images/projects/thattae.webp'
+  },
+  {
+    title: 'Mystonie',
+    subtitle: 'Next.js / Supabase / Tailwind • Live Product',
+    description: 'Strava for the shows and movies you finish. Log the movies, series, books, manga, and games you complete and turn each one into shareable Story-ready artwork — search a title via TMDB, pick a card template, add a rating and review, then export a PNG. Bilingual (EN/TH), tested with Vitest, Playwright, and pgTAP.',
+    liveUrl: 'https://mystonie.com',
+    repoUrl: `${GITHUB}/mystonie`,
+    poster: 'images/projects/mystonie.webp'
   },
   {
     title: 'Choicer Voicer Studio',
@@ -18,7 +26,7 @@ const FULLSTACK_PROJECTS = [
     description: 'Online voice-acting party game. Load a voice pack, record each line in your own voice, then watch the finished dub — solo, or splitting the lines with friends in a shared multiplayer room.',
     liveUrl: 'https://dogdub.vercel.app',
     repoUrl: `${GITHUB}/dogdub`,
-    poster: 'images/projects/dogdub.jpg'
+    poster: 'images/projects/dogdub.webp'
   },
   {
     title: 'VICTO — Print-on-Demand Platform',
@@ -26,7 +34,7 @@ const FULLSTACK_PROJECTS = [
     description: 'Premium print-on-demand apparel platform with an interactive design customizer, independent artwork canvases for four garment sides, and a dashboard for saving reusable product templates.',
     liveUrl: 'https://victo-iota.vercel.app',
     repoUrl: `${GITHUB}/Victo`,
-    poster: 'images/projects/victo.jpg'
+    poster: 'images/projects/victo.webp'
   },
   {
     title: 'PlengGuessr',
@@ -34,7 +42,7 @@ const FULLSTACK_PROJECTS = [
     description: 'Bandle-style song guessing game with a 226-track library split across International, Thai, and K-Pop playlists. Guess from the instrument stems — the faster you answer, the more stars you earn.',
     liveUrl: 'https://plengguessr.inatbalthazar.workers.dev/',
     repoUrl: `${GITHUB}/PlengGuessr`,
-    poster: 'images/projects/plengguessr.jpg'
+    poster: 'images/projects/plengguessr.webp'
   },
   {
     title: 'Chrome & Burger',
@@ -42,7 +50,7 @@ const FULLSTACK_PROJECTS = [
     description: 'Food truck restaurant management system with a gourmet menu and ordering flow, built to practise MongoDB and PostgreSQL queries, schema design, and CRUD operations.',
     liveUrl: 'https://dbs-assessment.vercel.app/',
     repoUrl: `${GITHUB}/DBS-assessment`,
-    poster: 'images/projects/chromaburger.jpg'
+    poster: 'images/projects/chromaburger.webp'
   }
 ];
 
@@ -53,7 +61,7 @@ const FRONTEND_PROJECTS = [
     description: 'Fully responsive educational landing page built with semantic HTML5 and a flexbox layout system across desktop, tablet, and mobile breakpoints.',
     liveUrl: 'https://html-css-assessment-red.vercel.app',
     repoUrl: `${GITHUB}/46-Watcharine-colmar`,
-    poster: 'images/projects/colmar.jpg'
+    poster: 'images/projects/colmar.webp'
   },
   {
     title: 'CSS Flex-Flow Interactive Guide',
@@ -61,7 +69,7 @@ const FRONTEND_PROJECTS = [
     description: 'Interactive visual guide and playground for learning the CSS flex-flow shorthand, letting you toggle properties and watch the layout respond live.',
     liveUrl: 'https://css-ex-black.vercel.app',
     repoUrl: `${GITHUB}/CSS-EX`,
-    poster: 'images/projects/cssflex.jpg'
+    poster: 'images/projects/cssflex.webp'
   },
   {
     title: 'HTML Session',
@@ -69,7 +77,7 @@ const FRONTEND_PROJECTS = [
     description: 'The starting point of the web development journey — a retro-styled personal bio page built with core HTML structure and semantic markup.',
     liveUrl: 'https://html-session-omega.vercel.app/',
     repoUrl: `${GITHUB}/HTML_session`,
-    poster: 'images/projects/htmlsession.jpg'
+    poster: 'images/projects/htmlsession.webp'
   },
   {
     title: 'Saber of Light',
@@ -77,7 +85,7 @@ const FRONTEND_PROJECTS = [
     description: 'Modular lightsaber e-commerce storefront concept with a hero banner, product categories, and cart UI, deployed on GitHub Pages.',
     liveUrl: 'https://inatbalthazar.github.io/SABER-OF-LIGHT/',
     repoUrl: `${GITHUB}/SABER-OF-LIGHT`,
-    poster: 'images/projects/saberoflight.jpg'
+    poster: 'images/projects/saberoflight.webp'
   },
   {
     title: 'Castle Rooms',
@@ -85,7 +93,7 @@ const FRONTEND_PROJECTS = [
     description: 'Interstellar-themed room browser — the Cornfield, the Wormhole, Miller’s Planet, Gargantua, the Tesseract — built as a component-driven React exercise in props, state, and conditional rendering, with messages relayed between Earth and Cooper.',
     liveUrl: 'https://w07-react-castle-rooms.vercel.app',
     repoUrl: `${GITHUB}/W07-React-castle-rooms`,
-    poster: 'images/projects/castlerooms.jpg'
+    poster: 'images/projects/castlerooms.webp'
   },
   {
     title: 'W09 React SPA Assessment',
@@ -93,7 +101,7 @@ const FRONTEND_PROJECTS = [
     description: 'Single-page React application assessment with separate User and Admin sections, covering component architecture, state management, and modular design.',
     liveUrl: 'https://w09-react-assessment.vercel.app/',
     repoUrl: `${GITHUB}/W09-REACT-ASSESSMENT`,
-    poster: 'images/projects/w09react.jpg'
+    poster: 'images/projects/w09react.webp'
   }
 ];
 
@@ -104,7 +112,7 @@ const INTERACTIVE_PROJECTS = [
     description: 'Incremental clicker game built with vanilla JavaScript, covering DOM events, state updates, and progression mechanics.',
     liveUrl: 'https://67-clicker-mu.vercel.app/',
     repoUrl: `${GITHUB}/WEEK07`,
-    poster: 'images/projects/clicker67.jpg'
+    poster: 'images/projects/clicker67.webp'
   },
   {
     title: 'Gen D — Premium Dining',
@@ -112,7 +120,7 @@ const INTERACTIVE_PROJECTS = [
     description: 'Restaurant menu and reservations site with cuisine filtering, pre-order flow, and an eleven-language switcher — built while practising JavaScript DOM manipulation and Git version control fundamentals.',
     liveUrl: 'https://1st-meet-git.vercel.app',
     repoUrl: `${GITHUB}/JS-Restaurant`,
-    poster: 'images/projects/jsrestaurant.jpg'
+    poster: 'images/projects/jsrestaurant.webp'
   },
   {
     title: 'Dayology',
@@ -120,7 +128,7 @@ const INTERACTIVE_PROJECTS = [
     description: 'Self-discovery card experience framed around Carl Jung’s psychology — explore the Persona you show the world, the Shadow you keep hidden, and a healing note for each of the seven days.',
     liveUrl: 'https://dayology.vercel.app',
     repoUrl: `${GITHUB}/dayology`,
-    poster: 'images/projects/dayology.jpg'
+    poster: 'images/projects/dayology.webp'
   }
 ];
 
@@ -194,7 +202,7 @@ function PortfolioSection() {
               data-description="Graduation capstone built by a 5-person JSD13 team — a Thai wellness food platform that matches menus to your body element."
               data-width="140"
             >
-              <img src="images/projects/thattae.jpg" alt="That-tae Cooking Kit" loading="lazy" decoding="async" />
+              <img src="images/projects/thattae.webp" alt="That-tae Cooking Kit" loading="lazy" decoding="async" />
               <div className="story-play-icon"></div>
             </div>
             <span className="word">that</span>
@@ -215,7 +223,7 @@ function PortfolioSection() {
             data-subtitle="Live on Vercel"
             data-description="Team capstone project (5 developers) from Generation Thailand JSD13, built end-to-end on the MERN stack."
           >
-            <img src="images/projects/thattae.jpg" alt="That-tae Cooking Kit" loading="lazy" decoding="async" />
+            <img src="images/projects/thattae.webp" alt="That-tae Cooking Kit" loading="lazy" decoding="async" />
             <div className="story-play-icon"></div>
           </div>
         </div>
@@ -242,7 +250,7 @@ function PortfolioSection() {
               data-description="Clean, fully responsive educational landing page assessment designed with semantic HTML5 and modern flexbox layout."
               data-width="130"
             >
-              <img src="images/projects/colmar.jpg" alt="Colmar Academy" loading="lazy" decoding="async" />
+              <img src="images/projects/colmar.webp" alt="Colmar Academy" loading="lazy" decoding="async" />
               <div className="story-play-icon"></div>
             </div>
             <span className="word">Responsive</span>
@@ -264,7 +272,7 @@ function PortfolioSection() {
             data-subtitle="HTML5 / CSS3 • GitHub Pages"
             data-description="Modular lightsaber e-commerce storefront concept with a hero banner, product categories, and cart UI."
           >
-            <img src="images/projects/saberoflight.jpg" alt="Saber of Light" loading="lazy" decoding="async" />
+            <img src="images/projects/saberoflight.webp" alt="Saber of Light" loading="lazy" decoding="async" />
             <div className="story-play-icon"></div>
           </div>
         </div>
@@ -292,7 +300,7 @@ function PortfolioSection() {
               data-description="Incremental clicker game built with vanilla JavaScript, covering DOM events, state updates, and progression mechanics."
               data-width="150"
             >
-              <img src="images/projects/clicker67.jpg" alt="67 Clicker" loading="lazy" decoding="async" />
+              <img src="images/projects/clicker67.webp" alt="67 Clicker" loading="lazy" decoding="async" />
               <div className="story-play-icon"></div>
             </div>
             <span className="word">the</span>
@@ -313,7 +321,7 @@ function PortfolioSection() {
             data-subtitle="Live on Vercel"
             data-description="Incremental clicker game with progression mechanics, built in vanilla JavaScript."
           >
-            <img src="images/projects/clicker67.jpg" alt="67 Clicker" loading="lazy" decoding="async" />
+            <img src="images/projects/clicker67.webp" alt="67 Clicker" loading="lazy" decoding="async" />
             <div className="story-play-icon"></div>
           </div>
         </div>

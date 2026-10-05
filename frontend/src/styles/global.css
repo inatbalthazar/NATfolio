@@ -3989,7 +3989,7 @@ body::after {
 	left: 0;
 	width: 300%;
 	height: 300%;
-	background-image: url('/images/1k_Dissolve_Noise_Texture.png');
+	background-image: url('/images/1k_Dissolve_Noise_Texture.webp');
 	opacity: .08;
 	pointer-events: none;
 	z-index: 99999;

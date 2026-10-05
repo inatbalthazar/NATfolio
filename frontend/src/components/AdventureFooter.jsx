@@ -223,7 +223,7 @@ function AdventureFooter({ onOpenDrawbox, onOpenCbox }) {
       >
         <div className="adventure-scene">
           <img className="scene-layer" id="adventure-layer-bg" src="/images/solidbg.png" alt="" loading="lazy" decoding="async" style={{objectFit:'cover', zIndex:0}} /> 
-          <img className="scene-layer" id="adventure-layer-mountains" src="/images/mountainscn.png" alt="" loading="lazy" decoding="async" style={{objectFit:'cover', zIndex:1}} /> 
+          <img className="scene-layer" id="adventure-layer-mountains" src="/images/mountainscn.webp" alt="" loading="lazy" decoding="async" style={{objectFit:'cover', zIndex:1}} /> 
           
           <img 
             className="hotspot-object" id="adventure-sequoia" src="/images/bigtree2.png" alt="Sequoia Tree" loading="lazy" decoding="async" 

@@ -58,14 +58,17 @@ function runMainScript() {
 	});
 
 	const frameCount = 192;
-	const currentFrame = index => `/sequoia/sequoia_${String(index).padStart(3, '0')}.jpg`;
+	// Only the intro sequence (frames 1–44, played by playInitialSequence) gates the
+	// preloader. Frames 45–192 are scroll-scrubbed and stream in after the page is
+	// shown — gating on all 192 made every visitor wait for the whole sequence.
+	const introFrameCount = 44;
+	const currentFrame = index => `/sequoia/sequoia_${String(index).padStart(3, '0')}.webp`;
 
 	const extraAssets = [
-		'/images/1k_Dissolve_Noise_Texture.png',
 		'/shell32_160.gif'
 	];
 
-	const totalAssetCount = frameCount + extraAssets.length;
+	const totalAssetCount = introFrameCount + extraAssets.length;
 	let loadedAssets = 0;
 	let initialPlayComplete = false;
 	let imagesLoaded = false;
@@ -116,8 +119,8 @@ function runMainScript() {
 		}
 	};
 
-	// Preload 192 sequoia frames
-	for (let i = 1; i <= frameCount; i++) {
+	// Preload the intro frames; the rest are requested by loadRemainingFrames()
+	for (let i = 1; i <= introFrameCount; i++) {
 		const img = new Image();
 		img.onload = onAssetLoaded;
 		img.onerror = onAssetLoaded;
@@ -125,7 +128,21 @@ function runMainScript() {
 		images.push(img);
 	}
 
-	// Preload extra heavy assets (e.g. 3.1MB Noise Texture)
+	// Started only after the preloader hides: pending <img> loads delay window 'load',
+	// which hidePreloader waits on.
+	let remainingFramesRequested = false;
+	function loadRemainingFrames() {
+		if (remainingFramesRequested) return;
+		remainingFramesRequested = true;
+		for (let i = introFrameCount + 1; i <= frameCount; i++) {
+			const img = new Image();
+			img.decoding = 'async';
+			img.src = currentFrame(i);
+			images.push(img);
+		}
+	}
+
+	// Preload extra assets shown during the intro
 	extraAssets.forEach(src => {
 		const img = new Image();
 		img.onload = onAssetLoaded;
@@ -145,6 +162,17 @@ function runMainScript() {
 		updateImage(1);
 		if (preloader) preloader.classList.add('hidden');
 		playInitialSequence();
+		loadRemainingFrames();
+	}
+
+	// A scrub can outrun the background download; fall back to the nearest decoded
+	// earlier frame instead of leaving the canvas on a stale or blank frame.
+	function nearestReadyFrame(index) {
+		for (let i = index - 1; i >= 0; i--) {
+			const img = images[i];
+			if (img && img.complete && img.naturalWidth) return img;
+		}
+		return null;
 	}
 
 	let currentFrameIndex = 1;
@@ -162,7 +190,7 @@ function runMainScript() {
 	// Render specific frame with full screen cover logic
 	function updateImage(index) {
 		currentFrameIndex = index;
-		const img = images[index - 1];
+		const img = nearestReadyFrame(index);
 		if (img) {
 			const w = canvas.width;
 			const h = canvas.height;
