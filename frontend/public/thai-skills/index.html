@@ -27,6 +27,8 @@
             --teal: #509eaa;
             --pen: #c8462f;
             --pen-soft: #e0684f;
+            --pen-ink: #b03a22;
+            --struck: #6f6976;
             --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
             --display: "Chakra Petch", "Bai Jamjuree", sans-serif;
             --body: "Bai Jamjuree", sans-serif;
@@ -62,7 +64,7 @@
         /* Top bar */
         .topbar { border-bottom: 1px solid var(--rule); }
         .topbar .wrap { display: flex; align-items: center; justify-content: space-between; gap: 12px; height: 60px; }
-        .back { font-family: var(--display); font-weight: 600; font-size: 15px; color: var(--muted); text-decoration: none; }
+        .back { font-family: var(--display); font-weight: 600; font-size: 15px; color: var(--muted); text-decoration: none; transition: color .2s var(--ease-out); }
         .back:hover { color: var(--text); }
         .top-actions { display: flex; align-items: center; gap: 18px; font-size: 14px; }
         .lang { display: flex; gap: 2px; }
@@ -72,7 +74,7 @@
         }
         .lang button[aria-pressed="true"] { color: var(--text); background: var(--ground-2); }
         .lang button:hover { color: var(--text); }
-        .top-actions > a { color: var(--muted); text-decoration: none; font-weight: 500; }
+        .top-actions > a { color: var(--muted); text-decoration: none; font-weight: 500; transition: color .2s var(--ease-out); }
         .top-actions > a:hover { color: var(--text); }
 
         /* Hero: the claim on the left, the proof on the right */
@@ -120,12 +122,12 @@
         .source b { font-weight: 600; color: var(--sheet-ink); }
         .proof { font-size: clamp(20px, 2.1vw, 25px); line-height: 2.1; margin-top: 6px; min-height: 4.2em; }
         .proof del {
-            text-decoration: none; color: #8a8390;
+            text-decoration: none; color: var(--struck);
             background: linear-gradient(var(--pen), var(--pen)) no-repeat 0 62% / 100% 2.5px;
             transition: color .5s var(--ease-out), background-size .6s var(--ease-out);
         }
         .proof ins {
-            text-decoration: none; font-family: var(--hand); color: var(--pen);
+            text-decoration: none; font-family: var(--hand); color: var(--pen-ink);
             display: inline-block; margin: 0 .18em; transform: rotate(-2deg);
             transition: opacity .6s var(--ease-out), filter .6s var(--ease-out), translate .6s var(--ease-out);
         }
@@ -135,7 +137,7 @@
         .proof.unmarked del { background-size: 0% 2.5px; }
         .proof.unmarked ins { opacity: 0; filter: blur(4px); translate: 0 6px; }
         .codes { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 13px; color: var(--sheet-muted); }
-        .codes span.code-id { font-family: var(--hand); color: var(--pen); font-size: 15px; }
+        .codes span.code-id { font-family: var(--hand); color: var(--pen-ink); font-size: 15px; }
         .sheet-foot { margin-top: 16px; font-size: 13px; color: var(--sheet-muted); }
 
         /* Sections */
@@ -191,7 +193,7 @@
         .small { font-size: 14px; color: var(--muted); margin-top: 10px; max-width: 60ch; }
         .small a { color: var(--text); }
         details { margin-top: 18px; }
-        summary { color: var(--muted); font-size: 15px; list-style: none; }
+        summary { color: var(--muted); font-size: 15px; list-style: none; transition: color .2s var(--ease-out); }
         summary::-webkit-details-marker { display: none; }
         summary::before { content: "+ "; color: var(--teal); font-family: var(--mono); }
         details[open] summary::before { content: "− "; }
@@ -213,8 +215,8 @@
 
         footer { border-top: 1px solid var(--rule); padding: 32px 0 48px; color: var(--muted); font-size: 14px; }
         footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px 24px; }
-        footer a { color: var(--text); text-decoration: none; }
-        footer a:hover { text-decoration: underline; }
+        footer a { color: var(--text); text-decoration: none; text-decoration-color: transparent; transition: text-decoration-color .2s var(--ease-out); }
+        footer a:hover { text-decoration: underline; text-decoration-color: currentColor; }
         .foot-links { display: flex; flex-wrap: wrap; gap: 20px; }
 
         @media (max-width: 900px) {
@@ -472,9 +474,9 @@
         });
 
         // The pen: strike each deletion, then write each insertion, in reading order.
-        function mark(proof) {
+        function mark(proof, lead) {
             if (reduce) return;
-            proof.querySelectorAll('del, ins').forEach(function (m, i) { m.style.transitionDelay = (i * 0.22) + 's'; });
+            proof.querySelectorAll('del, ins').forEach(function (m, i) { m.style.transitionDelay = ((lead || 0) + i * 0.22) + 's'; });
             proof.classList.add('unmarked');
             void proof.offsetWidth;
             requestAnimationFrame(function () {
@@ -503,7 +505,7 @@
             var io = new IntersectionObserver(function (entries) {
                 if (entries[0].isIntersecting) {
                     io.disconnect();
-                    setTimeout(function () { mark(first); }, 350);
+                    mark(first, 0.35);
                 }
             }, { threshold: 0.4 });
             io.observe(first);
