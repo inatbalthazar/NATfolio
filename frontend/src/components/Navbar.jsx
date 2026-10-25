@@ -2,17 +2,37 @@ import React, { useState, useEffect, useRef } from 'react';
 
 function Navbar({ onOpenInquiry }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [projectsOpen, setProjectsOpen] = useState(false);
   const [copied, setCopied] = useState(false);
   const dropdownRef = useRef(null);
+  const projectsRef = useRef(null);
 
   const toggleDropdown = (e) => {
     e.preventDefault();
     e.stopPropagation();
+    setProjectsOpen(false);
     setIsOpen(prev => !prev);
   };
 
   const closeDropdown = () => {
     setIsOpen(false);
+  };
+
+  const toggleProjects = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsOpen(false);
+    setProjectsOpen(prev => !prev);
+  };
+
+  const scrollToProjects = (e) => {
+    e.preventDefault();
+    setProjectsOpen(false);
+    if (window.gsap) {
+      window.gsap.to(window, { scrollTo: { y: '#portfolio-section', offsetY: 0 }, duration: 1.5, ease: 'power2.inOut' });
+    } else {
+      document.getElementById('portfolio-section')?.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   const handleCopyEmail = (e) => {
@@ -34,6 +54,9 @@ function Navbar({ onOpenInquiry }) {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
         setIsOpen(false);
       }
+      if (projectsRef.current && !projectsRef.current.contains(e.target)) {
+        setProjectsOpen(false);
+      }
     };
     document.addEventListener('click', handleClickOutside);
     return () => document.removeEventListener('click', handleClickOutside);
@@ -44,7 +67,20 @@ function Navbar({ onOpenInquiry }) {
       <div id="nav-links">
         <a href="#" className="nav-link">Home</a>
         <a href="#story-section" className="nav-link">About</a>
-        <a href="#portfolio-section" className="nav-link">Projects</a>
+        <div className={`nav-contact-wrapper ${projectsOpen ? 'is-open' : ''}`} ref={projectsRef}>
+          <button
+            type="button"
+            className={`nav-link contact-dropdown-btn ${projectsOpen ? 'active' : ''}`}
+            onClick={toggleProjects}
+            aria-expanded={projectsOpen}
+          >
+            Projects {projectsOpen ? '▴' : '▾'}
+          </button>
+          <div className={`social-dropdown ${projectsOpen ? 'is-open' : ''}`}>
+            <a href="#portfolio-section" className="social-link" onClick={scrollToProjects}>All Projects</a>
+            <a href="/thai-skills/" className="social-link" onClick={() => setProjectsOpen(false)}>Thai Skills</a>
+          </div>
+        </div>
         <div className={`nav-contact-wrapper ${isOpen ? 'is-open' : ''}`} ref={dropdownRef}>
           <button 
             type="button"
@@ -113,6 +149,10 @@ function Navbar({ onOpenInquiry }) {
           <a href="#story-section" className="mobile-nav-link">About</a>
           <a href="#portfolio-section" className="mobile-nav-link">Projects</a>
           <a href="#contact-section" className="mobile-nav-link">Contact</a>
+        </div>
+        <div className="mobile-menu-section">
+          <div className="mobile-menu-title">Projects</div>
+          <a href="/thai-skills/" className="mobile-social-link">Thai Skills</a>
         </div>
         <div className="mobile-menu-section">
           <div className="mobile-menu-title">Connect</div>
