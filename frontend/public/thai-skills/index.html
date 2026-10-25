@@ -170,8 +170,13 @@
             margin-top: 32px; max-width: 420px; padding: 6px 6px 6px 18px;
             background: var(--ground-2); border: 1px solid var(--rule); border-radius: 12px;
         }
-        .cmd code { font: 500 17px var(--mono); color: var(--text); white-space: nowrap; }
+        .cmd code { font: 500 17px var(--mono); color: var(--text); white-space: nowrap; overflow-x: auto; min-width: 0; scrollbar-width: none; }
         .cmd code .dim { color: #77727f; }
+        .cmd code .pkg { white-space: nowrap; color: var(--pen-soft); background: rgba(52, 211, 153, .12); border-radius: 4px; padding: 1px 5px; }
+        .panel .cmd { margin-top: 10px; max-width: 560px; }
+        .install > *, .step, .panel { min-width: 0; }
+        .cmd-block { align-items: flex-start; padding-top: 12px; padding-bottom: 12px; }
+        .cmd-block code { white-space: pre; overflow-x: auto; font-size: 15px; line-height: 1.9; }
         .copy {
             font: 600 13px var(--display); background: var(--text); color: var(--ground);
             border: 0; border-radius: 8px; padding: 9px 14px; transition: background .2s, transform .2s var(--ease-out);
@@ -340,6 +345,8 @@
             body { font-size: 16px; }
             .notes { grid-template-columns: 1fr; }
             .cmd code { font-size: 15px; }
+            .panel .cmd { align-items: flex-start; padding-top: 12px; padding-bottom: 12px; }
+            .panel .cmd code { white-space: pre-wrap; overflow-wrap: anywhere; font-size: 14px; line-height: 1.8; }
         }
         @media (prefers-reduced-motion: reduce) {
             *, *::before, *::after { transition: none !important; animation: none !important; }
@@ -414,7 +421,7 @@
                 <p class="lead th">skill ฟรีสามตัวที่สอน AI ให้แปลซับ เกม แอป และเว็บเป็นภาษาไทย เขียนบทละครสั้นที่ทำด้วยวิดีโอ AI และเกลาข้อความไทยให้อ่านเหมือนคนเขียน ใช้กับ Claude, ChatGPT, Gemini, Codex, Copilot และ Cursor</p>
                 <p class="lead en">Three free skills that teach your AI to translate subtitles, games, apps and websites into Thai, write Thai dialogue for AI short dramas, and make AI-written Thai read like a person wrote it. Works with Claude, ChatGPT, Gemini, Codex, Copilot and Cursor.</p>
                 <div class="cmd">
-                    <code><span class="dim">$ </span>npx humanizer-th</code>
+                    <code><span class="dim">$ </span>npx <span class="pkg">humanizer-th</span></code>
                     <button class="copy" type="button" data-copy="npx humanizer-th"><span class="th">คัดลอก</span><span class="en">Copy</span></button>
                 </div>
                 <p class="cmd-note th">พิมพ์ใน Terminal แล้วสั่งงานได้เลย ใช้ ChatGPT หรือ Gemini <a href="#start">ดูวิธีตรงนี้</a></p>
@@ -487,9 +494,11 @@
                 <li class="step">
                     <span class="trace" aria-hidden="true"></span>
                     <h3><span class="th">ติดตั้ง</span><span class="en">Install</span></h3>
-                    <div class="via" role="tablist">
-                        <span class="via-label"><span class="th">ผ่าน</span><span class="en">Via</span></span>
-                        <button role="tab" id="tab-cli" aria-controls="panel-cli" aria-selected="true">Terminal</button>
+                    <div class="via" role="tablist" aria-label="Install via">
+                        <span class="via-label"><span class="th">ติดตั้งผ่าน</span><span class="en">Install via</span></span>
+                        <button role="tab" id="tab-cli" aria-controls="panel-cli" aria-selected="true">CLI</button>
+                        <button role="tab" id="tab-plugin" aria-controls="panel-plugin" aria-selected="false">Claude plugin</button>
+                        <button role="tab" id="tab-skills" aria-controls="panel-skills" aria-selected="false">skills.sh</button>
                         <button role="tab" id="tab-claude" aria-controls="panel-claude" aria-selected="false">Claude.ai</button>
                         <button role="tab" id="tab-chat" aria-controls="panel-chat" aria-selected="false">ChatGPT, Gemini</button>
                     </div>
@@ -497,24 +506,44 @@
                     <div class="panel" role="tabpanel" id="panel-cli" aria-labelledby="tab-cli">
                         <p class="th">เปิด Terminal (Mac) หรือ PowerShell (Windows) แล้วพิมพ์</p>
                         <p class="en">Open Terminal (Mac) or PowerShell (Windows) and run</p>
-                        <div class="cmd" style="margin-top:10px">
-                            <code><span class="dim">$ </span>npx humanizer-th</code>
+                        <div class="cmd">
+                            <code><span class="dim">$ </span>npx <span class="pkg">humanizer-th</span></code>
                             <button class="copy" type="button" data-copy="npx humanizer-th"><span class="th">คัดลอก</span><span class="en">Copy</span></button>
                         </div>
                         <p class="small th">ลงให้ Claude Code, Codex, Gemini CLI และ GitHub Copilot ที่มีในเครื่อง ต้องมี <a href="https://nodejs.org" target="_blank" rel="noopener">Node.js</a> ถ้าขึ้นว่า Ok to proceed ให้กด y</p>
                         <p class="small en">Installs for Claude Code, Codex, Gemini CLI and GitHub Copilot, whichever you have. Needs <a href="https://nodejs.org" target="_blank" rel="noopener">Node.js</a>. If it asks "Ok to proceed", press y.</p>
                         <details>
-                            <summary><span class="th">อัปเดต ลบ และวิธีอื่น</span><span class="en">Update, remove and other ways</span></summary>
+                            <summary><span class="th">อัปเดตและลบ</span><span class="en">Updates and removal</span></summary>
                             <p><span class="th">อัปเดต</span><span class="en">Update</span></p>
                             <div class="code"><code>npx humanizer-th@latest</code><button class="copy" type="button">Copy</button></div>
                             <p><span class="th">ลบ</span><span class="en">Remove</span></p>
                             <div class="code"><code>npx humanizer-th uninstall</code><button class="copy" type="button">Copy</button></div>
-                            <p><span class="th">plugin ของ Claude Code (พิมพ์ใน Claude Code)</span><span class="en">Claude Code plugin (run inside Claude Code)</span></p>
-                            <div class="code"><code>/plugin marketplace add inatbalthazar/humanizer-th
-/plugin install humanizer-th@humanizer-th</code><button class="copy" type="button">Copy</button></div>
-                            <p><span class="th">Cursor, Windsurf และตัวอื่นที่ skills CLI รู้จัก</span><span class="en">Cursor, Windsurf and other Skills CLI agents</span></p>
-                            <div class="code"><code>npx skills add inatbalthazar/humanizer-th --global --agent '*'</code><button class="copy" type="button">Copy</button></div>
+                            <p><span class="th">ลงเฉพาะโฟลเดอร์โปรเจกต์นี้</span><span class="en">This project folder only</span></p>
+                            <div class="code"><code>npx humanizer-th --project</code><button class="copy" type="button">Copy</button></div>
                         </details>
+                    </div>
+
+                    <div class="panel" role="tabpanel" id="panel-plugin" aria-labelledby="tab-plugin" hidden>
+                        <p class="th">เปิด Claude Code แล้วพิมพ์สองบรรทัดนี้ทีละบรรทัด</p>
+                        <p class="en">Open Claude Code and run these two lines, one at a time.</p>
+                        <div class="cmd cmd-block">
+                            <code>/plugin marketplace add inatbalthazar/<span class="pkg">humanizer-th</span>
+/plugin install <span class="pkg">humanizer-th</span>@humanizer-th</code>
+                            <button class="copy" type="button" data-copy="/plugin marketplace add inatbalthazar/humanizer-th&#10;/plugin install humanizer-th@humanizer-th"><span class="th">คัดลอก</span><span class="en">Copy</span></button>
+                        </div>
+                        <p class="small th">ได้ทั้งสาม skill และอัปเดตผ่านเมนู /plugin ได้</p>
+                        <p class="small en">Gets all three skills, and updates through the /plugin menu.</p>
+                    </div>
+
+                    <div class="panel" role="tabpanel" id="panel-skills" aria-labelledby="tab-skills" hidden>
+                        <p class="th">สำหรับ Cursor, Windsurf และโปรแกรมอื่นที่ <a href="https://skills.sh" target="_blank" rel="noopener">skills.sh</a> รู้จัก พิมพ์ใน Terminal</p>
+                        <p class="en">For Cursor, Windsurf and the other agents <a href="https://skills.sh" target="_blank" rel="noopener">skills.sh</a> supports. Run in a terminal.</p>
+                        <div class="cmd">
+                            <code><span class="dim">$ </span>npx skills add inatbalthazar/<span class="pkg">humanizer-th</span></code>
+                            <button class="copy" type="button" data-copy="npx skills add inatbalthazar/humanizer-th"><span class="th">คัดลอก</span><span class="en">Copy</span></button>
+                        </div>
+                        <p class="small th">จะมีให้เลือกว่าลง skill ไหน และลงให้โปรแกรมอะไร</p>
+                        <p class="small en">It asks which skills to install and for which agents.</p>
                     </div>
 
                     <div class="panel" role="tabpanel" id="panel-claude" aria-labelledby="tab-claude" hidden>
