@@ -269,9 +269,16 @@ function runMainScript() {
 					ease: "power2.out",
 					delay: 0.5
 				});
-				// Refresh ScrollTrigger calculations after initial sequence finishes
+				try { sessionStorage.setItem('natfolio-intro-seen', '1'); } catch (e) {}
+
+				// Refresh ScrollTrigger calculations after initial sequence finishes,
+				// then honour links like /#portfolio-section from /thai-skills/
 				setTimeout(() => {
 					if (window.ScrollTrigger) ScrollTrigger.refresh();
+					const hashTarget = location.hash.length > 1 && document.querySelector(location.hash);
+					if (hashTarget) {
+						gsap.to(window, { scrollTo: { y: hashTarget, offsetY: 0 }, duration: 1.2, ease: "power2.inOut" });
+					}
 				}, 500);
 			}
 		}, 1000 / 30);

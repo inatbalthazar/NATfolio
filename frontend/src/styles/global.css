@@ -5787,3 +5787,34 @@ body.canteen-cursor * {
 		gap: .5rem;
 	}
 }
+
+/* Page switch to and from /thai-skills/: the browser cross-fades the page and keeps
+   the navbar in place, so the two read as one site. */
+@view-transition {
+	navigation: auto;
+}
+
+#nav-links {
+	view-transition-name: site-nav;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+	animation-duration: .35s;
+	animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	@view-transition {
+		navigation: none;
+	}
+}
+
+.returning #preloader {
+	display: none;
+}
+
+.returning #nav-links,
+.returning #burger-menu {
+	opacity: 1;
+}

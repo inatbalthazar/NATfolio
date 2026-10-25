@@ -82,7 +82,7 @@
         .lang button[aria-pressed="true"] { color: var(--text); background: var(--ground-2); }
         .lang button:hover { color: var(--text); }
 
-        .xp-nav { display: flex; align-items: center; gap: 12px; }
+        .xp-nav { display: flex; align-items: center; gap: 12px; view-transition-name: site-nav; }
         .xp-btn {
             font: 500 12px Tahoma, "Segoe UI", Arial, sans-serif; color: #000; text-decoration: none;
             display: inline-flex; align-items: center; gap: 4px; padding: 6px 18px; user-select: none;
@@ -141,6 +141,11 @@
         }
         .mobile-menu a:hover, .mobile-menu a[aria-current="page"] { color: #afeedf; }
         .mobile-menu a:hover { transform: translateX(10px); }
+
+        /* Page switch to and from codenat.me: cross-fade, navbar stays put */
+        @view-transition { navigation: auto; }
+        ::view-transition-old(root), ::view-transition-new(root) { animation-duration: .35s; animation-timing-function: var(--ease-out); }
+        @media (prefers-reduced-motion: reduce) { @view-transition { navigation: none; } }
 
         /* Film grain over everything, as on codenat.me */
         body::after {
