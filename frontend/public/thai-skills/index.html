@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thai Skills for AI | humanizer-th</title>
+    <meta name="description" content="skill ภาษาไทยฟรีสำหรับ AI แปลซับ เกม แอป และเว็บเป็นภาษาไทย เขียนบทละครสั้น AI และเกลาข้อความไทย ใช้กับ Claude, ChatGPT, Gemini, Codex, Copilot และ Cursor">
+    <meta property="og:title" content="Thai Skills for AI">
+    <meta property="og:description" content="แปลซับ เกม แอป เว็บ เขียนบทละครสั้น AI และเกลาข้อความไทย ฟรีและโอเพนซอร์ส">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://codenat.me/thai-skills/">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=IBM+Plex+Sans+Thai:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #08070a;
+            --bg-raised: #121016;
+            --bg-card: #17141c;
+            --line: #2a2631;
+            --text: #f6fffe;
+            --muted: #a9a6b3;
+            --teal: #509eaa;
+            --teal-soft: rgba(80, 158, 170, 0.14);
+            --rust: #c86e53;
+            --rust-soft: rgba(200, 110, 83, 0.14);
+            --grape: #48435c;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: Inter, "IBM Plex Sans Thai", sans-serif;
+            background: radial-gradient(ellipse at top, #0f0e12 0, #0d0b10 50%, var(--bg) 100%) fixed;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            cursor: url('/cursor.cur'), auto;
+        }
+
+        a, button { cursor: url('/Cursor107.cur'), pointer; }
+
+        /* Language switch: elements marked .en or .th show only in that language */
+        html[data-lang="th"] .en, html[data-lang="en"] .th { display: none !important; }
+
+        .wrap { width: 100%; max-width: 1040px; margin: 0 auto; padding: 0 16px; }
+
+        /* Top bar */
+        .topbar {
+            position: sticky; top: 0; z-index: 50;
+            background: rgba(8, 7, 10, 0.86);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--line);
+        }
+        .topbar .wrap { display: flex; align-items: center; justify-content: space-between; gap: 12px; height: 56px; }
+        .back {
+            font-family: "Chakra Petch", monospace;
+            color: var(--muted); text-decoration: none; font-size: 14px; letter-spacing: 0.04em;
+        }
+        .back:hover { color: var(--text); }
+        .top-actions { display: flex; align-items: center; gap: 10px; }
+        .lang-switch { display: flex; border: 1px solid var(--line); border-radius: 999px; overflow: hidden; }
+        .lang-switch button {
+            font-family: "Chakra Petch", monospace; font-size: 13px; font-weight: 600;
+            background: none; border: 0; color: var(--muted); padding: 5px 12px;
+        }
+        .lang-switch button[aria-pressed="true"] { background: var(--teal); color: var(--bg); }
+        .gh-link {
+            font-family: "Chakra Petch", monospace; font-size: 13px; font-weight: 600;
+            color: var(--text); text-decoration: none; border: 1px solid var(--line);
+            border-radius: 999px; padding: 5px 14px;
+        }
+        .gh-link:hover { border-color: var(--teal); }
+
+        /* Hero */
+        .hero { padding: 88px 0 64px; }
+        .eyebrow {
+            font-family: "Chakra Petch", monospace; font-size: 13px; font-weight: 600;
+            letter-spacing: 0.18em; color: var(--teal); text-transform: uppercase; margin-bottom: 18px;
+        }
+        h1, h2, h3 { font-family: "Chakra Petch", "IBM Plex Sans Thai", monospace; line-height: 1.25; }
+        h1 { font-size: clamp(34px, 6vw, 60px); font-weight: 700; max-width: 16ch; }
+        h1 .accent { color: var(--rust); }
+        .lead { color: var(--muted); font-size: clamp(16px, 2vw, 19px); max-width: 640px; margin-top: 22px; }
+        .hero-cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 34px; }
+        .btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            font-family: "Chakra Petch", monospace; font-weight: 600; font-size: 15px;
+            text-decoration: none; border-radius: 10px; padding: 12px 22px;
+            border: 1px solid var(--line); color: var(--text); background: var(--bg-raised);
+            transition: border-color 0.2s, transform 0.2s;
+        }
+        .btn:hover { border-color: var(--teal); transform: translateY(-1px); }
+        .btn.primary { background: var(--teal); border-color: var(--teal); color: var(--bg); }
+        .btn.primary:hover { background: #5fb1bd; }
+        .hero-meta { margin-top: 26px; color: var(--muted); font-size: 14px; display: flex; flex-wrap: wrap; gap: 8px 18px; }
+        .hero-meta span::before { content: ""; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--teal); margin-right: 8px; vertical-align: middle; }
+
+        section { padding: 56px 0; border-top: 1px solid var(--line); }
+        h2 { font-size: clamp(24px, 3.4vw, 34px); margin-bottom: 10px; }
+        .section-lead { color: var(--muted); max-width: 640px; margin-bottom: 30px; }
+
+        /* Before / after */
+        .compare { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+        .compare-card { background: var(--bg-card); border: 1px solid var(--line); border-radius: 14px; padding: 20px; }
+        .tag {
+            display: inline-block; font-family: "Chakra Petch", monospace; font-size: 12px; font-weight: 600;
+            letter-spacing: 0.08em; color: var(--teal); background: var(--teal-soft);
+            border-radius: 6px; padding: 2px 8px; margin-bottom: 14px;
+        }
+        .row { padding: 10px 0; border-top: 1px dashed var(--line); }
+        .row:first-of-type { border-top: 0; padding-top: 0; }
+        .row-label { font-size: 12px; color: var(--muted); letter-spacing: 0.04em; }
+        .row-text { font-size: 17px; }
+        .row.bad .row-text { color: var(--muted); text-decoration: line-through; text-decoration-color: var(--rust); }
+        .row.good .row-text { color: var(--text); font-weight: 600; }
+        .row.good .row-label { color: var(--teal); }
+        .gloss { display: block; font-size: 13px; color: var(--muted); font-weight: 400; }
+
+        /* Skills */
+        .skills { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+        .skill { background: var(--bg-card); border: 1px solid var(--line); border-radius: 14px; padding: 24px; display: flex; flex-direction: column; }
+        .skill-name { font-family: "Chakra Petch", monospace; font-size: 13px; color: var(--rust); font-weight: 600; letter-spacing: 0.06em; }
+        .skill h3 { font-size: 21px; margin: 6px 0 10px; }
+        .skill p { color: var(--muted); font-size: 15px; flex: 1; }
+        .try { margin-top: 18px; font-size: 14px; }
+        .try-label { color: var(--muted); font-size: 12px; display: block; margin-bottom: 4px; }
+        .try q { quotes: none; display: inline-block; background: var(--bg-raised); border: 1px solid var(--line); border-radius: 8px; padding: 4px 10px; margin: 0 6px 6px 0; }
+
+        /* Install tabs */
+        .tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
+        .tab {
+            font-family: "Chakra Petch", "IBM Plex Sans Thai", monospace; font-size: 14px; font-weight: 600;
+            background: var(--bg-raised); color: var(--muted); border: 1px solid var(--line);
+            border-radius: 999px; padding: 8px 16px;
+        }
+        .tab[aria-selected="true"] { color: var(--bg); background: var(--text); border-color: var(--text); }
+        .panel { background: var(--bg-card); border: 1px solid var(--line); border-radius: 14px; padding: 24px; }
+        /* Without JS every panel shows; with JS only the selected tab's panel does */
+        .panel[hidden] { display: block; margin-top: 16px; }
+        .js .panel[hidden] { display: none; }
+        .panel h3 { font-size: 18px; margin-bottom: 8px; }
+        .panel h3:not(:first-child) { margin-top: 26px; }
+        .panel p, .panel li { color: var(--muted); font-size: 15px; }
+        .panel ol { padding-left: 22px; display: grid; gap: 8px; margin-top: 8px; }
+        .panel strong { color: var(--text); font-weight: 600; }
+        .code {
+            display: flex; align-items: flex-start; justify-content: space-between; gap: 12px;
+            background: #0b0a0e; border: 1px solid var(--line); border-radius: 10px;
+            padding: 12px 14px; margin: 10px 0 4px;
+        }
+        .code code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 13.5px; color: var(--text); white-space: pre-wrap; word-break: break-all; }
+        .copy {
+            flex-shrink: 0; font-family: "Chakra Petch", monospace; font-size: 12px; font-weight: 600;
+            background: none; color: var(--teal); border: 1px solid var(--teal); border-radius: 6px; padding: 3px 10px;
+        }
+        .copy:hover { background: var(--teal-soft); }
+        .downloads { display: flex; flex-wrap: wrap; gap: 10px; margin: 12px 0 6px; }
+        .downloads .btn { font-size: 14px; padding: 9px 16px; }
+        .note { font-size: 13px; color: var(--muted); margin-top: 10px; }
+
+        /* Two-column info */
+        .info { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
+        .info-card { border: 1px solid var(--line); border-radius: 14px; padding: 24px; }
+        .info-card.foreign { background: var(--teal-soft); border-color: rgba(80, 158, 170, 0.4); }
+        .info-card.limits { background: var(--rust-soft); border-color: rgba(200, 110, 83, 0.4); }
+        .info-card h3 { font-size: 19px; margin-bottom: 10px; }
+        .info-card ul { padding-left: 20px; display: grid; gap: 8px; color: var(--muted); font-size: 15px; }
+        .info-card p { color: var(--muted); font-size: 15px; }
+
+        footer { border-top: 1px solid var(--line); padding: 36px 0 48px; color: var(--muted); font-size: 14px; }
+        footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; }
+        footer a { color: var(--text); text-decoration: none; }
+        footer a:hover { color: var(--teal); }
+        .foot-links { display: flex; flex-wrap: wrap; gap: 18px; }
+
+        :focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+
+        @media (max-width: 560px) {
+            .hero { padding: 56px 0 44px; }
+            section { padding: 44px 0; }
+            .btn { width: 100%; justify-content: center; }
+            .downloads .btn { width: auto; }
+            .gh-link { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<header class="topbar">
+    <div class="wrap">
+        <a class="back" href="/">&larr; codenat.me</a>
+        <div class="top-actions">
+            <div class="lang-switch" role="group" aria-label="Language">
+                <button type="button" data-set-lang="th" aria-pressed="true">TH</button>
+                <button type="button" data-set-lang="en" aria-pressed="false">EN</button>
+            </div>
+            <a class="gh-link" href="https://github.com/inatbalthazar/humanizer-th" target="_blank" rel="noopener">GitHub</a>
+        </div>
+    </div>
+</header>
+
+<main>
+    <div class="hero">
+        <div class="wrap">
+            <p class="eyebrow">Thai skills for AI</p>
+            <h1>
+                <span class="th">ให้ AI ทำงานภาษาไทย <span class="accent">แบบคนไทย</span></span>
+                <span class="en">Thai that doesn't read <span class="accent">like a translation</span></span>
+            </h1>
+            <p class="lead th">ชุด skill ฟรีสามตัว แปลซับ เกม แอป และเว็บเป็นภาษาไทย เขียนบทละครสั้นที่ทำด้วยวิดีโอ AI และเกลาข้อความไทยที่ AI เขียนให้อ่านเป็นธรรมชาติ ใช้กับ Claude, ChatGPT, Gemini, Codex, Copilot และ Cursor</p>
+            <p class="lead en">Three free skills for your AI: translate subtitles, games, apps and websites into natural Thai, write Thai dialogue for AI short dramas, and polish AI-written Thai. Works with Claude, ChatGPT, Gemini, Codex, Copilot and Cursor.</p>
+            <div class="hero-cta">
+                <a class="btn primary" href="#start"><span class="th">เริ่มใช้</span><span class="en">Get started</span></a>
+                <a class="btn" href="https://github.com/inatbalthazar/humanizer-th" target="_blank" rel="noopener"><span class="th">ดูโค้ดบน GitHub</span><span class="en">View on GitHub</span></a>
+            </div>
+            <div class="hero-meta">
+                <span class="th">ฟรี</span><span class="en">Free</span>
+                <span class="th">โอเพนซอร์ส (MIT)</span><span class="en">Open source (MIT)</span>
+                <span class="th">ติดตั้งครั้งเดียว แล้วพิมพ์สั่งตามปกติ</span><span class="en">Install once, then just ask</span>
+            </div>
+        </div>
+    </div>
+
+    <section>
+        <div class="wrap">
+            <h2><span class="th">ต่างกันตรงไหน</span><span class="en">What changes</span></h2>
+            <p class="section-lead th">ความหมายเหมือนเดิม แต่คนไทยอ่านแล้วไม่สะดุด</p>
+            <p class="section-lead en">Same meaning, but Thai readers don't trip over it.</p>
+            <div class="compare">
+                <div class="compare-card">
+                    <span class="tag"><span class="th">ซับหนัง</span><span class="en">SUBTITLE</span></span>
+                    <div class="row">
+                        <div class="row-label"><span class="th">ต้นฉบับ</span><span class="en">Source</span></div>
+                        <div class="row-text">Oh no.</div>
+                    </div>
+                    <div class="row bad">
+                        <div class="row-label"><span class="th">แปลแบบทั่วไป</span><span class="en">Typical machine translation</span></div>
+                        <div class="row-text">โอ้ไม่</div>
+                    </div>
+                    <div class="row good">
+                        <div class="row-label">localize-th</div>
+                        <div class="row-text">ซวยแล้ว <span class="gloss en">"I'm in trouble"</span></div>
+                    </div>
+                </div>
+                <div class="compare-card">
+                    <span class="tag"><span class="th">แอป</span><span class="en">APP</span></span>
+                    <div class="row">
+                        <div class="row-label"><span class="th">ต้นฉบับ</span><span class="en">Source</span></div>
+                        <div class="row-text">Payment failed.</div>
+                    </div>
+                    <div class="row bad">
+                        <div class="row-label"><span class="th">แปลแบบทั่วไป</span><span class="en">Typical machine translation</span></div>
+                        <div class="row-text">การชำระเงินล้มเหลว <span class="gloss en">"the payment has failed"</span></div>
+                    </div>
+                    <div class="row good">
+                        <div class="row-label">localize-th</div>
+                        <div class="row-text">ชำระเงินไม่สำเร็จ <span class="gloss en">"payment didn't go through"</span></div>
+                    </div>
+                </div>
+                <div class="compare-card">
+                    <span class="tag"><span class="th">ข้อความ LINE</span><span class="en">CHAT MESSAGE</span></span>
+                    <div class="row bad">
+                        <div class="row-label"><span class="th">AI เขียน</span><span class="en">Written by AI</span></div>
+                        <div class="row-text">ผมต้องการที่จะขอความช่วยเหลือจากพี่ในเรื่องหนึ่งครับ</div>
+                    </div>
+                    <div class="row good">
+                        <div class="row-label">humanizer-th</div>
+                        <div class="row-text">พี่ครับ ขอรบกวนหน่อย <span class="gloss en">"Hey, can I ask a favour"</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="wrap">
+            <h2><span class="th">สามตัว ใช้คนละงาน</span><span class="en">Three skills</span></h2>
+            <p class="section-lead th">ติดตั้งครั้งเดียวได้ทั้งสามตัว AI จะเลือกตัวที่ตรงกับคำสั่งเอง</p>
+            <p class="section-lead en">Install them together. The AI picks the right one for each request.</p>
+            <div class="skills">
+                <article class="skill">
+                    <span class="skill-name">localize-th</span>
+                    <h3><span class="th">แปลอังกฤษเป็นไทย</span><span class="en">English to Thai</span></h3>
+                    <p class="th">ซับหนังและซีรีส์ (SRT, VTT, ASS) บทพากย์ ข้อความในแอปและเว็บ (JSON, PO, XLIFF, .strings, Android XML) และเกม เวลาในซับ key และตัวแปรไม่พัง บรรทัดซับไม่ยาวจนอ่านไม่ทัน และเลือกสรรพนามตามความสัมพันธ์ของตัวละคร</p>
+                    <p class="en">Subtitles (SRT, VTT, ASS), dubbing scripts, app and website strings (JSON, PO, XLIFF, .strings, Android XML) and games. Timings, keys and placeholders stay intact, subtitle lines stay readable, and pronouns fit each character relationship.</p>
+                    <div class="try">
+                        <span class="try-label"><span class="th">พิมพ์ประมาณนี้</span><span class="en">Try asking</span></span>
+                        <q class="th">แปลซับนี้เป็นไทย</q><q class="th">แปลไฟล์ภาษาของแอปนี้</q>
+                        <q class="en">Translate this strings file into Thai</q>
+                    </div>
+                </article>
+                <article class="skill">
+                    <span class="skill-name">script-th</span>
+                    <h3><span class="th">ละครสั้น AI และเสียงพากย์</span><span class="en">AI short dramas and voice-over</span></h3>
+                    <p class="th">เขียนบทจากไอเดีย เกลาบทเดิม แบ่งบทให้พอดีคลิปละไม่กี่วินาที ทำพรอมต์ทีละช็อตที่ใช้คำบรรยายตัวละครชุดเดียวกันทุกช็อต และเตรียมบทให้เสียง AI อ่านไทยถูก</p>
+                    <p class="en">Write from an idea, polish an existing script, split it into shots that fit each clip, write per-shot prompts with the same character description every time, and prepare voice scripts Thai TTS reads correctly.</p>
+                    <div class="try">
+                        <span class="try-label"><span class="th">พิมพ์ประมาณนี้</span><span class="en">Try asking</span></span>
+                        <q class="th">เขียนบทละครสั้นเรื่อง...</q><q class="th">ทำบทให้ AI พากย์</q>
+                        <q class="en">Write a Thai short drama about...</q>
+                    </div>
+                </article>
+                <article class="skill">
+                    <span class="skill-name">humanizer-th</span>
+                    <h3><span class="th">เกลาข้อความไทย</span><span class="en">Polish AI-written Thai</span></h3>
+                    <p class="th">โพสต์ อีเมล และข้อความ LINE ที่ AI เขียน ให้อ่านเหมือนคนเขียน หรือส่งโพสต์เก่าของตัวเองไปให้ดู แล้วให้เขียนเป็นสำนวนของเราเอง</p>
+                    <p class="en">Posts, emails and chat messages that read like a person wrote them, or in your own voice from samples of your past writing.</p>
+                    <div class="try">
+                        <span class="try-label"><span class="th">พิมพ์ประมาณนี้</span><span class="en">Try asking</span></span>
+                        <q class="th">เกลาให้หน่อย</q><q class="th">เขียนให้เหมือนที่เราเขียน</q>
+                        <q class="en">Make my Thai sound natural</q>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section id="start">
+        <div class="wrap">
+            <h2><span class="th">เริ่มใช้</span><span class="en">Get started</span></h2>
+            <p class="section-lead th">เลือกตามเครื่องมือที่ใช้อยู่</p>
+            <p class="section-lead en">Pick the tool you use.</p>
+
+            <div class="tabs" role="tablist">
+                <button class="tab" role="tab" id="tab-cli" aria-controls="panel-cli" aria-selected="true">Claude Code, Codex, Cursor</button>
+                <button class="tab" role="tab" id="tab-claude" aria-controls="panel-claude" aria-selected="false">Claude.ai</button>
+                <button class="tab" role="tab" id="tab-chat" aria-controls="panel-chat" aria-selected="false">ChatGPT, Gemini</button>
+            </div>
+
+            <div class="panel" role="tabpanel" id="panel-cli" aria-labelledby="tab-cli">
+                <h3>Claude Code</h3>
+                <p class="th">พิมพ์สองบรรทัดนี้ใน Claude Code ได้ทั้งสามตัว</p>
+                <p class="en">Run these two lines inside Claude Code to install all three.</p>
+                <div class="code"><code>/plugin marketplace add inatbalthazar/humanizer-th
+/plugin install humanizer-th@humanizer-th</code><button class="copy" type="button">Copy</button></div>
+
+                <h3><span class="th">Codex, Gemini CLI, Copilot, Cursor และตัวอื่น</span><span class="en">Codex, Gemini CLI, Copilot, Cursor and others</span></h3>
+                <p class="th">ต้องมี Node.js ในเครื่อง คำสั่งนี้ติดตั้งให้ทุกเครื่องมือที่เจอ</p>
+                <p class="en">Needs Node.js. Installs into every supported tool it finds.</p>
+                <div class="code"><code>npx skills add inatbalthazar/humanizer-th --global --agent '*'</code><button class="copy" type="button">Copy</button></div>
+
+                <h3><span class="th">ไม่มี Node.js (macOS, Linux)</span><span class="en">Without Node.js (macOS, Linux)</span></h3>
+                <div class="code"><code>curl -fsSL https://raw.githubusercontent.com/inatbalthazar/humanizer-th/main/install.sh | bash</code><button class="copy" type="button">Copy</button></div>
+                <p class="note th">ติดตั้งเสร็จแล้วปิดเปิดโปรแกรมใหม่หนึ่งรอบ อัปเดตเวอร์ชันใหม่ก็รันคำสั่งเดิมซ้ำ</p>
+                <p class="note en">Restart the tool once after installing. Run the same command again to update.</p>
+            </div>
+
+            <div class="panel" role="tabpanel" id="panel-claude" aria-labelledby="tab-claude" hidden>
+                <h3><span class="th">ใช้ใน Claude.ai หรือ Claude Desktop</span><span class="en">Claude.ai or Claude Desktop</span></h3>
+                <ol>
+                    <li class="th">ดาวน์โหลด zip ของ skill ที่ต้องการ</li>
+                    <li class="en">Download the zip for each skill you want.</li>
+                </ol>
+                <div class="downloads">
+                    <a class="btn" href="https://github.com/inatbalthazar/humanizer-th/releases/latest/download/localize-th.zip">localize-th.zip</a>
+                    <a class="btn" href="https://github.com/inatbalthazar/humanizer-th/releases/latest/download/script-th.zip">script-th.zip</a>
+                    <a class="btn" href="https://github.com/inatbalthazar/humanizer-th/releases/latest/download/humanizer-th.zip">humanizer-th.zip</a>
+                </div>
+                <ol start="2">
+                    <li class="th">เข้า <strong>Settings → Capabilities → Skills</strong> แล้วอัปโหลดทีละไฟล์ ไม่ต้องแตก zip</li>
+                    <li class="en">Go to <strong>Settings → Capabilities → Skills</strong> and upload them one at a time. Don't unzip them.</li>
+                    <li class="th">เปิด skill ไว้ แล้วพิมพ์สั่งในแชตได้เลย</li>
+                    <li class="en">Turn the skills on, then ask in any chat.</li>
+                </ol>
+                <p class="note th">ถ้าในหน้านั้นมีสวิตช์ code execution ให้เปิดด้วย</p>
+                <p class="note en">If the page has a code execution switch, turn it on too.</p>
+            </div>
+
+            <div class="panel" role="tabpanel" id="panel-chat" aria-labelledby="tab-chat" hidden>
+                <h3><span class="th">ดาวน์โหลดไฟล์รวม</span><span class="en">Download the prompt files</span></h3>
+                <p class="th">แต่ละไฟล์รวมทุกอย่างของ skill นั้นไว้ในไฟล์เดียว</p>
+                <p class="en">Each file bundles one whole skill.</p>
+                <div class="downloads">
+                    <a class="btn" href="https://github.com/inatbalthazar/humanizer-th/releases/latest/download/localize-th-prompt.md">localize-th-prompt.md</a>
+                    <a class="btn" href="https://github.com/inatbalthazar/humanizer-th/releases/latest/download/script-th-prompt.md">script-th-prompt.md</a>
+                    <a class="btn" href="https://github.com/inatbalthazar/humanizer-th/releases/latest/download/humanizer-th-prompt.md">humanizer-th-prompt.md</a>
+                </div>
+                <h3>ChatGPT</h3>
+                <ol>
+                    <li class="th">สร้าง GPT ใหม่ หนึ่งตัวต่อหนึ่ง skill</li>
+                    <li class="en">Create a new GPT, one per skill.</li>
+                    <li class="th">อัปโหลดไฟล์ในช่อง <strong>Knowledge</strong></li>
+                    <li class="en">Upload the file under <strong>Knowledge</strong>.</li>
+                    <li class="th">ช่อง <strong>Instructions</strong> พิมพ์ว่า "ทำตามคำสั่งในไฟล์ [ชื่อไฟล์] ทุกข้อ"</li>
+                    <li class="en">Set <strong>Instructions</strong> to "Follow every instruction in [file name]."</li>
+                    <li class="th">ใช้งานผ่าน GPT ตัวนั้นทุกครั้ง</li>
+                    <li class="en">Use that GPT whenever you need the skill.</li>
+                </ol>
+                <h3>Gemini</h3>
+                <ol>
+                    <li class="th">สร้าง Gem ใหม่</li>
+                    <li class="en">Create a new Gem.</li>
+                    <li class="th">วางเนื้อหาทั้งไฟล์ในช่องคำสั่ง หรือแนบไฟล์</li>
+                    <li class="en">Paste the whole file into its instructions, or attach it.</li>
+                </ol>
+                <p class="note th">แชตทั่วไปก็ใช้ได้ แนบไฟล์แล้วบอกให้ทำตามไฟล์ แต่ต้องแนบใหม่ทุกแชต</p>
+                <p class="note en">Any chat works too: attach the file and ask the model to follow it. You'll need to attach it in every new chat.</p>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="wrap info">
+            <div class="info-card foreign">
+                <h3><span class="th">สำหรับคนที่อ่านไทยไม่ออก</span><span class="en">If you don't read Thai</span></h3>
+                <ul class="th">
+                    <li>สั่งเป็นภาษาอังกฤษได้ งานที่ได้ยังเป็นภาษาไทย</li>
+                    <li>บันทึก สรุป และคำถาม จะเป็นภาษาอังกฤษ</li>
+                    <li>งานสั้นมีคำแปลกลับเป็นภาษาอังกฤษให้ตรวจความหมาย ไฟล์ยาวขอเพิ่มได้</li>
+                    <li>เหมาะกับบริษัทเกมและแอปต่างชาติที่จะออกเวอร์ชันไทย</li>
+                </ul>
+                <ul class="en">
+                    <li>Ask in English. The Thai output stays Thai.</li>
+                    <li>Notes, summaries and questions come back in English.</li>
+                    <li>Short jobs include a back-translation so you can check the meaning. Ask for one on longer files.</li>
+                    <li>Have a native Thai speaker review anything you publish.</li>
+                </ul>
+            </div>
+            <div class="info-card limits">
+                <h3><span class="th">ควรรู้ก่อนใช้</span><span class="en">Good to know</span></h3>
+                <ul class="th">
+                    <li>skill คือคำแนะนำที่ AI ทำตาม ไม่ใช่โปรแกรม ผลแต่ละครั้งจึงไม่เหมือนกันเป๊ะ ควรอ่านทวนก่อนใช้จริง</li>
+                    <li>ทดสอบกับ Claude เป็นหลัก ตัวอื่นใช้ได้ แต่ผลขึ้นกับว่าโมเดลเก่งภาษาไทยแค่ไหน</li>
+                    <li>ไม่ได้มีไว้หลบ AI detector และไม่เขียนในนามคนอื่น</li>
+                </ul>
+                <ul class="en">
+                    <li>Skills are guidance the AI follows, not programs, so results vary. Review before you use them.</li>
+                    <li>Tested mostly with Claude. Other models work, depending on how well they handle Thai.</li>
+                    <li>Not an AI-detector evasion tool, and it won't write as someone else.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <div class="wrap">
+        <span class="th">ทำโดย <a href="/">Watcharine Duangsri</a></span>
+        <span class="en">Made by <a href="/">Watcharine Duangsri</a></span>
+        <div class="foot-links">
+            <a href="https://github.com/inatbalthazar/humanizer-th" target="_blank" rel="noopener">GitHub</a>
+            <a href="https://github.com/inatbalthazar/humanizer-th/releases/latest" target="_blank" rel="noopener"><span class="th">ดาวน์โหลดทั้งหมด</span><span class="en">All downloads</span></a>
+            <a href="https://github.com/inatbalthazar/humanizer-th/issues" target="_blank" rel="noopener"><span class="th">แจ้งปัญหา</span><span class="en">Report a problem</span></a>
+        </div>
+    </div>
+</footer>
+
+<script>
+    (function () {
+        var root = document.documentElement;
+        root.classList.add('js');
+
+        // Language: ?lang= in the URL, then the saved choice, then the browser language.
+        function saved() {
+            try { return localStorage.getItem('thai-skills-lang'); } catch (e) { return null; }
+        }
+        var param = new URLSearchParams(location.search).get('lang');
+        var lang = param || saved() || ((navigator.language || '').toLowerCase().indexOf('th') === 0 ? 'th' : 'en');
+        if (lang !== 'th' && lang !== 'en') lang = 'th';
+
+        function setLang(next) {
+            root.setAttribute('data-lang', next);
+            root.setAttribute('lang', next);
+            document.querySelectorAll('[data-set-lang]').forEach(function (b) {
+                b.setAttribute('aria-pressed', String(b.getAttribute('data-set-lang') === next));
+            });
+            try { localStorage.setItem('thai-skills-lang', next); } catch (e) {}
+        }
+        setLang(lang);
+        document.querySelectorAll('[data-set-lang]').forEach(function (b) {
+            b.addEventListener('click', function () { setLang(b.getAttribute('data-set-lang')); });
+        });
+
+        // Install tabs
+        var tabs = document.querySelectorAll('[role="tab"]');
+        tabs.forEach(function (tab) {
+            tab.addEventListener('click', function () {
+                tabs.forEach(function (t) {
+                    var on = t === tab;
+                    t.setAttribute('aria-selected', String(on));
+                    document.getElementById(t.getAttribute('aria-controls')).hidden = !on;
+                });
+            });
+        });
+
+        // Copy buttons
+        document.querySelectorAll('.copy').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                var text = btn.parentElement.querySelector('code').textContent;
+                var done = function () {
+                    btn.textContent = 'Copied';
+                    setTimeout(function () { btn.textContent = 'Copy'; }, 1500);
+                };
+                if (navigator.clipboard) {
+                    navigator.clipboard.writeText(text).then(done, function () {});
+                }
+            });
+        });
+    })();
+</script>
+</body>
+</html>
