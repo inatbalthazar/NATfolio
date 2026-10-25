@@ -96,7 +96,8 @@
         .btn:hover { border-color: var(--teal); transform: translateY(-1px); }
         .btn.primary { background: var(--teal); border-color: var(--teal); color: var(--bg); }
         .btn.primary:hover { background: #5fb1bd; }
-        .hero-meta { margin-top: 26px; color: var(--muted); font-size: 14px; display: flex; flex-wrap: wrap; gap: 8px 18px; }
+        .hero-cmd { max-width: 420px; margin-top: 22px; }
+        .hero-meta { margin-top: 20px; color: var(--muted); font-size: 14px; display: flex; flex-wrap: wrap; gap: 8px 18px; }
         .hero-meta span::before { content: ""; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--teal); margin-right: 8px; vertical-align: middle; }
 
         section { padding: 56px 0; border-top: 1px solid var(--line); }
@@ -138,7 +139,7 @@
             border-radius: 999px; padding: 8px 16px;
         }
         .tab[aria-selected="true"] { color: var(--bg); background: var(--text); border-color: var(--text); }
-        .panel { background: var(--bg-card); border: 1px solid var(--line); border-radius: 14px; padding: 24px; }
+        .panel { padding-top: 4px; }
         /* Without JS every panel shows; with JS only the selected tab's panel does */
         .panel[hidden] { display: block; margin-top: 16px; }
         .js .panel[hidden] { display: none; }
@@ -161,6 +162,36 @@
         .downloads { display: flex; flex-wrap: wrap; gap: 10px; margin: 12px 0 6px; }
         .downloads .btn { font-size: 14px; padding: 9px 16px; }
         .note { font-size: 13px; color: var(--muted); margin-top: 10px; }
+
+        /* Install: title on the left, numbered steps on the right */
+        .install { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.7fr); gap: 48px; }
+        .install-intro p { color: var(--muted); font-size: 17px; margin-top: 12px; max-width: 320px; }
+        .steps { list-style: none; }
+        .step { display: flex; gap: 16px; padding: 22px 0; border-top: 1px solid var(--line); }
+        .step:first-child { border-top: 0; padding-top: 4px; }
+        .step-num {
+            flex-shrink: 0; width: 30px; height: 30px; border-radius: 50%;
+            display: inline-flex; align-items: center; justify-content: center;
+            font-family: "Chakra Petch", monospace; font-weight: 700; font-size: 15px;
+            background: var(--text); color: var(--bg); margin-top: 1px;
+        }
+        .step-body { flex: 1; min-width: 0; }
+        .step-body h3 { font-size: 21px; margin-bottom: 10px; }
+        .step-body > p, .panel > p { color: var(--muted); font-size: 15px; margin-bottom: 4px; }
+        .step-body strong { color: var(--text); font-weight: 600; }
+        .tabs-label { color: var(--muted); font-size: 14px; align-self: center; margin-right: 4px; }
+        .code.big { padding: 16px 18px; align-items: center; }
+        .code.big code { font-size: 17px; }
+        .code .prompt { color: var(--muted); }
+        .code mark { background: rgba(200, 110, 83, 0.22); color: #f0a184; border-radius: 4px; padding: 1px 6px; }
+        .note a { color: var(--teal); }
+        .more { margin-top: 16px; }
+        .more summary { color: var(--muted); font-size: 14px; }
+        .more summary:hover { color: var(--text); }
+        .more p { color: var(--muted); font-size: 14px; margin-top: 14px; }
+        @media (max-width: 800px) {
+            .install { grid-template-columns: 1fr; gap: 20px; }
+        }
 
         /* Two-column info */
         .info { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
@@ -217,6 +248,7 @@
                 <a class="btn primary" href="#start"><span class="th">เริ่มใช้</span><span class="en">Get started</span></a>
                 <a class="btn" href="https://github.com/inatbalthazar/humanizer-th" target="_blank" rel="noopener"><span class="th">ดูโค้ดบน GitHub</span><span class="en">View on GitHub</span></a>
             </div>
+            <div class="code big hero-cmd"><code><span class="prompt">$ </span>npx <mark>humanizer-th</mark></code><button class="copy" type="button" data-copy="npx humanizer-th">Copy</button></div>
             <div class="hero-meta">
                 <span class="th">ฟรี</span><span class="en">Free</span>
                 <span class="th">โอเพนซอร์ส (MIT)</span><span class="en">Open source (MIT)</span>
@@ -320,86 +352,92 @@
     </section>
 
     <section id="start">
-        <div class="wrap">
-            <h2><span class="th">เริ่มใช้</span><span class="en">Get started</span></h2>
-            <p class="section-lead th">เลือกตามเครื่องมือที่ใช้อยู่</p>
-            <p class="section-lead en">Pick the tool you use.</p>
-
-            <div class="tabs" role="tablist">
-                <button class="tab" role="tab" id="tab-cli" aria-controls="panel-cli" aria-selected="true">Claude Code, Codex, Cursor</button>
-                <button class="tab" role="tab" id="tab-claude" aria-controls="panel-claude" aria-selected="false">Claude.ai</button>
-                <button class="tab" role="tab" id="tab-chat" aria-controls="panel-chat" aria-selected="false">ChatGPT, Gemini</button>
+        <div class="wrap install">
+            <div class="install-intro">
+                <h2><span class="th">ติดตั้ง</span><span class="en">Install</span></h2>
+                <p class="th">คำสั่งเดียว แล้วพิมพ์สั่งงานเป็นภาษาไทยได้เลย ไม่ต้องตั้งค่าอะไรเพิ่ม</p>
+                <p class="en">One command, then just ask. Nothing else to set up.</p>
             </div>
+            <ol class="steps">
+                <li class="step">
+                    <span class="step-num">1</span>
+                    <div class="step-body">
+                        <h3><span class="th">ติดตั้ง</span><span class="en">Install the skills</span></h3>
+                        <div class="tabs" role="tablist">
+                            <span class="tabs-label"><span class="th">ติดตั้งผ่าน</span><span class="en">Install via</span></span>
+                            <button class="tab" role="tab" id="tab-cli" aria-controls="panel-cli" aria-selected="true">Terminal</button>
+                            <button class="tab" role="tab" id="tab-claude" aria-controls="panel-claude" aria-selected="false">Claude.ai</button>
+                            <button class="tab" role="tab" id="tab-chat" aria-controls="panel-chat" aria-selected="false">ChatGPT, Gemini</button>
+                        </div>
 
-            <div class="panel" role="tabpanel" id="panel-cli" aria-labelledby="tab-cli">
-                <h3>Claude Code</h3>
-                <p class="th">พิมพ์สองบรรทัดนี้ใน Claude Code ได้ทั้งสามตัว</p>
-                <p class="en">Run these two lines inside Claude Code to install all three.</p>
-                <div class="code"><code>/plugin marketplace add inatbalthazar/humanizer-th
+                        <div class="panel" role="tabpanel" id="panel-cli" aria-labelledby="tab-cli">
+                            <p class="th">เปิด Terminal (Mac) หรือ PowerShell (Windows) แล้วพิมพ์</p>
+                            <p class="en">Open Terminal (Mac) or PowerShell (Windows) and run</p>
+                            <div class="code big"><code><span class="prompt">$ </span>npx <mark>humanizer-th</mark></code><button class="copy" type="button" data-copy="npx humanizer-th">Copy</button></div>
+                            <p class="note th">ติดตั้งทั้งสามตัวให้ Claude Code, Codex, Gemini CLI และ GitHub Copilot ที่มีในเครื่อง ต้องมี <a href="https://nodejs.org" target="_blank" rel="noopener">Node.js</a> ถ้าขึ้นว่า Ok to proceed ให้กด y</p>
+                            <p class="note en">Installs all three for Claude Code, Codex, Gemini CLI and GitHub Copilot, whichever you have. Needs <a href="https://nodejs.org" target="_blank" rel="noopener">Node.js</a>. If it asks "Ok to proceed", press y.</p>
+                            <details class="more">
+                                <summary><span class="th">อัปเดต ลบ และวิธีอื่น</span><span class="en">Updates, removal and other ways</span></summary>
+                                <p><span class="th">อัปเดต</span><span class="en">Update</span></p>
+                                <div class="code"><code>npx humanizer-th@latest</code><button class="copy" type="button">Copy</button></div>
+                                <p><span class="th">ลบ</span><span class="en">Remove</span></p>
+                                <div class="code"><code>npx humanizer-th uninstall</code><button class="copy" type="button">Copy</button></div>
+                                <p><span class="th">plugin ของ Claude Code (พิมพ์ใน Claude Code)</span><span class="en">Claude Code plugin (run inside Claude Code)</span></p>
+                                <div class="code"><code>/plugin marketplace add inatbalthazar/humanizer-th
 /plugin install humanizer-th@humanizer-th</code><button class="copy" type="button">Copy</button></div>
+                                <p><span class="th">Cursor, Windsurf และตัวอื่นที่ skills CLI รู้จัก</span><span class="en">Cursor, Windsurf and other Skills CLI agents</span></p>
+                                <div class="code"><code>npx skills add inatbalthazar/humanizer-th --global --agent '*'</code><button class="copy" type="button">Copy</button></div>
+                            </details>
+                        </div>
 
-                <h3><span class="th">Codex, Gemini CLI, Copilot, Cursor และตัวอื่น</span><span class="en">Codex, Gemini CLI, Copilot, Cursor and others</span></h3>
-                <p class="th">ต้องมี Node.js ในเครื่อง คำสั่งนี้ติดตั้งให้ทุกเครื่องมือที่เจอ</p>
-                <p class="en">Needs Node.js. Installs into every supported tool it finds.</p>
-                <div class="code"><code>npx skills add inatbalthazar/humanizer-th --global --agent '*'</code><button class="copy" type="button">Copy</button></div>
+                        <div class="panel" role="tabpanel" id="panel-claude" aria-labelledby="tab-claude" hidden>
+                            <p class="th">ดาวน์โหลด zip ของ skill ที่ต้องการ แล้วอัปโหลดทีละไฟล์ใน <strong>Settings → Capabilities → Skills</strong> ไม่ต้องแตก zip</p>
+                            <p class="en">Download the zip for each skill you want, then upload them one at a time under <strong>Settings → Capabilities → Skills</strong>. Don't unzip them.</p>
+                            <div class="downloads">
+                                <a class="btn" href="https://github.com/inatbalthazar/humanizer-th/releases/latest/download/localize-th.zip">localize-th.zip</a>
+                                <a class="btn" href="https://github.com/inatbalthazar/humanizer-th/releases/latest/download/script-th.zip">script-th.zip</a>
+                                <a class="btn" href="https://github.com/inatbalthazar/humanizer-th/releases/latest/download/humanizer-th.zip">humanizer-th.zip</a>
+                            </div>
+                            <p class="note th">ถ้าในหน้านั้นมีสวิตช์ code execution ให้เปิดด้วย</p>
+                            <p class="note en">If the page has a code execution switch, turn it on too.</p>
+                        </div>
 
-                <h3><span class="th">ไม่มี Node.js (macOS, Linux)</span><span class="en">Without Node.js (macOS, Linux)</span></h3>
-                <div class="code"><code>curl -fsSL https://raw.githubusercontent.com/inatbalthazar/humanizer-th/main/install.sh | bash</code><button class="copy" type="button">Copy</button></div>
-                <p class="note th">ติดตั้งเสร็จแล้วปิดเปิดโปรแกรมใหม่หนึ่งรอบ อัปเดตเวอร์ชันใหม่ก็รันคำสั่งเดิมซ้ำ</p>
-                <p class="note en">Restart the tool once after installing. Run the same command again to update.</p>
-            </div>
-
-            <div class="panel" role="tabpanel" id="panel-claude" aria-labelledby="tab-claude" hidden>
-                <h3><span class="th">ใช้ใน Claude.ai หรือ Claude Desktop</span><span class="en">Claude.ai or Claude Desktop</span></h3>
-                <ol>
-                    <li class="th">ดาวน์โหลด zip ของ skill ที่ต้องการ</li>
-                    <li class="en">Download the zip for each skill you want.</li>
-                </ol>
-                <div class="downloads">
-                    <a class="btn" href="https://github.com/inatbalthazar/humanizer-th/releases/latest/download/localize-th.zip">localize-th.zip</a>
-                    <a class="btn" href="https://github.com/inatbalthazar/humanizer-th/releases/latest/download/script-th.zip">script-th.zip</a>
-                    <a class="btn" href="https://github.com/inatbalthazar/humanizer-th/releases/latest/download/humanizer-th.zip">humanizer-th.zip</a>
-                </div>
-                <ol start="2">
-                    <li class="th">เข้า <strong>Settings → Capabilities → Skills</strong> แล้วอัปโหลดทีละไฟล์ ไม่ต้องแตก zip</li>
-                    <li class="en">Go to <strong>Settings → Capabilities → Skills</strong> and upload them one at a time. Don't unzip them.</li>
-                    <li class="th">เปิด skill ไว้ แล้วพิมพ์สั่งในแชตได้เลย</li>
-                    <li class="en">Turn the skills on, then ask in any chat.</li>
-                </ol>
-                <p class="note th">ถ้าในหน้านั้นมีสวิตช์ code execution ให้เปิดด้วย</p>
-                <p class="note en">If the page has a code execution switch, turn it on too.</p>
-            </div>
-
-            <div class="panel" role="tabpanel" id="panel-chat" aria-labelledby="tab-chat" hidden>
-                <h3><span class="th">ดาวน์โหลดไฟล์รวม</span><span class="en">Download the prompt files</span></h3>
-                <p class="th">แต่ละไฟล์รวมทุกอย่างของ skill นั้นไว้ในไฟล์เดียว</p>
-                <p class="en">Each file bundles one whole skill.</p>
-                <div class="downloads">
-                    <a class="btn" href="https://github.com/inatbalthazar/humanizer-th/releases/latest/download/localize-th-prompt.md">localize-th-prompt.md</a>
-                    <a class="btn" href="https://github.com/inatbalthazar/humanizer-th/releases/latest/download/script-th-prompt.md">script-th-prompt.md</a>
-                    <a class="btn" href="https://github.com/inatbalthazar/humanizer-th/releases/latest/download/humanizer-th-prompt.md">humanizer-th-prompt.md</a>
-                </div>
-                <h3>ChatGPT</h3>
-                <ol>
-                    <li class="th">สร้าง GPT ใหม่ หนึ่งตัวต่อหนึ่ง skill</li>
-                    <li class="en">Create a new GPT, one per skill.</li>
-                    <li class="th">อัปโหลดไฟล์ในช่อง <strong>Knowledge</strong></li>
-                    <li class="en">Upload the file under <strong>Knowledge</strong>.</li>
-                    <li class="th">ช่อง <strong>Instructions</strong> พิมพ์ว่า "ทำตามคำสั่งในไฟล์ [ชื่อไฟล์] ทุกข้อ"</li>
-                    <li class="en">Set <strong>Instructions</strong> to "Follow every instruction in [file name]."</li>
-                    <li class="th">ใช้งานผ่าน GPT ตัวนั้นทุกครั้ง</li>
-                    <li class="en">Use that GPT whenever you need the skill.</li>
-                </ol>
-                <h3>Gemini</h3>
-                <ol>
-                    <li class="th">สร้าง Gem ใหม่</li>
-                    <li class="en">Create a new Gem.</li>
-                    <li class="th">วางเนื้อหาทั้งไฟล์ในช่องคำสั่ง หรือแนบไฟล์</li>
-                    <li class="en">Paste the whole file into its instructions, or attach it.</li>
-                </ol>
-                <p class="note th">แชตทั่วไปก็ใช้ได้ แนบไฟล์แล้วบอกให้ทำตามไฟล์ แต่ต้องแนบใหม่ทุกแชต</p>
-                <p class="note en">Any chat works too: attach the file and ask the model to follow it. You'll need to attach it in every new chat.</p>
-            </div>
+                        <div class="panel" role="tabpanel" id="panel-chat" aria-labelledby="tab-chat" hidden>
+                            <p class="th">ดาวน์โหลดไฟล์ของ skill ที่ต้องการ</p>
+                            <p class="en">Download the file for each skill you want.</p>
+                            <div class="downloads">
+                                <a class="btn" href="https://github.com/inatbalthazar/humanizer-th/releases/latest/download/localize-th-prompt.md">localize-th-prompt.md</a>
+                                <a class="btn" href="https://github.com/inatbalthazar/humanizer-th/releases/latest/download/script-th-prompt.md">script-th-prompt.md</a>
+                                <a class="btn" href="https://github.com/inatbalthazar/humanizer-th/releases/latest/download/humanizer-th-prompt.md">humanizer-th-prompt.md</a>
+                            </div>
+                            <p class="th"><strong>ChatGPT:</strong> สร้าง GPT ใหม่ อัปโหลดไฟล์ในช่อง Knowledge แล้วพิมพ์ในช่อง Instructions ว่า "ทำตามคำสั่งในไฟล์ [ชื่อไฟล์] ทุกข้อ"</p>
+                            <p class="en"><strong>ChatGPT:</strong> create a GPT, upload the file under Knowledge, and set Instructions to "Follow every instruction in [file name]."</p>
+                            <p class="th"><strong>Gemini:</strong> สร้าง Gem แล้ววางเนื้อหาทั้งไฟล์ในช่องคำสั่ง</p>
+                            <p class="en"><strong>Gemini:</strong> create a Gem and paste the whole file into its instructions.</p>
+                        </div>
+                    </div>
+                </li>
+                <li class="step">
+                    <span class="step-num">2</span>
+                    <div class="step-body">
+                        <h3><span class="th">เปิดโปรแกรมใหม่</span><span class="en">Restart your tool</span></h3>
+                        <p class="th">ปิดแล้วเปิด Claude Code, Codex หรือโปรแกรมที่ใช้อีกครั้ง ถ้าใช้ GPT หรือ Gem ข้ามขั้นนี้ได้</p>
+                        <p class="en">Close and reopen Claude Code, Codex or whatever you use. Skip this for a GPT or Gem.</p>
+                    </div>
+                </li>
+                <li class="step">
+                    <span class="step-num">3</span>
+                    <div class="step-body">
+                        <h3><span class="th">พิมพ์สั่งได้เลย</span><span class="en">Just ask</span></h3>
+                        <p class="th">ไม่ต้องจำคำสั่ง AI จะเลือก skill ที่ตรงกับงานเอง</p>
+                        <p class="en">No commands to remember. The AI picks the right skill.</p>
+                        <div class="try">
+                            <q class="th">แปลซับนี้เป็นไทย</q><q class="th">เขียนบทละครสั้นเรื่อง...</q><q class="th">เกลาให้หน่อย</q>
+                            <q class="en">Translate this subtitle file into Thai</q><q class="en">Make my Thai sound natural</q>
+                        </div>
+                    </div>
+                </li>
+            </ol>
         </div>
     </section>
 
@@ -490,7 +528,7 @@
         // Copy buttons
         document.querySelectorAll('.copy').forEach(function (btn) {
             btn.addEventListener('click', function () {
-                var text = btn.parentElement.querySelector('code').textContent;
+                var text = btn.getAttribute('data-copy') || btn.parentElement.querySelector('code').textContent;
                 var done = function () {
                     btn.textContent = 'Copied';
                     setTimeout(function () { btn.textContent = 'Copy'; }, 1500);
