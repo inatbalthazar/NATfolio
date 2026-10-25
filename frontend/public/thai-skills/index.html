@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="th" data-lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thai Skills for AI | humanizer-th</title>
+    <meta name="description" content="skill ภาษาไทยฟรีสำหรับ AI แปลซับ เกม แอป และเว็บเป็นภาษาไทย เขียนบทละครสั้น AI และเกลาข้อความไทย ใช้กับ Claude, ChatGPT, Gemini, Codex, Copilot และ Cursor">
+    <meta property="og:title" content="Thai Skills for AI">
+    <meta property="og:description" content="แปลซับ เกม แอป เว็บ เขียนบทละครสั้น AI และเกลาข้อความไทย ฟรีและโอเพนซอร์ส">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://codenat.me/thai-skills/">
+    <meta name="theme-color" content="#0b0a0d">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@400;500;600&family=Chakra+Petch:wght@500;600;700&family=Sriracha&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --ground: #0b0a0d;
+            --ground-2: #131117;
+            --sheet: #f3efe6;
+            --sheet-ink: #2a2630;
+            --sheet-muted: #6d6774;
+            --rule: #26232b;
+            --text: #f6fffe;
+            --muted: #b1adb9;
+            --teal: #509eaa;
+            --pen: #059669;
+            --pen-soft: #34d399;
+            --pen-ink: #047857;
+            --struck: #6f6976;
+            --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+            --display: "Chakra Petch", "Bai Jamjuree", sans-serif;
+            --body: "Bai Jamjuree", sans-serif;
+            --hand: "Sriracha", "Bai Jamjuree", cursive;
+            --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; scrollbar-color: #3a3640 var(--ground); }
+        body {
+            font-family: var(--body);
+            background: var(--ground);
+            color: var(--text);
+            line-height: 1.75;
+            font-size: 17px;
+            cursor: url('/cursor.cur'), auto;
+            caret-color: var(--pen-soft);
+            -webkit-font-smoothing: antialiased;
+        }
+        a, button, summary { cursor: url('/Cursor107.cur'), pointer; }
+        ::selection { background: var(--pen-soft); color: #04120c; }
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: var(--ground); }
+        ::-webkit-scrollbar-thumb { background: #3a3640; border-radius: 10px; border: 2px solid var(--ground); }
+        :focus-visible { outline: 2px solid var(--pen-soft); outline-offset: 3px; border-radius: 4px; }
+        a { color: inherit; text-underline-offset: 0.22em; text-decoration-thickness: 1px; }
+
+        /* Elements marked .en or .th show only in that language */
+        html[data-lang="th"] .en, html[data-lang="en"] .th { display: none !important; }
+
+        .wrap { width: 100%; max-width: 1120px; margin: 0 auto; padding: 0 20px; }
+
+        /* Top bar: the same Windows XP buttons as the codenat.me navbar */
+        .topbar { position: sticky; top: 0; z-index: 50; }
+        .topbar::before {
+            content: ""; position: absolute; inset: 0 0 -60px; pointer-events: none; z-index: -1;
+            background: linear-gradient(to bottom, rgba(8, 7, 10, .85) 0%, rgba(8, 7, 10, .4) 50%, transparent 100%);
+            -webkit-backdrop-filter: blur(24px); backdrop-filter: blur(24px);
+            -webkit-mask-image: linear-gradient(to bottom, #000 0%, rgba(0, 0, 0, .6) 55%, transparent 100%);
+            mask-image: linear-gradient(to bottom, #000 0%, rgba(0, 0, 0, .6) 55%, transparent 100%);
+        }
+        .topbar .wrap { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 12px; height: 76px; }
+        .top-end { justify-self: end; display: flex; align-items: center; gap: 18px; font-size: 14px; }
+        .top-end > a { color: var(--muted); text-decoration: none; font-weight: 500; transition: color .2s var(--ease-out); }
+        .top-end > a:hover { color: var(--text); }
+        .lang { display: flex; gap: 2px; justify-self: start; }
+        .lang button {
+            font: 600 13px var(--display); background: none; border: 0; color: var(--muted);
+            padding: 4px 8px; border-radius: 6px; transition: color .2s;
+        }
+        .lang button[aria-pressed="true"] { color: var(--text); background: var(--ground-2); }
+        .lang button:hover { color: var(--text); }
+
+        .xp-nav { display: flex; align-items: center; gap: 12px; view-transition-name: site-nav; }
+        .xp-btn {
+            font: 500 12px Tahoma, "Segoe UI", Arial, sans-serif; color: #000; text-decoration: none;
+            display: inline-flex; align-items: center; gap: 4px; padding: 6px 18px; user-select: none;
+            background: linear-gradient(180deg, #fff 0%, #ece9d8 50%, #e3decb 100%);
+            border: 2px solid #003c74; border-radius: 5px;
+            box-shadow: inset 0 1px 0 #fff, inset 0 -1px 2px rgba(0, 0, 0, .12), 0 2px 4px rgba(0, 0, 0, .2), 2px 2px 0 rgba(220, 215, 195, .85);
+            transition: border-color .15s ease, background .15s ease, box-shadow .15s ease, transform .15s ease;
+        }
+        .xp-btn:hover {
+            border-color: #005499;
+            background: linear-gradient(180deg, #fff 0%, #f6f4eb 50%, #e0dcc8 100%);
+            box-shadow: 0 0 6px rgba(0, 84, 153, .55), inset 0 1px 0 #fff, 2px 2px 0 rgba(210, 205, 185, .9);
+        }
+        .xp-btn:active { background: linear-gradient(180deg, #e0dcc8 0%, #f6f4eb 100%); box-shadow: inset 0 1px 3px rgba(0, 0, 0, .3); transform: translate(1px, 1px); }
+        .xp-btn .caret { font-size: 10px; transition: transform .2s var(--ease-out); }
+        .xp-menu { position: relative; }
+        .xp-menu.open .caret { transform: rotate(180deg); }
+        .xp-drop {
+            position: absolute; top: 100%; right: 0; margin-top: 6px; min-width: 175px; padding: 8px 12px;
+            display: flex; flex-direction: column; gap: 6px;
+            background: linear-gradient(180deg, #fff 0%, #ece9d8 100%);
+            border: 2px solid #003c74; border-radius: 6px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, .45), inset 0 1px 0 #fff;
+            opacity: 0; visibility: hidden; transform: translateY(-10px) scale(.95); transform-origin: top right;
+            transition: opacity .35s cubic-bezier(.22, 1, .36, 1), transform .35s var(--ease-out), visibility .35s ease;
+        }
+        .xp-menu.open .xp-drop { opacity: 1; visibility: visible; transform: none; }
+        .xp-drop a {
+            font: 600 11px Tahoma, "Segoe UI", Arial, sans-serif; color: #003c74; text-decoration: none;
+            padding: 5px 10px; border-radius: 4px; transition: background .15s ease, color .15s ease;
+        }
+        .xp-drop a:hover, .xp-drop a[aria-current="page"] { background: #316ac5; color: #fff; }
+
+        .burger { display: none; justify-self: end; position: relative; width: 30px; height: 25px; background: none; border: 0; }
+        .burger span { position: absolute; left: 0; width: 100%; height: 2px; background: var(--text); transition: transform .3s ease, opacity .3s ease, top .3s ease; }
+        .burger span:nth-child(1) { top: 0; }
+        .burger span:nth-child(2) { top: 11px; }
+        .burger span:nth-child(3) { top: 22px; }
+        .burger[aria-expanded="true"] span:nth-child(1) { top: 11px; transform: rotate(45deg); }
+        .burger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+        .burger[aria-expanded="true"] span:nth-child(3) { top: 11px; transform: rotate(-45deg); }
+        .mobile-menu {
+            position: fixed; top: 0; right: 0; z-index: 40; width: 100%; max-width: 400px; height: 100vh; height: 100dvh;
+            padding: 100px 40px 40px; overflow-y: auto;
+            background: rgba(13, 11, 16, .98); border-left: 1px solid rgba(175, 238, 223, .2);
+            -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px);
+            transform: translateX(100%); visibility: hidden;
+            transition: transform .4s ease, visibility .4s ease;
+        }
+        .mobile-menu.open { transform: none; visibility: visible; }
+        .mobile-menu .title { font: 400 11px var(--display); letter-spacing: 3px; color: var(--pen-soft); opacity: .8; margin-bottom: 16px; }
+        .mobile-menu .group + .group { margin-top: 36px; }
+        .mobile-menu a {
+            display: block; margin-bottom: 14px; font: 300 16px var(--display); letter-spacing: 2px; text-transform: uppercase;
+            color: var(--text); text-decoration: none; transition: color .3s ease, transform .3s ease;
+        }
+        .mobile-menu a:hover, .mobile-menu a[aria-current="page"] { color: #afeedf; }
+        .mobile-menu a:hover { transform: translateX(10px); }
+
+        /* Page switch to and from codenat.me: cross-fade, navbar stays put */
+        @view-transition { navigation: auto; }
+        ::view-transition-old(root), ::view-transition-new(root) { animation-duration: .35s; animation-timing-function: var(--ease-out); }
+        @media (prefers-reduced-motion: reduce) { @view-transition { navigation: none; } }
+
+        /* Film grain over everything, as on codenat.me */
+        body::after {
+            content: ""; position: fixed; top: 0; left: 0; width: 300%; height: 300%; pointer-events: none; z-index: 99999;
+            background-image: url('/images/1k_Dissolve_Noise_Texture.webp'); opacity: .08;
+            animation: grain 8s steps(10) infinite;
+        }
+        @keyframes grain {
+            0%, 100% { transform: translate(0, 0); }
+            10%, 30%, 50%, 70%, 90% { transform: translate(-5%, -10%); }
+            20%, 40%, 60%, 80% { transform: translate(-15%, -20%); }
+        }
+
+        /* Hero: the claim on the left, the proof on the right */
+        .hero { padding: clamp(48px, 8vw, 104px) 0 clamp(56px, 8vw, 96px); }
+        .hero .wrap { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.08fr); gap: clamp(36px, 5vw, 72px); align-items: center; }
+        h1, h2, h3 { font-family: var(--display); font-weight: 700; line-height: 1.22; letter-spacing: -0.01em; text-wrap: balance; }
+        h1 { font-size: clamp(38px, 5.4vw, 64px); }
+        h1 .struck {
+            color: #8d8896; font-weight: 600; white-space: nowrap;
+            background: linear-gradient(var(--pen), var(--pen)) no-repeat 0 60% / 100% 4px;
+        }
+        h1 .fix { white-space: nowrap; font-family: var(--hand); font-weight: 400; color: var(--pen-soft); display: inline-block; transform: rotate(-2deg); }
+        .lead { color: var(--muted); font-size: clamp(17px, 1.6vw, 19px); max-width: 34em; margin-top: 22px; }
+        .cmd {
+            display: flex; align-items: center; justify-content: space-between; gap: 12px;
+            margin-top: 32px; max-width: 420px; padding: 6px 6px 6px 18px;
+            background: var(--ground-2); border: 1px solid var(--rule); border-radius: 12px;
+        }
+        .cmd code { font: 500 17px var(--mono); color: var(--text); white-space: nowrap; overflow-x: auto; min-width: 0; scrollbar-width: none; }
+        .cmd code .dim { color: #77727f; }
+        .cmd code .pkg { white-space: nowrap; color: var(--pen-soft); background: rgba(52, 211, 153, .12); border-radius: 4px; padding: 1px 5px; }
+        .panel .cmd { margin-top: 10px; max-width: 560px; }
+        .install > *, .step, .panel { min-width: 0; }
+        .cmd-block { align-items: flex-start; padding-top: 12px; padding-bottom: 12px; }
+        .cmd-block code { white-space: pre; overflow-x: auto; font-size: 15px; line-height: 1.9; }
+        .copy {
+            font: 600 13px var(--display); background: var(--text); color: var(--ground);
+            border: 0; border-radius: 8px; padding: 9px 14px; transition: background .2s, transform .2s var(--ease-out);
+        }
+        .copy:hover { background: #fff; transform: translateY(-1px); }
+        .copy.done { background: var(--teal); color: var(--ground); }
+        .cmd-note { margin-top: 12px; font-size: 14px; color: var(--muted); }
+        .cmd-note a { color: var(--text); }
+
+        /* The proofread sheet */
+        .sheet {
+            background: var(--sheet); color: var(--sheet-ink); border-radius: 6px;
+            padding: clamp(22px, 3vw, 34px);
+            box-shadow: 0 30px 60px -20px rgba(0,0,0,.65), 0 8px 18px -8px rgba(0,0,0,.5);
+            transform: rotate(0.6deg);
+        }
+        .sheet-tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 18px; }
+        .sheet-tabs button {
+            font: 600 13px var(--display); color: var(--sheet-muted); background: var(--sheet);
+            border: 1px solid #d9d2c4; border-radius: 999px; padding: 4px 12px; transition: all .2s;
+        }
+        .sheet-tabs button[aria-selected="true"] { color: var(--sheet); background: var(--sheet-ink); border-color: var(--sheet-ink); }
+        .sheet-tabs button:hover:not([aria-selected="true"]) { color: var(--sheet-ink); border-color: var(--sheet-muted); }
+        .source { font-size: 14px; color: var(--sheet-muted); min-height: 1.6em; }
+        .source b { font-weight: 600; color: var(--sheet-ink); }
+        .proof { font-size: clamp(20px, 2.1vw, 25px); line-height: 2.1; margin-top: 6px; min-height: 4.2em; }
+        .proof del {
+            text-decoration: none; color: var(--struck);
+            background: linear-gradient(var(--pen), var(--pen)) no-repeat 0 62% / 100% 2.5px;
+            transition: color .5s var(--ease-out), background-size .6s var(--ease-out);
+        }
+        .proof ins {
+            text-decoration: none; font-family: var(--hand); color: var(--pen-ink);
+            display: inline-block; margin: 0 .18em; transform: rotate(-2deg);
+            transition: opacity .6s var(--ease-out), filter .6s var(--ease-out), translate .6s var(--ease-out);
+        }
+        .proof .gloss { display: block; font-size: 14px; line-height: 1.6; color: var(--sheet-muted); margin-top: 6px; }
+        /* The marked state is the default; JS sets .unmarked first, then lifts it so the pen draws */
+        .proof.unmarked del { color: var(--sheet-ink); }
+        .proof.unmarked del { background-size: 0% 2.5px; }
+        .proof.unmarked ins { opacity: 0; filter: blur(4px); translate: 0 6px; }
+        .codes { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 13px; color: var(--sheet-muted); }
+        .codes span.code-id { font-family: var(--hand); color: var(--pen-ink); font-size: 15px; }
+        .sheet-foot { margin-top: 16px; font-size: 13px; color: var(--sheet-muted); }
+
+        /* Sections */
+        section { padding: clamp(64px, 8vw, 104px) 0; border-top: 1px solid var(--rule); }
+        h2 { font-size: clamp(28px, 3.6vw, 40px); margin-bottom: 14px; }
+        .section-lead { color: var(--muted); max-width: 36em; }
+
+        /* Skills: a list, not a card row */
+        .skill-list { margin-top: 44px; list-style: none; }
+        .skill-row {
+            display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.4fr) minmax(0, 1fr);
+            gap: 20px 40px; padding: 30px 0; border-top: 1px solid var(--rule); align-items: start;
+        }
+        .skill-row:last-child { border-bottom: 1px solid var(--rule); }
+        .skill-row h3 { font-size: 24px; }
+        .skill-row .id { display: block; font: 500 14px var(--mono); color: var(--teal); margin-top: 6px; letter-spacing: 0; }
+        .skill-row p { color: var(--muted); max-width: 70ch; }
+        .say { font-size: 15px; color: var(--muted); }
+        .say q { quotes: "“" "”"; display: block; color: var(--text); font-size: 17px; margin-top: 2px; }
+
+        /* Motion B: the pen follows the reading. Scroll-linked, CSS only; static where unsupported */
+        .demo { transition: opacity .15s ease-in; }
+        .demo.leaving { opacity: 0; }
+        .skill-row { transition: border-color .12s ease-out; }
+        .skill-row:hover { border-top-color: var(--pen); }
+        .skill-row h3 .hl { display: inline-block; position: relative; }
+        .skill-row h3 .hl::after {
+            content: ""; position: absolute; left: 0; right: 0; bottom: -2px; height: 3px;
+            background: var(--pen-soft); border-radius: 2px; transform: rotate(-0.6deg);
+        }
+        .trace {
+            position: absolute; left: 15.5px; top: 40px; bottom: 8px; width: 1px;
+            background: var(--pen-soft); transform-origin: top; transform: scaleY(0); z-index: 1;
+        }
+        @supports (animation-timeline: view()) {
+            .skill-row h3 .hl::after {
+                transform-origin: left center;
+                animation: pen-underline linear both;
+                animation-timeline: view();
+                animation-range: entry 40% cover 35%;
+            }
+            .trace {
+                animation: pen-trace linear both;
+                animation-timeline: view();
+                animation-range: cover 15% cover 55%;
+            }
+        }
+        @keyframes pen-underline { from { transform: rotate(-0.6deg) scaleX(0); } to { transform: rotate(-0.6deg) scaleX(1); } }
+        @keyframes pen-trace { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+
+        /* Install */
+        .install { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.5fr); gap: 32px 72px; }
+        .steps { list-style: none; counter-reset: step; }
+        .step { position: relative; padding: 0 0 36px 52px; }
+        .step::before {
+            counter-increment: step; content: counter(step);
+            position: absolute; left: 0; top: 0; width: 32px; height: 32px; border-radius: 50%;
+            display: grid; place-items: center; font: 700 15px var(--display);
+            color: var(--ground); background: var(--text);
+        }
+        .step:not(:last-child)::after { content: ""; position: absolute; left: 15.5px; top: 40px; bottom: 8px; width: 1px; background: var(--rule); }
+        .step h3 { font-size: 22px; margin-bottom: 8px; line-height: 32px; }
+        .step > p { color: var(--muted); max-width: 60ch; }
+        .via { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; margin: 4px 0 14px; }
+        .via-label { color: var(--muted); font-size: 14px; margin-right: 8px; }
+        .via [role="tab"] {
+            font: 600 14px var(--display); background: none; color: var(--muted); border: 0;
+            border-radius: 8px; padding: 6px 12px; transition: color .2s, background .2s;
+        }
+        .via [role="tab"][aria-selected="true"] { color: var(--text); background: var(--ground-2); }
+        .via [role="tab"]:hover { color: var(--text); }
+        .panel > p { color: var(--muted); max-width: 60ch; margin-bottom: 4px; }
+        .panel[hidden] { display: block; margin-top: 18px; }
+        .js .panel[hidden] { display: none; }
+        .panel strong { color: var(--text); font-weight: 600; }
+        .downloads { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
+        .dl {
+            font: 500 14px var(--mono); color: var(--text); text-decoration: none;
+            border: 1px solid var(--rule); border-radius: 8px; padding: 8px 12px; transition: border-color .2s;
+        }
+        .dl:hover { border-color: var(--teal); }
+        .dl::before { content: "↓ "; color: var(--teal); }
+        .small { font-size: 14px; color: var(--muted); margin-top: 10px; max-width: 60ch; }
+        .small a { color: var(--text); }
+        details { margin-top: 18px; }
+        summary { color: var(--muted); font-size: 15px; list-style: none; transition: color .2s var(--ease-out); }
+        summary::-webkit-details-marker { display: none; }
+        summary::before { content: "+ "; color: var(--teal); font-family: var(--mono); }
+        details[open] summary::before { content: "− "; }
+        summary:hover { color: var(--text); }
+        details p { color: var(--muted); font-size: 14px; margin-top: 16px; }
+        .code {
+            display: flex; justify-content: space-between; align-items: flex-start; gap: 12px;
+            background: var(--ground-2); border: 1px solid var(--rule); border-radius: 10px; padding: 10px 10px 10px 14px; margin-top: 6px;
+        }
+        .code code { font: 13.5px var(--mono); white-space: pre-wrap; word-break: break-all; padding-top: 4px; }
+        .code .copy { padding: 5px 10px; font-size: 12px; flex-shrink: 0; }
+
+        /* Notes */
+        .notes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px 72px; }
+        .notes h3 { font-size: 22px; margin-bottom: 12px; }
+        .notes ul { list-style: none; display: grid; gap: 10px; color: var(--muted); }
+        .notes li { padding-left: 18px; position: relative; max-width: 60ch; }
+        .notes li::before { content: ""; position: absolute; left: 0; top: .85em; width: 8px; height: 1px; background: var(--muted); }
+
+        footer { border-top: 1px solid var(--rule); padding: 32px 0 48px; color: var(--muted); font-size: 14px; }
+        footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px 24px; }
+        footer a { color: var(--text); text-decoration: none; text-decoration-color: transparent; transition: text-decoration-color .2s var(--ease-out); }
+        footer a:hover { text-decoration: underline; text-decoration-color: currentColor; }
+        .foot-links { display: flex; flex-wrap: wrap; gap: 20px; }
+
+        @media (max-width: 900px) {
+            .hero .wrap, .install { grid-template-columns: 1fr; }
+            .skill-row { grid-template-columns: 1fr; gap: 8px; }
+            .sheet { transform: none; }
+        }
+        @media (max-width: 768px) {
+            .xp-nav, .top-end { display: none; }
+            .burger { display: block; }
+            .topbar .wrap { height: 64px; grid-template-columns: 1fr auto; }
+        }
+        @media (max-width: 640px) {
+            body { font-size: 16px; }
+            .notes { grid-template-columns: 1fr; }
+            .cmd code { font-size: 15px; }
+            .panel .cmd { align-items: flex-start; padding-top: 12px; padding-bottom: 12px; }
+            .panel .cmd code { white-space: pre-wrap; overflow-wrap: anywhere; font-size: 14px; line-height: 1.8; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { transition: none !important; animation: none !important; }
+            .trace { transform: scaleY(1); }
+            html { scroll-behavior: auto; }
+        }
+    </style>
+</head>
+<body>
+
+<header class="topbar">
+    <div class="wrap">
+        <div class="lang" role="group" aria-label="Language">
+            <button type="button" data-set-lang="th" aria-pressed="true">ไทย</button>
+            <button type="button" data-set-lang="en" aria-pressed="false">EN</button>
+        </div>
+        <nav class="xp-nav" aria-label="codenat.me">
+            <a class="xp-btn" href="/">Home</a>
+            <a class="xp-btn" href="/#story-section">About</a>
+            <div class="xp-menu">
+                <button type="button" class="xp-btn" aria-expanded="false" aria-controls="menu-projects">Projects <span class="caret" aria-hidden="true">▾</span></button>
+                <div class="xp-drop" id="menu-projects">
+                    <a href="/#portfolio-section">All Projects</a>
+                    <a href="/thai-skills/" aria-current="page">Thai Skills</a>
+                </div>
+            </div>
+            <div class="xp-menu">
+                <button type="button" class="xp-btn" aria-expanded="false" aria-controls="menu-contact">Contact <span class="caret" aria-hidden="true">▾</span></button>
+                <div class="xp-drop" id="menu-contact">
+                    <a href="https://github.com/inatbalthazar" target="_blank" rel="noopener">GitHub Profile</a>
+                    <a href="https://www.linkedin.com/in/inat/" target="_blank" rel="noopener">LinkedIn Profile</a>
+                    <a href="/cv.html" target="_blank" rel="noopener">Online CV</a>
+                    <a href="/resume.html" target="_blank" rel="noopener">Resume</a>
+                    <a href="mailto:inatbalthazar@gmail.com">Send Email</a>
+                </div>
+            </div>
+        </nav>
+        <div class="top-end">
+            <a href="https://github.com/inatbalthazar/humanizer-th" target="_blank" rel="noopener">GitHub</a>
+        </div>
+        <button type="button" class="burger" aria-expanded="false" aria-controls="mobile-menu" aria-label="Menu">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
+</header>
+<nav class="mobile-menu" id="mobile-menu" aria-label="codenat.me">
+    <div class="group">
+        <div class="title">NAVIGATE</div>
+        <a href="/">Home</a>
+        <a href="/#story-section">About</a>
+        <a href="/#portfolio-section">Projects</a>
+        <a href="/thai-skills/" aria-current="page">Thai Skills</a>
+    </div>
+    <div class="group">
+        <div class="title">CONNECT</div>
+        <a href="https://github.com/inatbalthazar/humanizer-th" target="_blank" rel="noopener">humanizer-th on GitHub</a>
+        <a href="https://github.com/inatbalthazar" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://www.linkedin.com/in/inat/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="/cv.html" target="_blank" rel="noopener">Online CV</a>
+        <a href="/resume.html" target="_blank" rel="noopener">Resume</a>
+    </div>
+</nav>
+
+<main>
+    <div class="hero">
+        <div class="wrap">
+            <div>
+                <h1>
+                    <span class="th">ภาษาไทยที่อ่าน<span class="struck">เหมือนแปลมา</span> <span class="fix">เหมือนคนไทยเขียน</span></span>
+                    <span class="en">Thai that reads <span class="struck">translated</span> <span class="fix">native</span></span>
+                </h1>
+                <p class="lead th">skill ฟรีสามตัวที่สอน AI ให้แปลซับ เกม แอป และเว็บเป็นภาษาไทย เขียนบทละครสั้นที่ทำด้วยวิดีโอ AI และเกลาข้อความไทยให้อ่านเหมือนคนเขียน ใช้กับ Claude, ChatGPT, Gemini, Codex, Copilot และ Cursor</p>
+                <p class="lead en">Three free skills that teach your AI to translate subtitles, games, apps and websites into Thai, write Thai dialogue for AI short dramas, and make AI-written Thai read like a person wrote it. Works with Claude, ChatGPT, Gemini, Codex, Copilot and Cursor.</p>
+                <div class="cmd">
+                    <code><span class="dim">$ </span>npx <span class="pkg">humanizer-th</span></code>
+                    <button class="copy" type="button" data-copy="npx humanizer-th"><span class="th">คัดลอก</span><span class="en">Copy</span></button>
+                </div>
+                <p class="cmd-note th">พิมพ์ใน Terminal แล้วสั่งงานได้เลย ใช้ ChatGPT หรือ Gemini <a href="#start">ดูวิธีตรงนี้</a></p>
+                <p class="cmd-note en">Run it in a terminal, then just ask. Using ChatGPT or Gemini? <a href="#start">See here</a>.</p>
+            </div>
+
+            <figure class="sheet">
+                <div class="sheet-tabs" role="tablist" aria-label="Examples">
+                    <button type="button" role="tab" data-demo="line" aria-selected="true"><span class="th">ข้อความ LINE</span><span class="en">Chat message</span></button>
+                    <button type="button" role="tab" data-demo="sub" aria-selected="false"><span class="th">ซับหนัง</span><span class="en">Subtitle</span></button>
+                    <button type="button" role="tab" data-demo="app" aria-selected="false"><span class="th">แอป</span><span class="en">App</span></button>
+                </div>
+
+                <div class="demo" data-demo-panel="line">
+                    <p class="source"><span class="th">AI ร่างให้ จะส่งหาหัวหน้า</span><span class="en">Drafted by AI, to a manager</span></p>
+                    <p class="proof"><del>ผมได้ทำการ</del>ส่งรายงานประจำเดือน<del>เรียบร้อย</del>แล้ว <del>ซึ่งได้มีการปรับปรุง</del><ins>ปรับ</ins>ตามที่พี่แนะนำ<ins>แล้ว</ins> <del>หากมีข้อสงสัยเพิ่มเติม สามารถสอบถาม</del><ins>ถ้าสงสัยตรงไหนถาม</ins>ได้เลยครับ<span class="gloss en">"Sent the monthly report, fixed as you suggested. Ask if anything's unclear."</span></p>
+                    <p class="codes"><span class="code-id">TH03</span> ได้ทำการ <span class="code-id">TH05</span> ซึ่ง... <span class="code-id">TH21</span> สามารถ...ได้</p>
+                </div>
+                <div class="demo" data-demo-panel="sub">
+                    <p class="source"><span class="th">ต้นฉบับ</span><span class="en">Source</span> <b>Oh no. What do we do now?</b></p>
+                    <p class="proof"><del>โอ้ไม่</del><ins>ซวยแล้ว</ins> <del>เราจะทำอย่างไรตอนนี้</del><ins>แล้วจะเอาไงต่อ</ins><span class="gloss en">"We're in trouble. So what now?"</span></p>
+                    <p class="codes"><span class="code-id">LT05</span> <span class="th">คำอุทานแปลตรง</span><span class="en">literal interjection</span> <span class="code-id">LT04</span> <span class="th">สำนวนแปลตรงตัว</span><span class="en">word-for-word phrasing</span></p>
+                </div>
+                <div class="demo" data-demo-panel="app">
+                    <p class="source"><span class="th">ต้นฉบับ</span><span class="en">Source</span> <b>Payment failed. Please try again.</b></p>
+                    <p class="proof"><del>การ</del>ชำระเงิน<del>ล้มเหลว</del><ins>ไม่สำเร็จ</ins> <del>กรุณาลองใหม่อีกครั้ง</del><ins>ลองอีกครั้ง</ins><span class="gloss en">"Payment didn't go through. Try again."</span></p>
+                    <p class="codes"><span class="code-id">TH02</span> <span class="th">การ นำหน้าเกินจำเป็น</span><span class="en">needless "การ"</span> <span class="code-id">LT02</span> <span class="th">ศัพท์ตามพจนานุกรม</span><span class="en">dictionary word, wrong context</span></p>
+                </div>
+                <figcaption class="sheet-foot"><span class="th">ตัวอย่างจาก skill จริง รหัสสีเขียวคือรูปแบบที่ skill ตรวจเจอ</span><span class="en">Real examples from the skills. Green codes are the patterns they catch.</span></figcaption>
+            </figure>
+        </div>
+    </div>
+
+    <section>
+        <div class="wrap">
+            <h2><span class="th">สามงานที่ AI ยังทำภาษาไทยได้ไม่ดี</span><span class="en">Three jobs AI still does badly in Thai</span></h2>
+            <p class="section-lead th">ติดตั้งครั้งเดียวได้ทั้งสามตัว แล้ว AI จะเลือกตัวที่ตรงกับงานเอง</p>
+            <p class="section-lead en">Install all three at once. The AI picks the right one for each request.</p>
+            <ul class="skill-list">
+                <li class="skill-row">
+                    <h3><span class="th hl">แปลซับ เกม แอป และเว็บ</span><span class="en hl">Subtitles, games, apps and websites</span><span class="id">localize-th</span></h3>
+                    <p class="th">แปลอังกฤษเป็นไทยจากไฟล์ SRT, VTT, ASS, JSON, PO, XLIFF, .strings และ Android XML เวลาในซับ key และตัวแปรไม่พัง บรรทัดซับไม่ยาวเกินอ่านทัน เลือกสรรพนามตามความสัมพันธ์ของตัวละคร และมีสคริปต์เทียบไฟล์กับต้นฉบับ</p>
+                    <p class="en">English to Thai from SRT, VTT, ASS, JSON, PO, XLIFF, .strings and Android XML. Timings, keys and placeholders survive, subtitle lines stay readable, pronouns fit each relationship, and a checker diffs the file against the source.</p>
+                    <p class="say"><span class="th">พิมพ์ว่า</span><span class="en">Ask</span><q class="th">แปลซับนี้เป็นไทย</q><q class="en">Translate this strings file into Thai</q></p>
+                </li>
+                <li class="skill-row">
+                    <h3><span class="th hl">บทละครสั้น AI และเสียงพากย์</span><span class="en hl">AI short dramas and voice-over</span><span class="id">script-th</span></h3>
+                    <p class="th">เขียนบทจากไอเดียหรือเกลาบทเดิม แบ่งให้พอดีคลิปละไม่กี่วินาที ทำพรอมต์ทีละช็อตโดยใช้คำบรรยายตัวละครชุดเดียวกันทุกช็อต และเตรียมบทให้เสียง AI อ่านตัวเลขและคำยากถูก</p>
+                    <p class="en">Write from an idea or polish a script, split it into clips a few seconds long, write per-shot prompts with one fixed character description, and prepare voice scripts Thai TTS reads correctly.</p>
+                    <p class="say"><span class="th">พิมพ์ว่า</span><span class="en">Ask</span><q class="th">เขียนบทละครสั้นเรื่อง...</q><q class="en">Write a Thai short drama about...</q></p>
+                </li>
+                <li class="skill-row">
+                    <h3><span class="th hl">ข้อความที่ AI เขียน</span><span class="en hl">AI-written Thai</span><span class="id">humanizer-th</span></h3>
+                    <p class="th">โพสต์ อีเมล และข้อความ LINE ให้อ่านเหมือนคนเขียน ตรวจ 29 รูปแบบที่คนไทยอ่านแล้วรู้ทันที หรือส่งโพสต์เก่าไปให้ดู แล้วให้เขียนเป็นสำนวนของเราเอง</p>
+                    <p class="en">Posts, emails and chat messages that read like a person wrote them. It checks 29 patterns Thai readers spot at once, or writes in your own voice from samples of your past writing.</p>
+                    <p class="say"><span class="th">พิมพ์ว่า</span><span class="en">Ask</span><q class="th">เกลาให้หน่อย</q><q class="en">Make my Thai sound natural</q></p>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <section id="start">
+        <div class="wrap install">
+            <div>
+                <h2><span class="th">เริ่มใช้</span><span class="en">Get started</span></h2>
+                <p class="section-lead th">คำสั่งเดียว ไม่ต้องตั้งค่าอะไรเพิ่ม</p>
+                <p class="section-lead en">One command. Nothing to configure.</p>
+            </div>
+            <ol class="steps">
+                <li class="step">
+                    <span class="trace" aria-hidden="true"></span>
+                    <h3><span class="th">ติดตั้ง</span><span class="en">Install</span></h3>
+                    <div class="via" role="tablist" aria-label="Install via">
+                        <span class="via-label"><span class="th">ติดตั้งผ่าน</span><span class="en">Install via</span></span>
+                        <button role="tab" id="tab-cli" aria-controls="panel-cli" aria-selected="true">CLI</button>
+                        <button role="tab" id="tab-plugin" aria-controls="panel-plugin" aria-selected="false">Claude plugin</button>
+                        <button role="tab" id="tab-skills" aria-controls="panel-skills" aria-selected="false">skills.sh</button>
+                        <button role="tab" id="tab-claude" aria-controls="panel-claude" aria-selected="false">Claude.ai</button>
+                        <button role="tab" id="tab-chat" aria-controls="panel-chat" aria-selected="false">ChatGPT, Gemini</button>
+                    </div>
+
+                    <div class="panel" role="tabpanel" id="panel-cli" aria-labelledby="tab-cli">
+                        <p class="th">เปิด Terminal (Mac) หรือ PowerShell (Windows) แล้วพิมพ์</p>
+                        <p class="en">Open Terminal (Mac) or PowerShell (Windows) and run</p>
+                        <div class="cmd">
+                            <code><span class="dim">$ </span>npx <span class="pkg">humanizer-th</span></code>
+                            <button class="copy" type="button" data-copy="npx humanizer-th"><span class="th">คัดลอก</span><span class="en">Copy</span></button>
+                        </div>
+                        <p class="small th">ลงให้ Claude Code, Codex, Gemini CLI และ GitHub Copilot ที่มีในเครื่อง ต้องมี <a href="https://nodejs.org" target="_blank" rel="noopener">Node.js</a> ถ้าขึ้นว่า Ok to proceed ให้กด y</p>
+                        <p class="small en">Installs for Claude Code, Codex, Gemini CLI and GitHub Copilot, whichever you have. Needs <a href="https://nodejs.org" target="_blank" rel="noopener">Node.js</a>. If it asks "Ok to proceed", press y.</p>
+                        <details>
+                            <summary><span class="th">อัปเดตและลบ</span><span class="en">Updates and removal</span></summary>
+                            <p><span class="th">อัปเดต</span><span class="en">Update</span></p>
+                            <div class="code"><code>npx humanizer-th@latest</code><button class="copy" type="button">Copy</button></div>
+                            <p><span class="th">ลบ</span><span class="en">Remove</span></p>
+                            <div class="code"><code>npx humanizer-th uninstall</code><button class="copy" type="button">Copy</button></div>
+                            <p><span class="th">ลงเฉพาะโฟลเดอร์โปรเจกต์นี้</span><span class="en">This project folder only</span></p>
+                            <div class="code"><code>npx humanizer-th --project</code><button class="copy" type="button">Copy</button></div>
+                        </details>
+                    </div>
+
+                    <div class="panel" role="tabpanel" id="panel-plugin" aria-labelledby="tab-plugin" hidden>
+                        <p class="th">เปิด Claude Code แล้วพิมพ์สองบรรทัดนี้ทีละบรรทัด</p>
+                        <p class="en">Open Claude Code and run these two lines, one at a time.</p>
+                        <div class="cmd cmd-block">
+                            <code>/plugin marketplace add inatbalthazar/<span class="pkg">humanizer-th</span>
+/plugin install <span class="pkg">humanizer-th</span>@humanizer-th</code>
+                            <button class="copy" type="button" data-copy="/plugin marketplace add inatbalthazar/humanizer-th&#10;/plugin install humanizer-th@humanizer-th"><span class="th">คัดลอก</span><span class="en">Copy</span></button>
+                        </div>
+                        <p class="small th">ได้ทั้งสาม skill และอัปเดตผ่านเมนู /plugin ได้</p>
+                        <p class="small en">Gets all three skills, and updates through the /plugin menu.</p>
+                    </div>
+
+                    <div class="panel" role="tabpanel" id="panel-skills" aria-labelledby="tab-skills" hidden>
+                        <p class="th">สำหรับ Cursor, Windsurf และโปรแกรมอื่นที่ <a href="https://skills.sh" target="_blank" rel="noopener">skills.sh</a> รู้จัก พิมพ์ใน Terminal</p>
+                        <p class="en">For Cursor, Windsurf and the other agents <a href="https://skills.sh" target="_blank" rel="noopener">skills.sh</a> supports. Run in a terminal.</p>
+                        <div class="cmd">
+                            <code><span class="dim">$ </span>npx skills add inatbalthazar/<span class="pkg">humanizer-th</span></code>
+                            <button class="copy" type="button" data-copy="npx skills add inatbalthazar/humanizer-th"><span class="th">คัดลอก</span><span class="en">Copy</span></button>
+                        </div>
+                        <p class="small th">จะมีให้เลือกว่าลง skill ไหน และลงให้โปรแกรมอะไร</p>
+                        <p class="small en">It asks which skills to install and for which agents.</p>
+                    </div>
+
+                    <div class="panel" role="tabpanel" id="panel-claude" aria-labelledby="tab-claude" hidden>
+                        <p class="th">ดาวน์โหลด zip ของ skill ที่ต้องการ แล้วอัปโหลดทีละไฟล์ใน <strong>Settings → Capabilities → Skills</strong> ไม่ต้องแตก zip</p>
+                        <p class="en">Download the zip for each skill you want and upload them one at a time under <strong>Settings → Capabilities → Skills</strong>. Don't unzip them.</p>
+                        <div class="downloads">
+                            <a class="dl" href="https://github.com/inatbalthazar/humanizer-th/releases/latest/download/localize-th.zip">localize-th.zip</a>
+                            <a class="dl" href="https://github.com/inatbalthazar/humanizer-th/releases/latest/download/script-th.zip">script-th.zip</a>
+                            <a class="dl" href="https://github.com/inatbalthazar/humanizer-th/releases/latest/download/humanizer-th.zip">humanizer-th.zip</a>
+                        </div>
+                        <p class="small th">ถ้าในหน้านั้นมีสวิตช์ code execution ให้เปิดด้วย</p>
+                        <p class="small en">If that page has a code execution switch, turn it on too.</p>
+                    </div>
+
+                    <div class="panel" role="tabpanel" id="panel-chat" aria-labelledby="tab-chat" hidden>
+                        <p class="th">ดาวน์โหลดไฟล์ของ skill ที่ต้องการ</p>
+                        <p class="en">Download the file for each skill you want.</p>
+                        <div class="downloads">
+                            <a class="dl" href="https://github.com/inatbalthazar/humanizer-th/releases/latest/download/localize-th-prompt.md">localize-th-prompt.md</a>
+                            <a class="dl" href="https://github.com/inatbalthazar/humanizer-th/releases/latest/download/script-th-prompt.md">script-th-prompt.md</a>
+                            <a class="dl" href="https://github.com/inatbalthazar/humanizer-th/releases/latest/download/humanizer-th-prompt.md">humanizer-th-prompt.md</a>
+                        </div>
+                        <p class="th"><strong>ChatGPT</strong> สร้าง GPT ใหม่ อัปโหลดไฟล์ในช่อง Knowledge แล้วพิมพ์ในช่อง Instructions ว่า "ทำตามคำสั่งในไฟล์ [ชื่อไฟล์] ทุกข้อ"</p>
+                        <p class="en"><strong>ChatGPT</strong> Create a GPT, upload the file under Knowledge, and set Instructions to "Follow every instruction in [file name]."</p>
+                        <p class="th"><strong>Gemini</strong> สร้าง Gem แล้ววางเนื้อหาทั้งไฟล์ในช่องคำสั่ง</p>
+                        <p class="en"><strong>Gemini</strong> Create a Gem and paste the whole file into its instructions.</p>
+                    </div>
+                </li>
+                <li class="step">
+                    <span class="trace" aria-hidden="true"></span>
+                    <h3><span class="th">เปิดโปรแกรมใหม่</span><span class="en">Restart your tool</span></h3>
+                    <p class="th">ปิดแล้วเปิด Claude Code, Codex หรือโปรแกรมที่ใช้อีกครั้ง ใช้ GPT หรือ Gem ข้ามขั้นนี้ได้</p>
+                    <p class="en">Close and reopen Claude Code, Codex or whatever you use. Skip this for a GPT or Gem.</p>
+                </li>
+                <li class="step">
+                    <h3><span class="th">พิมพ์สั่งได้เลย</span><span class="en">Just ask</span></h3>
+                    <p class="th">ไม่ต้องจำคำสั่ง เช่น "แปลซับนี้เป็นไทย" แล้วแนบไฟล์ หรือ "เกลาให้หน่อย" แล้ววางข้อความ</p>
+                    <p class="en">No commands to remember. "Translate this subtitle file into Thai" with the file attached is enough.</p>
+                </li>
+            </ol>
+        </div>
+    </section>
+
+    <section>
+        <div class="wrap notes">
+            <div>
+                <h3><span class="th">อ่านไทยไม่ออกก็ใช้ได้</span><span class="en">If you don't read Thai</span></h3>
+                <ul class="th">
+                    <li>สั่งเป็นภาษาอังกฤษได้ งานที่ได้ยังเป็นภาษาไทย แต่บันทึกและคำอธิบายจะเป็นภาษาอังกฤษ</li>
+                    <li>งานสั้นมีคำแปลกลับเป็นภาษาอังกฤษให้ตรวจความหมาย ไฟล์ยาวขอเพิ่มได้</li>
+                    <li>เหมาะกับบริษัทเกมและแอปต่างชาติที่จะออกเวอร์ชันไทย</li>
+                </ul>
+                <ul class="en">
+                    <li>Ask in English. The Thai stays Thai; notes and explanations come back in English.</li>
+                    <li>Short jobs include a back-translation so you can check the meaning. Ask for one on longer files.</li>
+                    <li>Have a native Thai speaker review anything you publish.</li>
+                </ul>
+            </div>
+            <div>
+                <h3><span class="th">ควรรู้ก่อนใช้</span><span class="en">Good to know</span></h3>
+                <ul class="th">
+                    <li>skill คือคำแนะนำที่ AI ทำตาม ไม่ใช่โปรแกรม ผลแต่ละครั้งไม่เหมือนกันเป๊ะ ควรอ่านทวนก่อนใช้จริง</li>
+                    <li>ทดสอบกับ Claude เป็นหลัก ตัวอื่นใช้ได้ แต่ผลขึ้นกับว่าโมเดลเก่งภาษาไทยแค่ไหน</li>
+                    <li>ไม่ได้มีไว้หลบ AI detector และไม่เขียนในนามคนอื่น</li>
+                </ul>
+                <ul class="en">
+                    <li>Skills are guidance the AI follows, not programs, so results vary. Review before you use them.</li>
+                    <li>Tested mostly with Claude. Other models work, depending on how well they handle Thai.</li>
+                    <li>Not an AI-detector evasion tool, and it won't write as someone else.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <div class="wrap">
+        <div class="foot-links">
+            <a href="https://github.com/inatbalthazar/humanizer-th" target="_blank" rel="noopener">GitHub</a>
+            <a href="https://github.com/inatbalthazar/humanizer-th/releases/latest" target="_blank" rel="noopener"><span class="th">ดาวน์โหลดทั้งหมด</span><span class="en">All downloads</span></a>
+            <a href="https://github.com/inatbalthazar/humanizer-th/issues" target="_blank" rel="noopener"><span class="th">แจ้งปัญหา</span><span class="en">Report a problem</span></a>
+        </div>
+    </div>
+</footer>
+
+<script>
+    (function () {
+        var root = document.documentElement;
+        root.classList.add('js');
+        var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        // Language: ?lang= in the URL, then the saved choice, then the browser language.
+        function saved() {
+            try { return localStorage.getItem('thai-skills-lang'); } catch (e) { return null; }
+        }
+        var param = new URLSearchParams(location.search).get('lang');
+        var lang = param || saved() || ((navigator.language || '').toLowerCase().indexOf('th') === 0 ? 'th' : 'en');
+        if (lang !== 'th' && lang !== 'en') lang = 'th';
+        function setLang(next) {
+            root.setAttribute('data-lang', next);
+            root.setAttribute('lang', next);
+            document.querySelectorAll('[data-set-lang]').forEach(function (b) {
+                b.setAttribute('aria-pressed', String(b.getAttribute('data-set-lang') === next));
+            });
+            try { localStorage.setItem('thai-skills-lang', next); } catch (e) {}
+        }
+        setLang(lang);
+        document.querySelectorAll('[data-set-lang]').forEach(function (b) {
+            b.addEventListener('click', function () { setLang(b.getAttribute('data-set-lang')); });
+        });
+
+        // Navbar dropdowns and the mobile menu, same behaviour as codenat.me
+        var menus = document.querySelectorAll('.xp-menu');
+        var burger = document.querySelector('.burger');
+        var mobileMenu = document.getElementById('mobile-menu');
+        function closeMenus(except) {
+            menus.forEach(function (m) {
+                if (m === except) return;
+                m.classList.remove('open');
+                m.querySelector('button').setAttribute('aria-expanded', 'false');
+            });
+        }
+        function setMobile(open) {
+            mobileMenu.classList.toggle('open', open);
+            burger.setAttribute('aria-expanded', String(open));
+        }
+        menus.forEach(function (m) {
+            var btn = m.querySelector('button');
+            btn.addEventListener('click', function (e) {
+                e.stopPropagation();
+                var open = !m.classList.contains('open');
+                closeMenus(m);
+                m.classList.toggle('open', open);
+                btn.setAttribute('aria-expanded', String(open));
+            });
+            m.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { closeMenus(); }); });
+        });
+        burger.addEventListener('click', function (e) {
+            e.stopPropagation();
+            setMobile(!mobileMenu.classList.contains('open'));
+        });
+        document.addEventListener('click', function (e) {
+            if (!e.target.closest('.xp-menu')) closeMenus();
+            if (!e.target.closest('.mobile-menu')) setMobile(false);
+        });
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') { closeMenus(); setMobile(false); }
+        });
+
+        // The pen: strike each deletion, then write each insertion, in reading order.
+        function mark(proof, lead) {
+            if (reduce) return;
+            proof.querySelectorAll('del, ins').forEach(function (m, i) { m.style.transitionDelay = ((lead || 0) + i * 0.22) + 's'; });
+            proof.classList.add('unmarked');
+            void proof.offsetWidth;
+            requestAnimationFrame(function () {
+                requestAnimationFrame(function () { proof.classList.remove('unmarked'); });
+            });
+        }
+        var demoTabs = document.querySelectorAll('[data-demo]');
+        var panels = document.querySelectorAll('[data-demo-panel]');
+        function swap(name, animate) {
+            panels.forEach(function (p) {
+                var on = p.getAttribute('data-demo-panel') === name;
+                p.hidden = !on;
+                p.classList.remove('leaving');
+                if (on && animate) mark(p.querySelector('.proof'));
+            });
+        }
+        function showDemo(name, animate) {
+            demoTabs.forEach(function (t) { t.setAttribute('aria-selected', String(t.getAttribute('data-demo') === name)); });
+            var current = document.querySelector('[data-demo-panel]:not([hidden])');
+            if (!animate || reduce || !current || current.getAttribute('data-demo-panel') === name) {
+                swap(name, animate);
+                return;
+            }
+            current.addEventListener('transitionend', function done(e) {
+                if (e.target !== current) return;
+                current.removeEventListener('transitionend', done);
+                swap(name, true);
+            });
+            current.classList.add('leaving');
+        }
+        demoTabs.forEach(function (t) {
+            t.addEventListener('click', function () { showDemo(t.getAttribute('data-demo'), true); });
+        });
+        showDemo('line', false);
+
+        // Draw the first example once the sheet is on screen
+        var first = document.querySelector('[data-demo-panel="line"] .proof');
+        if (!reduce && 'IntersectionObserver' in window) {
+            first.classList.add('unmarked');
+            var io = new IntersectionObserver(function (entries) {
+                if (entries[0].isIntersecting) {
+                    io.disconnect();
+                    mark(first, 0.35);
+                }
+            }, { threshold: 0.4 });
+            io.observe(first);
+        }
+
+        // Install tabs
+        var itabs = document.querySelectorAll('.via [role="tab"]');
+        itabs.forEach(function (tab) {
+            tab.addEventListener('click', function () {
+                itabs.forEach(function (t) {
+                    var on = t === tab;
+                    t.setAttribute('aria-selected', String(on));
+                    document.getElementById(t.getAttribute('aria-controls')).hidden = !on;
+                });
+            });
+        });
+
+        // Copy buttons
+        document.querySelectorAll('.copy').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                var text = btn.getAttribute('data-copy') || btn.parentElement.querySelector('code').textContent;
+                if (!navigator.clipboard) return;
+                navigator.clipboard.writeText(text).then(function () {
+                    var label = btn.innerHTML;
+                    btn.classList.add('done');
+                    btn.textContent = root.getAttribute('data-lang') === 'th' ? 'คัดลอกแล้ว' : 'Copied';
+                    setTimeout(function () { btn.innerHTML = label; btn.classList.remove('done'); }, 1600);
+                }, function () {});
+            });
+        });
+    })();
+</script>
+</body>
+</html>
