@@ -158,6 +158,36 @@
         .say { font-size: 15px; color: var(--muted); }
         .say q { quotes: "“" "”"; display: block; color: var(--text); font-size: 17px; margin-top: 2px; }
 
+        /* Motion B: the pen follows the reading. Scroll-linked, CSS only; static where unsupported */
+        .demo { transition: opacity .15s ease-in; }
+        .demo.leaving { opacity: 0; }
+        .skill-row { transition: border-color .12s ease-out; }
+        .skill-row:hover { border-top-color: var(--pen); }
+        .skill-row h3 .hl { display: inline-block; position: relative; }
+        .skill-row h3 .hl::after {
+            content: ""; position: absolute; left: 0; right: 0; bottom: -2px; height: 3px;
+            background: var(--pen-soft); border-radius: 2px; transform: rotate(-0.6deg);
+        }
+        .trace {
+            position: absolute; left: 15.5px; top: 40px; bottom: 8px; width: 1px;
+            background: var(--pen-soft); transform-origin: top; transform: scaleY(0); z-index: 1;
+        }
+        @supports (animation-timeline: view()) {
+            .skill-row h3 .hl::after {
+                transform-origin: left center;
+                animation: pen-underline linear both;
+                animation-timeline: view();
+                animation-range: entry 40% cover 35%;
+            }
+            .trace {
+                animation: pen-trace linear both;
+                animation-timeline: view();
+                animation-range: cover 15% cover 55%;
+            }
+        }
+        @keyframes pen-underline { from { transform: rotate(-0.6deg) scaleX(0); } to { transform: rotate(-0.6deg) scaleX(1); } }
+        @keyframes pen-trace { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+
         /* Install */
         .install { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.5fr); gap: 32px 72px; }
         .steps { list-style: none; counter-reset: step; }
@@ -231,7 +261,8 @@
             .cmd code { font-size: 15px; }
         }
         @media (prefers-reduced-motion: reduce) {
-            *, *::before, *::after { transition: none !important; }
+            *, *::before, *::after { transition: none !important; animation: none !important; }
+            .trace { transform: scaleY(1); }
             html { scroll-behavior: auto; }
         }
     </style>
@@ -303,19 +334,19 @@
             <p class="section-lead en">Install all three at once. The AI picks the right one for each request.</p>
             <ul class="skill-list">
                 <li class="skill-row">
-                    <h3><span class="th">แปลซับ เกม แอป และเว็บ</span><span class="en">Subtitles, games, apps and websites</span><span class="id">localize-th</span></h3>
+                    <h3><span class="th hl">แปลซับ เกม แอป และเว็บ</span><span class="en hl">Subtitles, games, apps and websites</span><span class="id">localize-th</span></h3>
                     <p class="th">แปลอังกฤษเป็นไทยจากไฟล์ SRT, VTT, ASS, JSON, PO, XLIFF, .strings และ Android XML เวลาในซับ key และตัวแปรไม่พัง บรรทัดซับไม่ยาวเกินอ่านทัน เลือกสรรพนามตามความสัมพันธ์ของตัวละคร และมีสคริปต์เทียบไฟล์กับต้นฉบับ</p>
                     <p class="en">English to Thai from SRT, VTT, ASS, JSON, PO, XLIFF, .strings and Android XML. Timings, keys and placeholders survive, subtitle lines stay readable, pronouns fit each relationship, and a checker diffs the file against the source.</p>
                     <p class="say"><span class="th">พิมพ์ว่า</span><span class="en">Ask</span><q class="th">แปลซับนี้เป็นไทย</q><q class="en">Translate this strings file into Thai</q></p>
                 </li>
                 <li class="skill-row">
-                    <h3><span class="th">บทละครสั้น AI และเสียงพากย์</span><span class="en">AI short dramas and voice-over</span><span class="id">script-th</span></h3>
+                    <h3><span class="th hl">บทละครสั้น AI และเสียงพากย์</span><span class="en hl">AI short dramas and voice-over</span><span class="id">script-th</span></h3>
                     <p class="th">เขียนบทจากไอเดียหรือเกลาบทเดิม แบ่งให้พอดีคลิปละไม่กี่วินาที ทำพรอมต์ทีละช็อตโดยใช้คำบรรยายตัวละครชุดเดียวกันทุกช็อต และเตรียมบทให้เสียง AI อ่านตัวเลขและคำยากถูก</p>
                     <p class="en">Write from an idea or polish a script, split it into clips a few seconds long, write per-shot prompts with one fixed character description, and prepare voice scripts Thai TTS reads correctly.</p>
                     <p class="say"><span class="th">พิมพ์ว่า</span><span class="en">Ask</span><q class="th">เขียนบทละครสั้นเรื่อง...</q><q class="en">Write a Thai short drama about...</q></p>
                 </li>
                 <li class="skill-row">
-                    <h3><span class="th">ข้อความที่ AI เขียน</span><span class="en">AI-written Thai</span><span class="id">humanizer-th</span></h3>
+                    <h3><span class="th hl">ข้อความที่ AI เขียน</span><span class="en hl">AI-written Thai</span><span class="id">humanizer-th</span></h3>
                     <p class="th">โพสต์ อีเมล และข้อความ LINE ให้อ่านเหมือนคนเขียน ตรวจ 29 รูปแบบที่คนไทยอ่านแล้วรู้ทันที หรือส่งโพสต์เก่าไปให้ดู แล้วให้เขียนเป็นสำนวนของเราเอง</p>
                     <p class="en">Posts, emails and chat messages that read like a person wrote them. It checks 29 patterns Thai readers spot at once, or writes in your own voice from samples of your past writing.</p>
                     <p class="say"><span class="th">พิมพ์ว่า</span><span class="en">Ask</span><q class="th">เกลาให้หน่อย</q><q class="en">Make my Thai sound natural</q></p>
@@ -333,6 +364,7 @@
             </div>
             <ol class="steps">
                 <li class="step">
+                    <span class="trace" aria-hidden="true"></span>
                     <h3><span class="th">ติดตั้ง</span><span class="en">Install</span></h3>
                     <div class="via" role="tablist">
                         <span class="via-label"><span class="th">ผ่าน</span><span class="en">Via</span></span>
@@ -391,6 +423,7 @@
                     </div>
                 </li>
                 <li class="step">
+                    <span class="trace" aria-hidden="true"></span>
                     <h3><span class="th">เปิดโปรแกรมใหม่</span><span class="en">Restart your tool</span></h3>
                     <p class="th">ปิดแล้วเปิด Claude Code, Codex หรือโปรแกรมที่ใช้อีกครั้ง ใช้ GPT หรือ Gem ข้ามขั้นนี้ได้</p>
                     <p class="en">Close and reopen Claude Code, Codex or whatever you use. Skip this for a GPT or Gem.</p>
@@ -485,13 +518,27 @@
         }
         var demoTabs = document.querySelectorAll('[data-demo]');
         var panels = document.querySelectorAll('[data-demo-panel]');
-        function showDemo(name, animate) {
-            demoTabs.forEach(function (t) { t.setAttribute('aria-selected', String(t.getAttribute('data-demo') === name)); });
+        function swap(name, animate) {
             panels.forEach(function (p) {
                 var on = p.getAttribute('data-demo-panel') === name;
                 p.hidden = !on;
+                p.classList.remove('leaving');
                 if (on && animate) mark(p.querySelector('.proof'));
             });
+        }
+        function showDemo(name, animate) {
+            demoTabs.forEach(function (t) { t.setAttribute('aria-selected', String(t.getAttribute('data-demo') === name)); });
+            var current = document.querySelector('[data-demo-panel]:not([hidden])');
+            if (!animate || reduce || !current || current.getAttribute('data-demo-panel') === name) {
+                swap(name, animate);
+                return;
+            }
+            current.addEventListener('transitionend', function done(e) {
+                if (e.target !== current) return;
+                current.removeEventListener('transitionend', done);
+                swap(name, true);
+            });
+            current.classList.add('leaving');
         }
         demoTabs.forEach(function (t) {
             t.addEventListener('click', function () { showDemo(t.getAttribute('data-demo'), true); });
