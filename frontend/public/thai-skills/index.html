@@ -25,9 +25,9 @@
             --text: #f6fffe;
             --muted: #b1adb9;
             --teal: #509eaa;
-            --pen: #c8462f;
-            --pen-soft: #e0684f;
-            --pen-ink: #b03a22;
+            --pen: #059669;
+            --pen-soft: #34d399;
+            --pen-ink: #047857;
             --struck: #6f6976;
             --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
             --display: "Chakra Petch", "Bai Jamjuree", sans-serif;
@@ -49,7 +49,7 @@
             -webkit-font-smoothing: antialiased;
         }
         a, button, summary { cursor: url('/Cursor107.cur'), pointer; }
-        ::selection { background: var(--pen); color: #fff; }
+        ::selection { background: var(--pen-soft); color: #04120c; }
         ::-webkit-scrollbar { width: 10px; }
         ::-webkit-scrollbar-track { background: var(--ground); }
         ::-webkit-scrollbar-thumb { background: #3a3640; border-radius: 10px; border: 2px solid var(--ground); }
@@ -133,7 +133,7 @@
             transition: transform .4s ease, visibility .4s ease;
         }
         .mobile-menu.open { transform: none; visibility: visible; }
-        .mobile-menu .title { font: 400 11px var(--display); letter-spacing: 3px; color: #c86e53; opacity: .8; margin-bottom: 16px; }
+        .mobile-menu .title { font: 400 11px var(--display); letter-spacing: 3px; color: var(--pen-soft); opacity: .8; margin-bottom: 16px; }
         .mobile-menu .group + .group { margin-top: 36px; }
         .mobile-menu a {
             display: block; margin-bottom: 14px; font: 300 16px var(--display); letter-spacing: 2px; text-transform: uppercase;
@@ -443,7 +443,7 @@
                     <p class="proof"><del>การ</del>ชำระเงิน<del>ล้มเหลว</del><ins>ไม่สำเร็จ</ins> <del>กรุณาลองใหม่อีกครั้ง</del><ins>ลองอีกครั้ง</ins><span class="gloss en">"Payment didn't go through. Try again."</span></p>
                     <p class="codes"><span class="code-id">TH02</span> <span class="th">การ นำหน้าเกินจำเป็น</span><span class="en">needless "การ"</span> <span class="code-id">LT02</span> <span class="th">ศัพท์ตามพจนานุกรม</span><span class="en">dictionary word, wrong context</span></p>
                 </div>
-                <figcaption class="sheet-foot"><span class="th">ตัวอย่างจาก skill จริง รหัสสีแดงคือรูปแบบที่ skill ตรวจเจอ</span><span class="en">Real examples from the skills. Red codes are the patterns they catch.</span></figcaption>
+                <figcaption class="sheet-foot"><span class="th">ตัวอย่างจาก skill จริง รหัสสีเขียวคือรูปแบบที่ skill ตรวจเจอ</span><span class="en">Real examples from the skills. Green codes are the patterns they catch.</span></figcaption>
             </figure>
         </div>
     </div>
