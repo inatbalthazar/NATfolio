@@ -61,21 +61,98 @@
 
         .wrap { width: 100%; max-width: 1120px; margin: 0 auto; padding: 0 20px; }
 
-        /* Top bar */
-        .topbar { border-bottom: 1px solid var(--rule); }
-        .topbar .wrap { display: flex; align-items: center; justify-content: space-between; gap: 12px; height: 60px; }
-        .back { font-family: var(--display); font-weight: 600; font-size: 15px; color: var(--muted); text-decoration: none; transition: color .2s var(--ease-out); }
-        .back:hover { color: var(--text); }
-        .top-actions { display: flex; align-items: center; gap: 18px; font-size: 14px; }
-        .lang { display: flex; gap: 2px; }
+        /* Top bar: the same Windows XP buttons as the codenat.me navbar */
+        .topbar { position: sticky; top: 0; z-index: 50; }
+        .topbar::before {
+            content: ""; position: absolute; inset: 0 0 -60px; pointer-events: none; z-index: -1;
+            background: linear-gradient(to bottom, rgba(8, 7, 10, .85) 0%, rgba(8, 7, 10, .4) 50%, transparent 100%);
+            -webkit-backdrop-filter: blur(24px); backdrop-filter: blur(24px);
+            -webkit-mask-image: linear-gradient(to bottom, #000 0%, rgba(0, 0, 0, .6) 55%, transparent 100%);
+            mask-image: linear-gradient(to bottom, #000 0%, rgba(0, 0, 0, .6) 55%, transparent 100%);
+        }
+        .topbar .wrap { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 12px; height: 76px; }
+        .top-end { justify-self: end; display: flex; align-items: center; gap: 18px; font-size: 14px; }
+        .top-end > a { color: var(--muted); text-decoration: none; font-weight: 500; transition: color .2s var(--ease-out); }
+        .top-end > a:hover { color: var(--text); }
+        .lang { display: flex; gap: 2px; justify-self: start; }
         .lang button {
             font: 600 13px var(--display); background: none; border: 0; color: var(--muted);
             padding: 4px 8px; border-radius: 6px; transition: color .2s;
         }
         .lang button[aria-pressed="true"] { color: var(--text); background: var(--ground-2); }
         .lang button:hover { color: var(--text); }
-        .top-actions > a { color: var(--muted); text-decoration: none; font-weight: 500; transition: color .2s var(--ease-out); }
-        .top-actions > a:hover { color: var(--text); }
+
+        .xp-nav { display: flex; align-items: center; gap: 12px; }
+        .xp-btn {
+            font: 500 12px Tahoma, "Segoe UI", Arial, sans-serif; color: #000; text-decoration: none;
+            display: inline-flex; align-items: center; gap: 4px; padding: 6px 18px; user-select: none;
+            background: linear-gradient(180deg, #fff 0%, #ece9d8 50%, #e3decb 100%);
+            border: 2px solid #003c74; border-radius: 5px;
+            box-shadow: inset 0 1px 0 #fff, inset 0 -1px 2px rgba(0, 0, 0, .12), 0 2px 4px rgba(0, 0, 0, .2), 2px 2px 0 rgba(220, 215, 195, .85);
+            transition: border-color .15s ease, background .15s ease, box-shadow .15s ease, transform .15s ease;
+        }
+        .xp-btn:hover {
+            border-color: #005499;
+            background: linear-gradient(180deg, #fff 0%, #f6f4eb 50%, #e0dcc8 100%);
+            box-shadow: 0 0 6px rgba(0, 84, 153, .55), inset 0 1px 0 #fff, 2px 2px 0 rgba(210, 205, 185, .9);
+        }
+        .xp-btn:active { background: linear-gradient(180deg, #e0dcc8 0%, #f6f4eb 100%); box-shadow: inset 0 1px 3px rgba(0, 0, 0, .3); transform: translate(1px, 1px); }
+        .xp-btn .caret { font-size: 10px; transition: transform .2s var(--ease-out); }
+        .xp-menu { position: relative; }
+        .xp-menu.open .caret { transform: rotate(180deg); }
+        .xp-drop {
+            position: absolute; top: 100%; right: 0; margin-top: 6px; min-width: 175px; padding: 8px 12px;
+            display: flex; flex-direction: column; gap: 6px;
+            background: linear-gradient(180deg, #fff 0%, #ece9d8 100%);
+            border: 2px solid #003c74; border-radius: 6px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, .45), inset 0 1px 0 #fff;
+            opacity: 0; visibility: hidden; transform: translateY(-10px) scale(.95); transform-origin: top right;
+            transition: opacity .35s cubic-bezier(.22, 1, .36, 1), transform .35s var(--ease-out), visibility .35s ease;
+        }
+        .xp-menu.open .xp-drop { opacity: 1; visibility: visible; transform: none; }
+        .xp-drop a {
+            font: 600 11px Tahoma, "Segoe UI", Arial, sans-serif; color: #003c74; text-decoration: none;
+            padding: 5px 10px; border-radius: 4px; transition: background .15s ease, color .15s ease;
+        }
+        .xp-drop a:hover, .xp-drop a[aria-current="page"] { background: #316ac5; color: #fff; }
+
+        .burger { display: none; justify-self: end; position: relative; width: 30px; height: 25px; background: none; border: 0; }
+        .burger span { position: absolute; left: 0; width: 100%; height: 2px; background: var(--text); transition: transform .3s ease, opacity .3s ease, top .3s ease; }
+        .burger span:nth-child(1) { top: 0; }
+        .burger span:nth-child(2) { top: 11px; }
+        .burger span:nth-child(3) { top: 22px; }
+        .burger[aria-expanded="true"] span:nth-child(1) { top: 11px; transform: rotate(45deg); }
+        .burger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+        .burger[aria-expanded="true"] span:nth-child(3) { top: 11px; transform: rotate(-45deg); }
+        .mobile-menu {
+            position: fixed; top: 0; right: 0; z-index: 40; width: 100%; max-width: 400px; height: 100vh; height: 100dvh;
+            padding: 100px 40px 40px; overflow-y: auto;
+            background: rgba(13, 11, 16, .98); border-left: 1px solid rgba(175, 238, 223, .2);
+            -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px);
+            transform: translateX(100%); visibility: hidden;
+            transition: transform .4s ease, visibility .4s ease;
+        }
+        .mobile-menu.open { transform: none; visibility: visible; }
+        .mobile-menu .title { font: 400 11px var(--display); letter-spacing: 3px; color: #c86e53; opacity: .8; margin-bottom: 16px; }
+        .mobile-menu .group + .group { margin-top: 36px; }
+        .mobile-menu a {
+            display: block; margin-bottom: 14px; font: 300 16px var(--display); letter-spacing: 2px; text-transform: uppercase;
+            color: var(--text); text-decoration: none; transition: color .3s ease, transform .3s ease;
+        }
+        .mobile-menu a:hover, .mobile-menu a[aria-current="page"] { color: #afeedf; }
+        .mobile-menu a:hover { transform: translateX(10px); }
+
+        /* Film grain over everything, as on codenat.me */
+        body::after {
+            content: ""; position: fixed; top: 0; left: 0; width: 300%; height: 300%; pointer-events: none; z-index: 99999;
+            background-image: url('/images/1k_Dissolve_Noise_Texture.webp'); opacity: .08;
+            animation: grain 8s steps(10) infinite;
+        }
+        @keyframes grain {
+            0%, 100% { transform: translate(0, 0); }
+            10%, 30%, 50%, 70%, 90% { transform: translate(-5%, -10%); }
+            20%, 40%, 60%, 80% { transform: translate(-15%, -20%); }
+        }
 
         /* Hero: the claim on the left, the proof on the right */
         .hero { padding: clamp(48px, 8vw, 104px) 0 clamp(56px, 8vw, 96px); }
@@ -254,10 +331,14 @@
             .skill-row { grid-template-columns: 1fr; gap: 8px; }
             .sheet { transform: none; }
         }
+        @media (max-width: 768px) {
+            .xp-nav, .top-end { display: none; }
+            .burger { display: block; }
+            .topbar .wrap { height: 64px; grid-template-columns: 1fr auto; }
+        }
         @media (max-width: 640px) {
             body { font-size: 16px; }
             .notes { grid-template-columns: 1fr; }
-            .top-actions > a { display: none; }
             .cmd code { font-size: 15px; }
         }
         @media (prefers-reduced-motion: reduce) {
@@ -271,16 +352,56 @@
 
 <header class="topbar">
     <div class="wrap">
-        <a class="back" href="/">codenat.me</a>
-        <div class="top-actions">
-            <div class="lang" role="group" aria-label="Language">
-                <button type="button" data-set-lang="th" aria-pressed="true">ไทย</button>
-                <button type="button" data-set-lang="en" aria-pressed="false">EN</button>
+        <div class="lang" role="group" aria-label="Language">
+            <button type="button" data-set-lang="th" aria-pressed="true">ไทย</button>
+            <button type="button" data-set-lang="en" aria-pressed="false">EN</button>
+        </div>
+        <nav class="xp-nav" aria-label="codenat.me">
+            <a class="xp-btn" href="/">Home</a>
+            <a class="xp-btn" href="/#story-section">About</a>
+            <div class="xp-menu">
+                <button type="button" class="xp-btn" aria-expanded="false" aria-controls="menu-projects">Projects <span class="caret" aria-hidden="true">▾</span></button>
+                <div class="xp-drop" id="menu-projects">
+                    <a href="/#portfolio-section">All Projects</a>
+                    <a href="/thai-skills/" aria-current="page">Thai Skills</a>
+                </div>
             </div>
+            <div class="xp-menu">
+                <button type="button" class="xp-btn" aria-expanded="false" aria-controls="menu-contact">Contact <span class="caret" aria-hidden="true">▾</span></button>
+                <div class="xp-drop" id="menu-contact">
+                    <a href="https://github.com/inatbalthazar" target="_blank" rel="noopener">GitHub Profile</a>
+                    <a href="https://www.linkedin.com/in/inat/" target="_blank" rel="noopener">LinkedIn Profile</a>
+                    <a href="/cv.html" target="_blank" rel="noopener">Online CV</a>
+                    <a href="/resume.html" target="_blank" rel="noopener">Resume</a>
+                    <a href="mailto:inatbalthazar@gmail.com">Send Email</a>
+                </div>
+            </div>
+        </nav>
+        <div class="top-end">
             <a href="https://github.com/inatbalthazar/humanizer-th" target="_blank" rel="noopener">GitHub</a>
         </div>
+        <button type="button" class="burger" aria-expanded="false" aria-controls="mobile-menu" aria-label="Menu">
+            <span></span><span></span><span></span>
+        </button>
     </div>
 </header>
+<nav class="mobile-menu" id="mobile-menu" aria-label="codenat.me">
+    <div class="group">
+        <div class="title">NAVIGATE</div>
+        <a href="/">Home</a>
+        <a href="/#story-section">About</a>
+        <a href="/#portfolio-section">Projects</a>
+        <a href="/thai-skills/" aria-current="page">Thai Skills</a>
+    </div>
+    <div class="group">
+        <div class="title">CONNECT</div>
+        <a href="https://github.com/inatbalthazar/humanizer-th" target="_blank" rel="noopener">humanizer-th on GitHub</a>
+        <a href="https://github.com/inatbalthazar" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://www.linkedin.com/in/inat/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="/cv.html" target="_blank" rel="noopener">Online CV</a>
+        <a href="/resume.html" target="_blank" rel="noopener">Resume</a>
+    </div>
+</nav>
 
 <main>
     <div class="hero">
@@ -503,6 +624,44 @@
         setLang(lang);
         document.querySelectorAll('[data-set-lang]').forEach(function (b) {
             b.addEventListener('click', function () { setLang(b.getAttribute('data-set-lang')); });
+        });
+
+        // Navbar dropdowns and the mobile menu, same behaviour as codenat.me
+        var menus = document.querySelectorAll('.xp-menu');
+        var burger = document.querySelector('.burger');
+        var mobileMenu = document.getElementById('mobile-menu');
+        function closeMenus(except) {
+            menus.forEach(function (m) {
+                if (m === except) return;
+                m.classList.remove('open');
+                m.querySelector('button').setAttribute('aria-expanded', 'false');
+            });
+        }
+        function setMobile(open) {
+            mobileMenu.classList.toggle('open', open);
+            burger.setAttribute('aria-expanded', String(open));
+        }
+        menus.forEach(function (m) {
+            var btn = m.querySelector('button');
+            btn.addEventListener('click', function (e) {
+                e.stopPropagation();
+                var open = !m.classList.contains('open');
+                closeMenus(m);
+                m.classList.toggle('open', open);
+                btn.setAttribute('aria-expanded', String(open));
+            });
+            m.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { closeMenus(); }); });
+        });
+        burger.addEventListener('click', function (e) {
+            e.stopPropagation();
+            setMobile(!mobileMenu.classList.contains('open'));
+        });
+        document.addEventListener('click', function (e) {
+            if (!e.target.closest('.xp-menu')) closeMenus();
+            if (!e.target.closest('.mobile-menu')) setMobile(false);
+        });
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') { closeMenus(); setMobile(false); }
         });
 
         // The pen: strike each deletion, then write each insertion, in reading order.
